@@ -1,0 +1,35 @@
+
+[repositories.spaces]
+git = "https://github.com/work-spaces/spaces"
+checkout = "Revision"
+rev = "2a20d4c46e1a9acf9cd9d3535d76beafe7727303"
+
+[actions]
+deploy = [
+    { name = "build", command = "cargo", working_directory = "spaces", arguments = [
+        "build",
+        "--profile=release",
+    ] },
+    { name = "mkdir", command = "mkdir", arguments = [
+        "-p",
+        "deploy",
+    ] },
+    { name = "archive", command = "spaces", arguments = [
+        "create-binary-archive",
+        "--name=spaces",
+        "--version={SPACES_TOML:spaces/Cargo.toml/package.version}",
+        "--output=deploy",
+        "--input=spaces/target/release/spaces",
+    ] },
+    { name = "check_release", command = "gh", working_directory = "spaces", arguments = [
+        "release",
+        "view",
+        "v{SPACES_TOML:spaces/Cargo.toml/package.version}",
+    ] },
+    { name = "upload", command = "gh", working_directory = "spaces", arguments = [
+        "release",
+        "upload",
+        "v{SPACES_TOML:spaces/Cargo.toml/package.version}",
+        "../deploy/spaces-v{SPACES_TOML:spaces/Cargo.toml/package.version}-{SPACES_PLATFORM}.zip"
+    ] },
+]
