@@ -20,9 +20,10 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v4
       - uses: facebook/install-dotslash@latest
+
+      - name: Checkout
+        run: git clone https://github.com/work-spaces/workflows
 
       # Runs a single command using the runners shell
       - name: spaces check version
