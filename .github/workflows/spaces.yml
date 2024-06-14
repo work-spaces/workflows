@@ -25,19 +25,17 @@ jobs:
       - name: Checkout
         run: git clone https://github.com/work-spaces/workflows
 
+      # Runs a single command using the runners shell
+      - name: spaces check version
+        run: ./workflows/bin/spaces --version
+
+      - name: spaces create workspace
+        run: ./workflows/bin/spaces create --name=spaces-deploy --config=workflows/spaces_deploy.toml
+
       - name: Show what happened
         run: |
           echo $PWD
           echo $GITHUB_WORKSPACE
           ls -Ralt
-
-      # Runs a single command using the runners shell
-      - name: spaces check version
-        run: ./bin/workflows/spaces --version
-
-
-
-      - name: spaces create workspace
-        run: ./bin/spaces create --name=spaces-deploy --config=$GITHUB_WORKSPACE/workflows/spaces_deploy.toml
 
 
