@@ -2,7 +2,7 @@
 [repositories.spaces]
 git = "https://github.com/work-spaces/spaces"
 checkout = "Revision"
-rev = "2a20d4c46e1a9acf9cd9d3535d76beafe7727303"
+rev = "2f82e6399e7d4802be824ab66d61262bd1709075"
 
 [actions]
 deploy = [
@@ -25,11 +25,13 @@ deploy = [
         "release",
         "view",
         "v{SPACES_TOML:spaces/Cargo.toml/package.version}",
+        "--repo=https://github.com/work-spaces/spaces"
     ] },
     { name = "upload", command = "gh", working_directory = "spaces", arguments = [
         "release",
         "upload",
         "v{SPACES_TOML:spaces/Cargo.toml/package.version}",
-        "../deploy/spaces-v{SPACES_TOML:spaces/Cargo.toml/package.version}-{SPACES_PLATFORM}.zip"
+        "../deploy/spaces-v{SPACES_TOML:spaces/Cargo.toml/package.version}-{SPACES_PLATFORM}.zip",
+        "--repo=https://github.com/work-spaces/spaces"
     ] },
 ]
