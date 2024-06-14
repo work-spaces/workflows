@@ -24,9 +24,6 @@ jobs:
       - uses: actions/checkout@v4
       - uses: facebook/install-dotslash@latest
 
-
-      - name: Create Github Release
-
       # Runs a single command using the runners shell
       - name: spaces check version
         run: ./bin/spaces --version
