@@ -27,7 +27,7 @@ jobs:
 
       # Runs a single command using the runners shell
       - name: spaces check version
-        run: ./bin/spaces --version
+        run: ./bin/workflows/spaces --version
 
       - name: Show what happened
         run: |
