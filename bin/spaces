@@ -4,6 +4,18 @@
 {
   "name": "spaces",
   "platforms": {
+    "macos-aarch64": {
+      "size": 1411367,
+      "hash": "blake3",
+      "digest": "66782d6b36e222a1089291a7df90f4a05eb7f0409e12dea38934af6bb5ad3f95",
+      "format": "zip",
+      "path": "spaces",
+      "providers": [
+        {
+          "url": "https://github.com/work-spaces/workflows/releases/download/spaces-v0.2.0/spaces-v0.2.0-macos-x86_64.zip"
+        }
+      ]
+    },
     "macos-x86_64": {
       "size": 1411367,
       "hash": "blake3",
