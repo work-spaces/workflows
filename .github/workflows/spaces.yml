@@ -28,11 +28,13 @@ jobs:
       - name: spaces check version
         run: ./bin/spaces --version
 
-      - name: spaces create workspace
-        run: ./bin/spaces create --name=spaces-deploy --config=$GITHUB_WORKSPACE/workflows/spaces_deploy.toml
-
-      # Runs a set of commands using the runners shell
       - name: Show what happened
         run: |
           echo $PWD
+          echo $GITHUB_WORKSPACE
           ls -alt
+
+      - name: spaces create workspace
+        run: ./bin/spaces create --name=spaces-deploy --config=$GITHUB_WORKSPACE/workflows/spaces_deploy.toml
+
+
