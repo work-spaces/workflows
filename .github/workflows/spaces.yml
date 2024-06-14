@@ -31,11 +31,9 @@ jobs:
 
       - name: spaces create workspace
         run: ./workflows/bin/spaces create --name=spaces-deploy --config=workflows/spaces_deploy.toml
+      
+      - name: spaces deploy
+        run: cd spaces-deploy && ../workflows/bin/spaces run-action --name=deploy
 
-      - name: Show what happened
-        run: |
-          echo $PWD
-          echo $GITHUB_WORKSPACE
-          ls -Ralt
 
 
