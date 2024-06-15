@@ -26,12 +26,6 @@ jobs:
         run: git clone --filter=blob:none https://github.com/work-spaces/workflows
         shell: bash
 
-      - name: Show temp dir
-        run: 
-          echo $PWD
-          ls $PWD
-        shell: bash
-
       - name: Update path
         run: echo "$PWD/workflows/bin" >> $GITHUB_PATH
         shell: bash
@@ -44,17 +38,11 @@ jobs:
         run: spaces create --name=spaces-deploy --config=workflows/spaces_deploy.toml
         shell: bash
 
-      - name: spaces build
-        run: cd spaces-deploy && spaces run-action --name=build
-        shell: bash
-
-      - name: show status
-        run: ls -alt ./spaces-deploy/spaces && ls -alt ./spaces-deploy/spaces/target && ls -alt ./spaces-deploy/spaces/target/release
-        shell: bash
-
       - name: spaces deploy
         run: cd spaces-deploy && spaces run-action --name=deploy
         shell: bash
+        env:
+           GH_TOKEN: ${{ github.token }}
 
 
 
