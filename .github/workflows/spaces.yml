@@ -34,6 +34,9 @@ jobs:
       
       - name: spaces deploy
         run: cd spaces-deploy && ../workflows/bin/spaces run-action --name=build
+      
+      - name: show status
+        run: ls -alt ./
 
       - name: show status
         run: ls -alt ../workflows/spaces-deploy/spaces/target/release
