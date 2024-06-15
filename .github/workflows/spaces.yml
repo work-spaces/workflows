@@ -49,12 +49,9 @@ jobs:
         shell: bash
 
       - name: spaces build
-        run: cd spaces-deploy && spaces run-action --name=build
+        run: cd spaces-deploy && spaces run-action --name=deploy
         shell: bash
 
-      - name: spaces deploy
-        run: cd spaces-deploy && spaces create-binary-archive --name=spaces --version=v0.2.0 --output=deploy --input=spaces/target/release/spaces
-        shell: bash
 
 
       
