@@ -1,3 +1,5 @@
+[settings]
+branch = "{SPACE}-{UNIQUE}"
 
 [repositories.spaces]
 git = "https://github.com/work-spaces/spaces"

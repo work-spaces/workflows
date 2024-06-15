@@ -1,5 +1,5 @@
 [settings]
-branch = "user/{USER}/{SPACE}-{UNIQUE}"
+branch = "{SPACE}-{UNIQUE}"
 
 [vscode.extensions]
 recommendations = ["rust-lang.rust-analyzer"]
