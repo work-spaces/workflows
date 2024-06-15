@@ -27,6 +27,18 @@
           "url": "https://github.com/work-spaces/workflows/releases/download/spaces-v0.2.0/spaces-v0.2.0-macos-x86_64.zip"
         }
       ]
+    },
+    "windows-x86_64": {
+      "size": 1337903,
+      "hash": "blake3",
+      "digest": "b57f1414905b3c771cf54097e4948ba51148558984270bec898bcae9de7500ff",
+      "format": "zip",
+      "path": "spaces.exe",
+      "providers": [
+        {
+          "url": "https://github.com/work-spaces/workflows/releases/download/spaces-v0.2.0/spaces-v0.2.0-windows-x86_64.zip"
+        }
+      ]
     }
   }
 }

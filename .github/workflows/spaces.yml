@@ -42,6 +42,11 @@ jobs:
       contents: write
     needs: release
     runs-on: macos-latest
+    strategy:
+        matrix:
+            os:
+                - windows-latest
+                - macos-latest
     steps:
       - uses: facebook/install-dotslash@latest
       - name: Checkout
