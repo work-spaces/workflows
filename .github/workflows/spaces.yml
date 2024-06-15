@@ -33,7 +33,10 @@ jobs:
         run: ./workflows/bin/spaces create --name=spaces-deploy --config=workflows/spaces_deploy.toml
       
       - name: spaces deploy
-        run: cd spaces-deploy && ../workflows/bin/spaces run-action --name=deploy
+        run: cd spaces-deploy && ../workflows/bin/spaces run-action --name=build
 
+      - name: show status
+        run: ls -Ralt ..
 
+      
 
