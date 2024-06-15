@@ -29,14 +29,14 @@
       ]
     },
     "windows-x86_64": {
-      "size": 1337903,
+      "size": 1391773,
       "hash": "blake3",
-      "digest": "b57f1414905b3c771cf54097e4948ba51148558984270bec898bcae9de7500ff",
+      "digest": "5690b29f6f580658b76f5cb0fb875a8b44f51dfee9fb6cd6511a2226e1d6cf8b",
       "format": "zip",
       "path": "spaces.exe",
       "providers": [
         {
-          "url": "https://github.com/work-spaces/workflows/releases/download/spaces-v0.2.0/spaces-v0.2.0-windows-x86_64.zip"
+          "url": "https://github.com/work-spaces/workflows/releases/download/spaces-v0.2.0/spaces-v0.3.0-beta.0-windows-x86_64.zip"
         }
       ]
     }
