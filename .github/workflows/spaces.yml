@@ -46,6 +46,7 @@ jobs:
             os:
                 - windows-latest
                 - macos-latest
+    runs-on: ${{ matrix.os }}
     steps:
       - uses: facebook/install-dotslash@latest
       - name: Checkout
