@@ -20,7 +20,7 @@ build = [
 deploy = [
     { name = "build", command = "cargo", working_directory = "spaces", arguments = [
         "build",
-        "--profile=release",
+        "--profile=dev",
     ] },
     { name = "mkdir", command = "mkdir", arguments = [
         "-p",
