@@ -13,8 +13,41 @@ on:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
+  # Create release
+  release:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      - uses: facebook/install-dotslash@latest
+
+      - name: Checkout
+        run: git clone --filter=blob:none https://github.com/work-spaces/workflows
+        shell: bash
+
+      - name: Update path
+        run: echo "$PWD/workflows/bin" >> $GITHUB_PATH
+        shell: bash
+
+      - name: spaces check version
+        run: spaces --version
+        shell: bash
+
+      - name: spaces create workspace
+        run: spaces create --name=spaces-deploy --config=workflows/spaces_deploy.toml
+        shell: bash
+
+      - name: spaces deploy
+        run: cd spaces-deploy && spaces run-action --name=release
+        shell: bash
+        env:
+           GH_TOKEN: ${{ github.token }}
+
+
   # This workflow contains a single job called "build"
   build:
+    needs: release
     # The type of runner that the job will run on
     runs-on: macos-latest
 
@@ -29,7 +62,7 @@ jobs:
       - name: Update path
         run: echo "$PWD/workflows/bin" >> $GITHUB_PATH
         shell: bash
-      # Runs a single command using the runners shell
+
       - name: spaces check version
         run: spaces --version
         shell: bash
