@@ -28,12 +28,12 @@ jobs:
 
       - name: Show temp dir
         run: 
-          echo ${{runner.temp}}
-          ls ${{runner.temp}}
+          echo $PWD
+          ls $PWD
         shell: bash
 
       - name: Update path
-        run: echo "${{runner.temp}}/workflows/bin" >> $GITHUB_PATH
+        run: echo "$PWD/workflows/bin" >> $GITHUB_PATH
         shell: bash
       # Runs a single command using the runners shell
       - name: spaces check version
