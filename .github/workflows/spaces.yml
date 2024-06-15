@@ -19,7 +19,7 @@ jobs:
       contents: write
     runs-on: macos-latest
     steps:
-      - uses: work-spaces/install-spaces@latest
+      - uses: work-spaces/install-spaces@v0.2.0
       - name: Checkout
         run: git clone --filter=blob:none https://github.com/work-spaces/workflows
         shell: bash
@@ -45,7 +45,7 @@ jobs:
                 - macos-latest
     runs-on: ${{ matrix.os }}
     steps:
-      - uses: work-spaces/install-spaces@latest
+      - uses: work-spaces/install-spaces@v0.2.0
       - name: Checkout
         run: git clone --filter=blob:none https://github.com/work-spaces/workflows
         shell: bash
