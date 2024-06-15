@@ -24,14 +24,14 @@ deploy = [
     { name = "check_release", command = "gh", working_directory = "spaces", arguments = [
         "release",
         "view",
-        "v{SPACES_TOML:spaces/Cargo.toml/package.version}",
-        "--repo=https://github.com/work-spaces/spaces"
+        "Spaces-v{SPACES_TOML:spaces/Cargo.toml/package.version}",
+        "--repo=https://github.com/work-spaces/workflows"
     ] },
     { name = "upload", command = "gh", working_directory = "spaces", arguments = [
         "release",
         "upload",
         "v{SPACES_TOML:spaces/Cargo.toml/package.version}",
         "../deploy/spaces-v{SPACES_TOML:spaces/Cargo.toml/package.version}-{SPACES_PLATFORM}.zip",
-        "--repo=https://github.com/work-spaces/spaces"
+        "--repo=https://github.com/work-spaces/workflows"
     ] },
 ]
