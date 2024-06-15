@@ -5,9 +5,9 @@
   "name": "spaces",
   "platforms": {
     "macos-aarch64": {
-      "size": 1412102,
+      "size": 1412181,
       "hash": "blake3",
-      "digest": "635de84911e3eb6d463a5ce4c274d585608a7a445d3a2b70bff7280754a5c8b2",
+      "digest": "f0a796fc19c50c74a55306aaad7a385d96e8cd9b66a8a1c80673592193ece8a7",
       "format": "zip",
       "path": "spaces",
       "providers": [
@@ -17,9 +17,9 @@
       ]
     },
     "macos-x86_64": {
-      "size": 1412102,
+      "size": 1412181,
       "hash": "blake3",
-      "digest": "635de84911e3eb6d463a5ce4c274d585608a7a445d3a2b70bff7280754a5c8b2",
+      "digest": "f0a796fc19c50c74a55306aaad7a385d96e8cd9b66a8a1c80673592193ece8a7",
       "format": "zip",
       "path": "spaces",
       "providers": [
