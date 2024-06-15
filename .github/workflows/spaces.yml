@@ -45,7 +45,7 @@ jobs:
         shell: bash
 
       - name: show status
-        run: ls -alt ./ && ls -alt ./spaces-deploy
+        run: ls -alt ./spaces-deploy/spaces && ls -alt ./spaces-deploy/spaces/target && ls -alt ./spaces-deploy/spaces/target/release
         shell: bash
 
       - name: spaces build
