@@ -23,7 +23,7 @@ jobs:
       - uses: facebook/install-dotslash@latest
 
       - name: Checkout
-        run: git clone https://github.com/work-spaces/workflows
+        run: git clone --filter=blob:none https://github.com/work-spaces/workflows
 
       # Runs a single command using the runners shell
       - name: spaces check version
@@ -36,7 +36,7 @@ jobs:
         run: cd spaces-deploy && ../workflows/bin/spaces run-action --name=build
       
       - name: show status
-        run: ls -alt ./ && ls -alt ./spaces_deploy
+        run: ls -alt ./ && ls -alt ./spaces-deploy
 
       - name: show status
         run: ls -alt ./spaces-deploy/spaces/target/release
