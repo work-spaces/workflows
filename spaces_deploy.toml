@@ -2,7 +2,7 @@
 [repositories.spaces]
 git = "https://github.com/work-spaces/spaces"
 checkout = "Revision"
-rev = "2f82e6399e7d4802be824ab66d61262bd1709075"
+rev = "21056541689ffea25749fa751ff94b571d177e1a"
 
 [actions]
 deploy = [
