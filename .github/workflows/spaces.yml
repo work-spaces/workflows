@@ -19,12 +19,9 @@ jobs:
       contents: write
     runs-on: macos-latest
     steps:
-      - uses: facebook/install-dotslash@latest
+      - uses: work-spaces/install-spaces@latest
       - name: Checkout
         run: git clone --filter=blob:none https://github.com/work-spaces/workflows
-        shell: bash
-      - name: Update path
-        run: echo "$PWD/workflows/bin" >> $GITHUB_PATH
         shell: bash
       - name: spaces check version
         run: spaces --version
