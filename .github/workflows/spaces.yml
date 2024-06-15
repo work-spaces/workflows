@@ -48,12 +48,8 @@ jobs:
         run: ls -alt ./ && ls -alt ./spaces-deploy
         shell: bash
 
-      - name: show status
-        run: ls -alt ./spaces-deploy/spaces/target/release
-        shell: bash
-
       - name: spaces deploy
-        run: cd spaces-deploy && ../workflows/bin/spaces run-action --name=deploy
+        run: cd spaces-deploy && spaces run-action --name=deploy
         shell: bash
 
 
