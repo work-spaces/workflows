@@ -32,7 +32,7 @@ jobs:
       - name: spaces create workspace
         run: spaces create --name=spaces-deploy --config=workflows/spaces_deploy.toml
         shell: bash
-      - name: spaces deploy
+      - name: spaces release
         run: cd spaces-deploy && spaces run-action --name=release
         shell: bash
         env:
