@@ -4,9 +4,29 @@ branch = "{SPACE}-{UNIQUE}"
 [repositories.spaces]
 git = "https://github.com/work-spaces/spaces"
 checkout = "Revision"
-rev = "21056541689ffea25749fa751ff94b571d177e1a"
+rev = "1a4f517113c54d1bdd73a21076ef77962a5c5f5e"
 
 [actions]
+
+local_archive = [
+    { name = "build", command = "cargo", working_directory = "spaces", arguments = [
+        "build",
+        "--profile=release",
+    ] },
+    { name = "mkdir", command = "mkdir", arguments = [
+        "-p",
+        "deploy",
+    ] },
+    { name = "archive", command = "spaces", arguments = [
+        "create-binary-archive",
+        "--name=spaces",
+        "--version={SPACES_TOML:spaces/Cargo.toml/package.version}",
+        "--output=deploy",
+        "--input=spaces/target/release/spaces",
+    ] }
+]
+
+
 deploy = [
     { name = "build", command = "cargo", working_directory = "spaces", arguments = [
         "build",
