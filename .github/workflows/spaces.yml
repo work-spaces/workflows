@@ -15,62 +15,47 @@ on:
 jobs:
   # Create release
   release:
-    # The type of runner that the job will run on
+    permissions:
+      contents: write
     runs-on: macos-latest
-
-    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       - uses: facebook/install-dotslash@latest
-
       - name: Checkout
         run: git clone --filter=blob:none https://github.com/work-spaces/workflows
         shell: bash
-
       - name: Update path
         run: echo "$PWD/workflows/bin" >> $GITHUB_PATH
         shell: bash
-
       - name: spaces check version
         run: spaces --version
         shell: bash
-
       - name: spaces create workspace
         run: spaces create --name=spaces-deploy --config=workflows/spaces_deploy.toml
         shell: bash
-
       - name: spaces deploy
         run: cd spaces-deploy && spaces run-action --name=release
         shell: bash
         env:
            GH_TOKEN: ${{ github.token }}
-
-
-  # This workflow contains a single job called "build"
   build:
+    permissions:
+      contents: write
     needs: release
-    # The type of runner that the job will run on
     runs-on: macos-latest
-
-    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       - uses: facebook/install-dotslash@latest
-
       - name: Checkout
         run: git clone --filter=blob:none https://github.com/work-spaces/workflows
         shell: bash
-
       - name: Update path
         run: echo "$PWD/workflows/bin" >> $GITHUB_PATH
         shell: bash
-
       - name: spaces check version
         run: spaces --version
         shell: bash
-
       - name: spaces create workspace
         run: spaces create --name=spaces-deploy --config=workflows/spaces_deploy.toml
         shell: bash
-
       - name: spaces deploy
         run: cd spaces-deploy && spaces run-action --name=deploy
         shell: bash
