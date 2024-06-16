@@ -4,7 +4,7 @@ branch = "{SPACE}-{UNIQUE}"
 [repositories.spaces]
 git = "https://github.com/work-spaces/spaces"
 checkout = "Revision"
-rev = "1a4f517113c54d1bdd73a21076ef77962a5c5f5e"
+rev = "94af591663dd751020f9257ab0df4c684255bdc2"
 
 [actions]
 
@@ -23,7 +23,7 @@ local_archive = [
         "--version={SPACES_TOML:spaces/Cargo.toml/package.version}",
         "--output=deploy",
         "--input=spaces/target/release/spaces",
-    ] }
+    ] },
 ]
 
 
@@ -47,14 +47,14 @@ deploy = [
         "release",
         "view",
         "spaces-v{SPACES_TOML:spaces/Cargo.toml/package.version}",
-        "--repo=https://github.com/work-spaces/workflows"
+        "--repo=https://github.com/work-spaces/workflows",
     ] },
     { name = "upload", command = "gh", working_directory = "spaces", arguments = [
         "release",
         "upload",
         "spaces-v{SPACES_TOML:spaces/Cargo.toml/package.version}",
         "../deploy/spaces-v{SPACES_TOML:spaces/Cargo.toml/package.version}-{SPACES_PLATFORM}.zip",
-        "--repo=https://github.com/work-spaces/workflows"
+        "--repo=https://github.com/work-spaces/workflows",
     ] },
 ]
 
@@ -64,6 +64,6 @@ release = [
         "create",
         "spaces-v{SPACES_TOML:spaces/Cargo.toml/package.version}",
         "--generate-notes",
-        "--repo=https://github.com/work-spaces/workflows"
+        "--repo=https://github.com/work-spaces/workflows",
     ] },
 ]

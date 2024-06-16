@@ -43,6 +43,7 @@ jobs:
             os:
                 - windows-latest
                 - macos-latest
+                - ubuntu-latest
     runs-on: ${{ matrix.os }}
     steps:
       - uses: work-spaces/install-spaces@v0.3.0
