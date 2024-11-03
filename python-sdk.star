@@ -1,22 +1,21 @@
 """
+This is an example of how to get python running in your workspace. This
+uses https://github.com/astral-sh/uv for python binary and package management.
 
 """
 
-checkout.update_env(
-    rule = {"name": "update_env"},
-    env = {
-        "vars": {
-            "PS1": '"(spaces) $PS1"',
-        },
-        "paths": ["/usr/bin", "/bin"],
-    },
-)
+load("sysroot-packages/star/spaces_env.star", "spaces_working_env")
+load("sysroot-packages/packages/github.com/astral-sh/uv/0.4.29.star", uv_platforms = "platforms")
+load("sysroot-packages/star/python.star", "add_uv_python")
 
-checkout.add_repo(
-    rule = {"name": "tools/sysroot-python"},
-    repo = {
-        "url": "https://github.com/work-spaces/sysroot-python",
-        "rev": "v3",
-        "checkout": "Revision",
-    },
-)
+add_uv_python(
+    rule_name = "python3",
+    uv_platforms = uv_platforms,
+    python_version = "3.11",
+    packages = ["numpy", "cmake-format"])
+
+
+# This will add /usr/bin and /bin to the path so you can
+# work in the command line after running `source env`
+spaces_working_env()
+
