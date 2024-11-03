@@ -4,9 +4,9 @@ uses https://github.com/astral-sh/uv for python binary and package management.
 
 """
 
-load("sysroot-packages/star/spaces_env.star", "spaces_working_env")
-load("sysroot-packages/packages/github.com/astral-sh/uv/0.4.29.star", uv_platforms = "platforms")
-load("sysroot-packages/star/python.star", "add_uv_python")
+load("spaces-starlark-sdk/star/spaces-env.star", "spaces_working_env")
+load("spaces-starlark-sdk/packages/github.com/astral-sh/uv/0.4.29.star", uv_platforms = "platforms")
+load("spaces-starlark-sdk/star/python.star", "add_uv_python")
 
 add_uv_python(
     rule_name = "python3",
