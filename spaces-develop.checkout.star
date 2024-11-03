@@ -3,7 +3,7 @@ Spaces starlark checkout script to make changes to spaces, printer, and easy-arc
 With VSCode integration
 """
 
-load("spaces-starlark-sdk/star/spaces_env.star", "spaces_working_env")
+load("spaces-starlark-sdk/star/spaces-env.star", "spaces_working_env")
 load("spaces-starlark-sdk/star/rust.star", "add_rust")
 load("spaces-starlark-sdk/star/sccache.star", "add_sccache")
 
