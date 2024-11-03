@@ -1,11 +1,29 @@
 [settings]
-branch = "{SPACE}-{UNIQUE}"
+branch = "{{spaces.space_name}}-{{spaces.unique}}"
 
-[vscode.extensions]
-recommendations = ["rust-lang.rust-analyzer"]
+[assets.'workspace.Cargo.toml']
+path = 'Cargo.toml'
+contents = """
+[workspace]
+resolver = "2"
+members = ["spaces"]
 
-[vscode.settings]
-"editor.formatOnSave" = true
+[profile.dev]
+opt-level = 3
+lto = false
+debug = true
+strip = false
+codegen-units = 16
+
+[profile.release]
+opt-level = "z"
+lto = true
+debug = false
+panic = "abort"
+strip = true
+codegen-units = 1
+"""
+type = "String"
 
 [vscode.tasks.build_spaces]
 type = "cargo"
@@ -40,11 +58,19 @@ group = "build"
 label = "build:printer"
 
 [repositories]
-spaces = { git = "https://github.com/work-spaces/spaces", branch = "development" }
-printer = { git = "https://github.com/work-spaces/printer-rs", branch = "development" }
+spaces = { git = "https://github.com/work-spaces/spaces", branch = "main", checkout = "BranchHead" }
+printer = { git = "https://github.com/work-spaces/printer-rs", branch = "main", checkout = "BranchHead" }
+easy-archiver = { git = "https://github.com/work-spaces/easy-archiver", branch = "main", checkout = "BranchHead" }
+'tools/sysroot-rust' = { git = "https://github.com/work-spaces/sysroot-rust", branch = "main", checkout = "BranchHead" }
+'tools/sysroot-sccache' = { git = "https://github.com/work-spaces/sysroot-sccache", branch = "v0", checkout = "BranchHead" }
 
-[cargo.patches]
-spaces = ["printer"]
+[env]
+vars = { RUST_TOOLCHAIN = "1.80", PS1 = '"(spaces) $PS1"' }
+paths = ["/usr/bin", "/bin"]
+
+[cargo.patch]
+'https://github.com/work-spaces/printer-rs' = { printer = { path = "./printer" } }
+'https://github.com/work-spaces/easy-archiver' = { easy-archiver = { path = "./easy-archiver" } }
 
 [cargo.build]
 rustc-wrapper = "sccache"

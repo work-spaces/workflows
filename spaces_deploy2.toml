@@ -1,0 +1,70 @@
+[settings]
+branch = "{SPACE}-{UNIQUE}"
+
+[repositories]
+spaces = { git = "https://github.com/work-spaces/spaces", checkout = "Revision", rev = "94af591663dd751020f9257ab0df4c684255bdc2" }
+sysroot-cargo-make = { git = "https://github.com/work-spaces/sysroot-cargo-make", checkout = "BranchHead", branch = "v0" }
+sysroot-gh = { git = "https://github.com/work-spaces/sysroot-gh", checkout = "BranchHead", branch = "v2" }
+
+
+[assets.'spaces-archive.toml']
+path = "spaces-archive.toml"
+type = "String"
+contents = """
+input = "spaces/target/release/spaces"
+name = "spaces"
+version = "{{files.'spaces/Cargo.toml'.package.version}}"
+driver = "tar.gz"
+platform = "{{spaces.platform}}"
+"""
+
+[cargo-make.tasks.build]
+command = "cargo"
+cwd = "spaces"
+args = ["build", "--profile=release"]
+
+[cargo-make.tasks.mkdir_deploy]
+command = "mkdir"
+args = ["-p", "deploy"]
+dependencies = ["build"]
+
+[cargo-make.tasks.archive]
+command = "spaces"
+args = [
+    "create-archive",
+    "--manifest=spaces-archive.toml",
+    "--output-directory=deploy",
+]
+dependencies = ["mkdir_deploy"]
+
+[cargo-make.tasks.archive_flow]
+dependencies = ["build", "mkdir_deploy", "archive"]
+
+[cargo-make.tasks.check_release]
+command = "gh"
+args = [
+    "release",
+    "view",
+    "spaces-v{{files.'spaces/Cargo.toml'.package.version}}",
+    "--repo=https://github.com/work-spaces/workflows",
+]
+
+[cargo-make.tasks.upload]
+command = "gh"
+args = [
+    "release",
+    "upload",
+    "spaces-v{{files.'spaces/Cargo.toml'.package.version}}",
+    "deploy/spaces-v{{files.'spaces/Cargo.toml'.package.version}}-{{spaces.platform}}.zip",
+    "--repo=https://github.com/work-spaces/workflows",
+]
+
+[cargo-make.tasks.release]
+command = "gh"
+args = [
+    "release",
+    "create",
+    "spaces-v{{files.'spaces/Cargo.toml'.package.version}}",
+    "--generate-notes",
+    "--repo=https://github.com/work-spaces/workflows",
+]
