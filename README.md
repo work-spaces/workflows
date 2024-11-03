@@ -2,13 +2,10 @@
 
 This repository contains sample workflows.
 
-Usage:
+This command will create a sample project for building a project using
+`cmake`, `ninja` and `clang`.
 
 ```sh
 git clone https://github.com/work-spaces/workflows
-spaces checkout --script=workflows/preload.star --script=workflows/llvm-sdk.star --name=llvm-build-test
+spaces checkout --script=workflows/preload --script=workflows/llvm-sdk --name=llvm-build-test
 ```
-
-
-
-
