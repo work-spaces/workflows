@@ -1,6 +1,14 @@
 """
-
+Spaces starlark checkout script to make changes to spaces, printer, and easy-archiver.
+With VSCode integration
 """
+
+load("sysroot-packages/star/spaces_env.star", "spaces_working_env")
+load("sysroot-packages/star/rust.star", "add_rust")
+load("sysroot-packages/star/sccache.star", "add_sccache")
+
+
+# Configure the top level workspace
 
 cargo_toml_contents = """
 [workspace]
@@ -82,9 +90,10 @@ checkout.add_asset(
     },
 )
 
+# Add spaces, printer, and easy-archiver source repositories to the workspace
+
 printer_url = "https://github.com/work-spaces/printer-rs"
 easy_archiver_url = "https://github.com/work-spaces/easy-archiver"
-
 checkout.add_repo(
     rule = {"name": "spaces"},
     repo = {
@@ -112,22 +121,14 @@ checkout.add_repo(
     },
 )
 
-checkout.add_repo(
-    rule = {"name": "tools/sysroot-rust"},
-    repo = {
-        "url": "https://github.com/work-spaces/sysroot-rust",
-        "rev": "main",
-        "checkout": "Revision",
-    },
+add_rust(
+    rule_name = "rust_toolchain",
+    toolchain_version = "1.80",
 )
 
-checkout.add_repo(
-    rule = {"name": "tools/sysroot-sccache"},
-    repo = {
-        "url": "https://github.com/work-spaces/sysroot-sccache",
-        "rev": "v0",
-        "checkout": "Revision",
-    },
+add_sccache(
+    rule_name = "sccache",
+    sccache_version = "0.8",
 )
 
 cargo_vscode_task = {
@@ -158,34 +159,9 @@ checkout.update_asset(
                     "args": ["--path=spaces/crates/spaces", "--root=${userHome}/.local", "--profile=release"],
                     "label": "install:spaces",
                 },
-                cargo_vscode_task | {
-                    "command": "build",
-                    "args": ["--manifest-path=printer/Cargo.toml"],
-                    "label": "build:printer",
-                },
             ],
         },
     },
 )
 
-checkout.update_asset(
-    rule = {"name": "cargo_config"},
-    asset = {
-        "destination": ".cargo/config.toml",
-        "format": "toml",
-        "value": {
-            "patch": {
-                printer_url: {"printer": {"path": "./printer"}},
-            },
-            "build": {"rustc-wrapper": "sccache"},
-        },
-    },
-)
-
-checkout.update_env(
-    rule = {"name": "rust_toolchain_env"},
-    env = {
-        "vars": {"RUST_TOOLCHAIN": "1.80", "PS1": '"(spaces) $PS1"'},
-        "paths": ["/usr/bin", "/bin"],
-    },
-)
+spaces_working_env()
