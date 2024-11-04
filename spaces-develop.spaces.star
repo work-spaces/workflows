@@ -7,7 +7,6 @@ load("spaces-starlark-sdk/star/spaces-env.star", "spaces_working_env")
 load("spaces-starlark-sdk/star/rust.star", "add_rust")
 load("spaces-starlark-sdk/star/sccache.star", "add_sccache")
 
-
 # Configure the top level workspace
 
 cargo_toml_contents = """
@@ -87,6 +86,23 @@ checkout.add_asset(
     asset = {
         "destination": "Developer.md",
         "content": developer_md_content,
+    },
+)
+
+checkout.update_asset(
+    rule = {"name": "cargo_config"},
+    asset = {
+        "destination": ".cargo/config.toml",
+        "format": "toml",
+        "value": {
+            "patch": {
+                "https://github.com/work-spaces/printer-rs": {
+                    "printer": {
+                        "path": "./printer",
+                    },
+                },
+            },
+        },
     },
 )
 
