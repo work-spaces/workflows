@@ -79,7 +79,9 @@ checkout.add_asset(
     },
 )
 
-spaces_star_content = """
+# basic spaces environment - adds /usr/bin and /bin to PATH
+spaces_working_env()
+
 run.add_exec(
     rule = {"name": "configure", "help": "Configure the build system"},
     exec = {
@@ -95,15 +97,3 @@ run.add_exec(
         "args": ["-Cbuild"],
     }
 )
-"""
-
-checkout.add_asset(
-    rule = {"name": "spaces_star"},
-    asset = {
-        "destination": "spaces.star",
-        "content": spaces_star_content,
-    },
-)
-
-# basic spaces environment - adds /usr/bin and /bin to PATH
-spaces_working_env()
