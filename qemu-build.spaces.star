@@ -7,13 +7,7 @@ load("spaces-starlark-sdk/packages/github.com/ninja-build/ninja/v1.12.1.star", n
 load("spaces-starlark-sdk/packages/github.com/astral-sh/uv/0.4.29.star", uv_platforms = "platforms")
 load("spaces-starlark-sdk/star/python.star", "add_uv_python")
 
-load("spaces-starlark-sdk/packages/github.com/llvm/llvm-project/llvmorg-19.1.3.star", llvm19_platforms = "platforms")
-load("spaces-starlark-sdk/star/llvm.star", "add_llvm")
-
-add_llvm(
-    rule_name = "llvm19",
-    platforms = llvm19_platforms,
-    toolchain_name = "llvm-19-toolchain.cmake")
+info.set_minimum_version("0.10.0")
 
 checkout.add_platform_archive(
     rule = {"name": "ninja1"},
@@ -89,23 +83,6 @@ def get_sdk_root():
 
 env_sdk_root = get_sdk_root()
 
-checkout.update_env(
-    rule = {"name": "update_build_env"},
-    env = {
-        "vars": {
-            "CC": "clang",
-            "CXX": "clang++",
-            "CC_LD": "lld",
-            "CXX_LD": "lld",
-            "SDKROOT": env_sdk_root,
-            "CFLAGS": "-isysroot {}".format(env_sdk_root, env_sdk_root),
-            "CXXFLAGS": "-isysroot {}".format(env_sdk_root, env_sdk_root),
-            "LDFLAGS": "-fuse-ld=lld -isysroot {} -L{}/usr/lib".format(env_sdk_root, env_sdk_root),
-        },
-        "paths": []
-    },
-)
-
 spaces_working_env()
 
 # Run Rules
@@ -137,11 +114,6 @@ def meson_compile_and_install(rule_name, working_directory):
         },
     )
 
-clang_env = {
-    "CC": "{}/sysroot/bin/clang".format(workspace),
-    "CXX": "{}/sysroot/bin/clang++".format(workspace),
-}
-
 def get_common_configure_args(build_dir):
     return [
         "configure",
@@ -150,9 +122,6 @@ def get_common_configure_args(build_dir):
         "--buildtype=release",
         "--pkgconfig.relocatable",
     ]
-
-#install_rpath_arg = ["-Dinstall_rpath='{}'".format("@loader_path" if info.is_platform_macos() else "$ORIGIN")]
-install_rpath_arg = []
 
 run.add_exec(
     rule = {"name": "glib_setup"},
@@ -171,7 +140,7 @@ run.add_exec(
     rule = {"name": "glib_configure", "deps": ["glib_setup"]},
     exec = {
         "command": "meson",
-        "args": glib_common_configure_args + linux_configure_args + install_rpath_arg,
+        "args": glib_common_configure_args + linux_configure_args,
         "working_directory": "glib",
     },
 )
@@ -192,7 +161,7 @@ run.add_exec(
     rule = {"name": "pixman_configure", "deps": ["pixman_setup"]},
     exec = {
         "command": "meson",
-        "args": pixman_common_configure_args + linux_configure_args + install_rpath_arg,
+        "args": pixman_common_configure_args + linux_configure_args,
         "working_directory": "pixman",
     },
 )
@@ -209,32 +178,73 @@ run.add_exec(
     },
 )
 
+static_arg = ["--static"] if info.is_platform_linux() else []
+
 run.add_exec(
     rule = {"name": "qemu_configure", "deps": ["glib_install", "qemu_setup", "pixman_install"]},
     exec = {
         "command": "../../qemu/configure",
         "args": [
-            "--cc={}/sysroot/bin/clang".format(workspace),
-            "--cxx={}/sysroot/bin/clang++".format(workspace),
             "--python={}/venv/bin/python3".format(workspace),
             install_prefix_arg,
             "--target-list=arm-softmmu",
             "--disable-pie",
+            "--disable-sdl",
             "--enable-fdt",
             "--disable-kvm",
             "--disable-xen",
-        ] + ["--static"] if info.is_platform_linux() else None,
+            "--disable-guest-agent",
+            "--disable-bsd-user",
+        ] + static_arg,
         "working_directory": "build/qemu",
         "env": {"PKG_CONFIG_PATH": pkg_config_path},
     },
 )
 
 run.add_exec(
-    rule = {"name": "qemu_compile_commands", "deps": ["qemu_configure"]},
+    rule = {"name": "qemu_ninja_build", "deps": ["qemu_configure"]},
     exec = {
         "command": "ninja",
-        "args": ["-Cbuild/qemu", "-tcompdb"],
+        "args": ["-Cbuild/qemu",],
     },
 )
 
-meson_compile_and_install("qemu", "build/qemu")
+run.add_exec(
+    rule = {"name": "qemu_ninja_install", "deps": ["qemu_ninja_build"]},
+    exec = {
+        "command": "ninja",
+        "args": ["-Cbuild/qemu", "install"],
+    },
+)
+
+def add_copy_libs():
+    """
+    Add targets to copy the dylibs using the relative paths
+    """
+    
+    copy_libs = [
+        { "name": "libpixman", "path": "build/pixman/pixman/libpixman-1.0.dylib" },
+        { "name": "libglib", "path": "build/glib/glib/libglib-2.0.0.dylib" },
+        { "name": "libgobject", "path": "build/glib/gobject/libgobject-2.0.0.dylib" },
+        { "name": "libgthread", "path": "build/glib/gthread/libgthread-2.0.0.dylib" },
+        { "name": "libgmodule", "path": "build/glib/gmodule/libgmodule-2.0.0.dylib" },
+        { "name": "libgio", "path": "build/glib/gio/libgio-2.0.0.dylib" },
+        { "name": "libgirepository", "path": "build/glib/girepository/libgirepository-2.0.0.dylib" }
+    ]
+
+    for lib in copy_libs:
+        run.add_exec(
+            rule = {"name": "copy_{}".format(lib["name"]), "deps": ["pixman_install", "glib_install"]},
+            exec = {
+                "command": "cp",
+                "args": ["-f", lib["path"], "build/install/lib/"],
+            },
+        )
+    
+    deps = ["copy_{}".format(lib["name"]) for lib in copy_libs] 
+
+    run.add_target(
+        rule = {"name": "copy_libs", "deps": deps},
+    )
+
+add_copy_libs()
