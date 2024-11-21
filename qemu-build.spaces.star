@@ -49,11 +49,13 @@ checkout.add_repo(
     },
 )
 
+qemu_version = "7.2.9"
+
 checkout.add_repo(
     rule = {"name": "qemu"},
     repo = {
         "url": "https://github.com/qemu/qemu",
-        "rev": "v7.2.9",
+        "rev": "v{}".format(qemu_version),
         "checkout": "Revision",
         "clone": "Worktree",
     },
@@ -205,7 +207,7 @@ run.add_exec(
     rule = {"name": "qemu_ninja_build", "deps": ["qemu_configure"]},
     exec = {
         "command": "ninja",
-        "args": ["-Cbuild/qemu",],
+        "args": ["-Cbuild/qemu"],
     },
 )
 
@@ -221,15 +223,15 @@ def add_copy_libs():
     """
     Add targets to copy the dylibs using the relative paths
     """
-    
+
     copy_libs = [
-        { "name": "libpixman", "path": "build/pixman/pixman/libpixman-1.0.dylib" },
-        { "name": "libglib", "path": "build/glib/glib/libglib-2.0.0.dylib" },
-        { "name": "libgobject", "path": "build/glib/gobject/libgobject-2.0.0.dylib" },
-        { "name": "libgthread", "path": "build/glib/gthread/libgthread-2.0.0.dylib" },
-        { "name": "libgmodule", "path": "build/glib/gmodule/libgmodule-2.0.0.dylib" },
-        { "name": "libgio", "path": "build/glib/gio/libgio-2.0.0.dylib" },
-        { "name": "libgirepository", "path": "build/glib/girepository/libgirepository-2.0.0.dylib" }
+        {"name": "libpixman", "path": "build/pixman/pixman/libpixman-1.0.dylib"},
+        {"name": "libglib", "path": "build/glib/glib/libglib-2.0.0.dylib"},
+        {"name": "libgobject", "path": "build/glib/gobject/libgobject-2.0.0.dylib"},
+        {"name": "libgthread", "path": "build/glib/gthread/libgthread-2.0.0.dylib"},
+        {"name": "libgmodule", "path": "build/glib/gmodule/libgmodule-2.0.0.dylib"},
+        {"name": "libgio", "path": "build/glib/gio/libgio-2.0.0.dylib"},
+        {"name": "libgirepository", "path": "build/glib/girepository/libgirepository-2.0.0.dylib"},
     ]
 
     for lib in copy_libs:
@@ -240,11 +242,38 @@ def add_copy_libs():
                 "args": ["-f", lib["path"], "build/install/lib/"],
             },
         )
-    
-    deps = ["copy_{}".format(lib["name"]) for lib in copy_libs] 
+
+    deps = ["copy_{}".format(lib["name"]) for lib in copy_libs]
 
     run.add_target(
         rule = {"name": "copy_libs", "deps": deps},
     )
 
 add_copy_libs()
+
+run.add_exec(
+    rule = {
+        "name": "install_qemu_rpath",
+        "deps": ["qemu_ninja_install", "copy_libs"],
+        "platforms": ["macos-x86_64", "macos-aarch64"],
+    },
+    exec = {
+        "command": "install_name_tool",
+        "args": ["-add_rpath", "@executable_path/../lib", "build/install/bin/qemu-system-arm"],
+    },
+)
+
+archive_info = {
+    "input": "build/install",
+    "name": "qemu",
+    "version": qemu_version,
+    "driver": "tar.xz",
+    "platform": info.get_platform_name(),
+}
+
+#archive_output = info.get_path_to_build_archive(rule_name = archive_rule_name, archive = archive_info)
+
+run.add_archive(
+    rule = {"name": "archive_qemu", "deps": ["install_qemu_rpath"]},
+    archive = archive_info,
+)
