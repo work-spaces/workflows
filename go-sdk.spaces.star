@@ -1,6 +1,8 @@
 """
 This example adds the go compiler to your workspace.
 
+This is a work in progress.
+
 """
 
 load("spaces-starlark-sdk/star/spaces-env.star", "spaces_working_env")
