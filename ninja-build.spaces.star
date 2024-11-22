@@ -4,6 +4,7 @@ Building Ninja using Spaces
 
 load("spaces-starlark-sdk/star/spaces-env.star", "spaces_working_env")
 load("spaces-starlark-sdk/packages/github.com/Kitware/CMake/v3.30.5.star", cmake3_platforms = "platforms")
+load("spaces-starlark-sdk/packages/github.com/ninja-build/ninja/v1.12.1.star", ninja1_platforms = "platforms")
 load("spaces-starlark-sdk/star/cmake.star", "add_cmake")
 load("spaces-starlark-sdk/star/checkout.star", "add_clone_repo")
 load("spaces-starlark-sdk/star/run.star", "add_exec")
@@ -11,6 +12,11 @@ load("spaces-starlark-sdk/star/run.star", "add_exec")
 add_cmake(
     rule_name = "cmake3",
     platforms = cmake3_platforms,
+)
+
+checkout.add_platform_archive(
+    rule = {"name": "ninja1"},
+    platforms = ninja1_platforms,
 )
 
 add_clone_repo(
@@ -26,11 +32,12 @@ spaces_working_env()
 add_exec(
     "configure",
     command = "cmake",
-    args = ["-Bbuild", "-Sninja-build", "-Wno-dev"],
+    args = ["-Bbuild", "-Sninja-build", "-Wno-dev", "-GNinja"],
 )
 
 add_exec(
     "build",
+    deps = ["configure"],
     command = "cmake",
     args = ["--build", "build"],
 )
