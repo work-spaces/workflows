@@ -6,8 +6,8 @@ load("spaces-starlark-sdk/star/spaces-env.star", "spaces_working_env")
 load("spaces-starlark-sdk/packages/github.com/Kitware/CMake/v3.30.5.star", cmake3_platforms = "platforms")
 load("spaces-starlark-sdk/packages/github.com/ninja-build/ninja/v1.12.1.star", ninja1_platforms = "platforms")
 load("spaces-starlark-sdk/star/cmake.star", "add_cmake")
-load("spaces-starlark-sdk/star/checkout.star", "add_clone_repo")
-load("spaces-starlark-sdk/star/run.star", "add_exec")
+load("spaces-starlark-sdk/star/checkout.star", "checkout_add_repo")
+load("spaces-starlark-sdk/star/run.star", "run_add_exec")
 
 add_cmake(
     rule_name = "cmake3",
@@ -19,23 +19,24 @@ checkout.add_platform_archive(
     platforms = ninja1_platforms,
 )
 
-add_clone_repo(
+checkout_add_repo(
     "ninja-build",
     url = "https://github.com/ninja-build/ninja",
     rev = "v1.12.1",
+    clone = "Worktree",
 )
 
 # This will add /usr/bin and /bin to the path so you can
 # work in the command line after running `source env`
 spaces_working_env()
 
-add_exec(
+run_add_exec(
     "configure",
     command = "cmake",
     args = ["-Bbuild", "-Sninja-build", "-Wno-dev", "-GNinja"],
 )
 
-add_exec(
+run_add_exec(
     "build",
     deps = ["configure"],
     command = "cmake",
