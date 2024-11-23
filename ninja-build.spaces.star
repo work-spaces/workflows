@@ -4,8 +4,10 @@ Building Ninja using Spaces
 
 load("spaces-starlark-sdk/packages/github.com/Kitware/CMake/v3.30.5.star", cmake3_platforms = "platforms")
 load("spaces-starlark-sdk/packages/github.com/ninja-build/ninja/v1.12.1.star", ninja1_platforms = "platforms")
+load("spaces-starlark-sdk/packages/github.com/cli/cli/v2.62.0.star", gh2_platforms = "platforms")
+load("spaces-starlark-sdk/star/gh.star", "add_publish_archive")
 load("spaces-starlark-sdk/star/cmake.star", "add_cmake")
-load("spaces-starlark-sdk/star/checkout.star", "checkout_add_repo", "checkout_update_env")
+load("spaces-starlark-sdk/star/checkout.star", "checkout_add_repo", "checkout_update_env", "checkout_add_platform_archive")
 load("spaces-starlark-sdk/star/run.star", "run_add_exec")
 
 add_cmake(
@@ -13,9 +15,14 @@ add_cmake(
     platforms = cmake3_platforms,
 )
 
-checkout.add_platform_archive(
-    rule = {"name": "ninja1"},
+checkout_add_platform_archive(
+    "ninja1",
     platforms = ninja1_platforms,
+)
+
+checkout_add_platform_archive(
+    "gh2",
+    platforms = gh2_platforms,
 )
 
 checkout_add_repo(
@@ -25,22 +32,18 @@ checkout_add_repo(
     clone = "Worktree",
 )
 
+workspace = info.get_absolute_path_to_workspace()
+
 # This will add /usr/bin and /bin to the path so you can
 # work in the command line after running `source env`
-#spaces_working_env()
 checkout_update_env(
     "update_env",
     paths = ["/usr/bin", "/bin"],
     vars = {
-        "SPACES_WORKSPACE": info.get_absolute_path_to_workspace(),
+        "SPACES_WORKSPACE": workspace,
     }
 )
 
-workspace = info.get_absolute_path_to_workspace()
-
-run_env = {
-#    "PATH": "{}/sysroot/bin:/usr/bin:/bin".format(workspace),
-}
 
 run_add_exec(
     "configure",
@@ -51,8 +54,7 @@ run_add_exec(
         "-Wno-dev",
         "-GNinja",
         "-DCMAKE_INSTALL_PREFIX={}/build/install".format(workspace),
-    ],
-    env = run_env,
+    ]
 )
 
 run_add_exec(
@@ -60,7 +62,6 @@ run_add_exec(
     deps = ["configure"],
     command = "cmake",
     args = ["--build", "build"],
-    env = run_env,
 )
 
 run_add_exec(
@@ -68,5 +69,13 @@ run_add_exec(
     deps = ["build"],
     command = "ninja",
     args = ["-Cbuild", "install"],
-    env = run_env,
 )
+
+
+add_publish_archive(
+    name = "ninja",
+    input = "{}/build/install".format(workspace),
+    version = "1.12.1",
+    deploy_repo = "https://github.com/work-spaces/tools",
+    deps = ["install"])
+
