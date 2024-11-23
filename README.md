@@ -11,6 +11,6 @@ spaces checkout --spaces-starlark-sdk --script=workflows/llvm-sdk --name=llvm-bu
 cd llvm-build-test
 spaces run
 
-# To get in the ENV and run commands manually
+# To get into the ENV and run commands manually
 source env
 ```

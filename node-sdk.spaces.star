@@ -6,9 +6,10 @@ uses https://github.com/astral-sh/uv for python binary and package management.
 
 load("spaces-starlark-sdk/star/spaces-env.star", "spaces_working_env")
 load("spaces-starlark-sdk/packages/nodejs.org/node/nodejs/v23.3.0.star", node_platforms = "platforms")
+load("spaces-starlark-sdk/star/checkout.star", "checkout_add_platform_archive")
 
-checkout.add_platform_archive(
-    rule = {"name": "nodejs23"},
+checkout_add_platform_archive(
+    "nodejs23",
     platforms = node_platforms,
 )
 

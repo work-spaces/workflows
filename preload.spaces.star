@@ -7,8 +7,8 @@ The spaces-starlark-sdk can be preloaded using: `--spaces-starlark-sdk`.
 git clone https://github.com/work-spaces/workflows
 
 spaces checkout --spaces-starlark-sdk --script=workflows/conan-sdk --name=conan-quick-test
-# is equivalent to
-spaces checkout --script=workflows/preload.spaces.star --script=workflows/conan-sdk --name=conan-quick-test
+# is equivalent to (this allows locking the version of the sdk)
+spaces checkout --script=workflows/preload --script=workflows/conan-sdk --name=conan-quick-test
 ```
 
 This file serves as an example of how to preload a custom spaces starlark SDK.

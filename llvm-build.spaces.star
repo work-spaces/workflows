@@ -8,6 +8,8 @@ load("spaces-starlark-sdk/star/cmake.star", "add_cmake")
 
 load("spaces-starlark-sdk/packages/github.com/ninja-build/ninja/v1.12.1.star", ninja1_platforms = "platforms")
 
+info.set_minimum_version("0.10.3")
+
 add_cmake(
     rule_name = "cmake3",
     platforms = cmake3_platforms)

@@ -44,7 +44,6 @@ checkout_update_env(
     }
 )
 
-
 run_add_exec(
     "configure",
     command = "cmake",

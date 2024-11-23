@@ -6,6 +6,7 @@ uses https://github.com/astral-sh/uv for python binary and package management.
 
 load("spaces-starlark-sdk/star/spaces-env.star", "spaces_working_env")
 load("spaces-starlark-sdk/packages/github.com/astral-sh/uv/0.4.29.star", uv_platforms = "platforms")
+load("spaces-starlark-sdk/packages/github.com/astral-sh/ruff/0.8.0.star", ruff_platforms = "platforms")
 load("spaces-starlark-sdk/star/python.star", "add_uv_python")
 
 add_uv_python(
