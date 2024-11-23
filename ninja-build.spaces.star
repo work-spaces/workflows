@@ -2,11 +2,10 @@
 Building Ninja using Spaces
 """
 
-load("spaces-starlark-sdk/star/spaces-env.star", "spaces_working_env")
 load("spaces-starlark-sdk/packages/github.com/Kitware/CMake/v3.30.5.star", cmake3_platforms = "platforms")
 load("spaces-starlark-sdk/packages/github.com/ninja-build/ninja/v1.12.1.star", ninja1_platforms = "platforms")
 load("spaces-starlark-sdk/star/cmake.star", "add_cmake")
-load("spaces-starlark-sdk/star/checkout.star", "checkout_add_repo")
+load("spaces-starlark-sdk/star/checkout.star", "checkout_add_repo", "checkout_update_env")
 load("spaces-starlark-sdk/star/run.star", "run_add_exec")
 
 add_cmake(
@@ -28,7 +27,14 @@ checkout_add_repo(
 
 # This will add /usr/bin and /bin to the path so you can
 # work in the command line after running `source env`
-spaces_working_env()
+#spaces_working_env()
+checkout_update_env(
+    "update_env",
+    paths = ["/usr/bin", "/bin"],
+    vars = {
+        "SPACES_WORKSPACE": info.get_absolute_path_to_workspace(),
+    }
+)
 
 workspace = info.get_absolute_path_to_workspace()
 
