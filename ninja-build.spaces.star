@@ -29,16 +29,17 @@ checkout_add_repo(
 # work in the command line after running `source env`
 #spaces_working_env()
 
-
 workspace = info.get_absolute_path_to_workspace()
+
+run_env = {
+    "PATH": "{}/sysroot/bin:/usr/bin:/bin".format(workspace),
+}
 
 run_add_exec(
     "configure",
     command = "cmake",
     args = ["-Bbuild", "-Sninja-build", "-Wno-dev", "-GNinja"],
-    env = {
-        "PATH": "{}/sysroot/bin:/usr/bin:/bin".format(workspace),
-    },
+    env = run_env,
 )
 
 run_add_exec(
@@ -46,4 +47,5 @@ run_add_exec(
     deps = ["configure"],
     command = "cmake",
     args = ["--build", "build"],
+    env = run_env,
 )
