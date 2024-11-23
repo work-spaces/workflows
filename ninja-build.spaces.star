@@ -9,15 +9,15 @@ load("spaces-starlark-sdk/star/cmake.star", "add_cmake")
 load("spaces-starlark-sdk/star/checkout.star", "checkout_add_repo")
 load("spaces-starlark-sdk/star/run.star", "run_add_exec")
 
-#add_cmake(
-#    rule_name = "cmake3",
-#    platforms = cmake3_platforms,
-#)
+add_cmake(
+    rule_name = "cmake3",
+    platforms = cmake3_platforms,
+)
 
-#checkout.add_platform_archive(
-#    rule = {"name": "ninja1"},
-#    platforms = ninja1_platforms,
-#)
+checkout.add_platform_archive(
+    rule = {"name": "ninja1"},
+    platforms = ninja1_platforms,
+)
 
 checkout_add_repo(
     "ninja-build",
