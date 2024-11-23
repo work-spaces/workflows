@@ -28,7 +28,7 @@ checkout_add_repo(
 
 # This will add /usr/bin and /bin to the path so you can
 # work in the command line after running `source env`
-spaces_working_env()
+#spaces_working_env()
 
 #run_add_exec(
 #    "configure",
