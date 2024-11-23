@@ -2,6 +2,7 @@
 Building Ninja using Spaces
 """
 
+load("spaces-starlark-sdk/star/spaces-env.star", "spaces_working_env")
 load("spaces-starlark-sdk/packages/github.com/Kitware/CMake/v3.30.5.star", cmake3_platforms = "platforms")
 load("spaces-starlark-sdk/packages/github.com/ninja-build/ninja/v1.12.1.star", ninja1_platforms = "platforms")
 load("spaces-starlark-sdk/star/cmake.star", "add_cmake")
@@ -27,18 +28,24 @@ checkout_add_repo(
 
 # This will add /usr/bin and /bin to the path so you can
 # work in the command line after running `source env`
-#spaces_working_env()
+spaces_working_env()
 
 workspace = info.get_absolute_path_to_workspace()
 
 run_env = {
-    "PATH": "{}/sysroot/bin:/usr/bin:/bin".format(workspace),
+#    "PATH": "{}/sysroot/bin:/usr/bin:/bin".format(workspace),
 }
 
 run_add_exec(
     "configure",
     command = "cmake",
-    args = ["-Bbuild", "-Sninja-build", "-Wno-dev", "-GNinja"],
+    args = [
+        "-Bbuild",
+        "-Sninja-build",
+        "-Wno-dev",
+        "-GNinja",
+        "-DCMAKE_INSTALL_PREFIX={}/build/install".format(workspace),
+    ],
     env = run_env,
 )
 
@@ -47,5 +54,13 @@ run_add_exec(
     deps = ["configure"],
     command = "cmake",
     args = ["--build", "build"],
+    env = run_env,
+)
+
+run_add_exec(
+    "install",
+    deps = ["build"],
+    command = "ninja",
+    args = ["-Cbuild", "install"],
     env = run_env,
 )
