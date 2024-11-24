@@ -12,6 +12,7 @@ load("spaces-starlark-sdk/star/python.star", "add_uv_python")
 add_uv_python(
     rule_name = "python3",
     uv_platforms = uv_platforms,
+    ruff_platforms = ruff_platforms,
     python_version = "3.11",
     packages = ["numpy", "cmake-format"])
 
