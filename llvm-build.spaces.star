@@ -25,7 +25,7 @@ load(
     "checkout_update_env",
 )
 load("//spaces-starlark-sdk/packages/github.com/ninja-build/ninja/v1.12.1.star", ninja1_platforms = "platforms")
-load("llvm-config.star", llvm_sha256 = "sha256", llvm_version = "version")
+load("//llvm-config.star", llvm_sha256 = "sha256", llvm_version = "version")
 
 info.set_minimum_version("0.10.3")
 
