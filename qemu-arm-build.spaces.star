@@ -17,7 +17,7 @@ load(
 )
 load("//spaces-starlark-sdk/star/run.star", "run_add_exec")
 
-info.set_minimum_version("0.10.3")
+info.set_minimum_version("0.11.2")
 
 checkout_add_platform_archive(
     "ninja1",
@@ -42,18 +42,20 @@ add_uv_python(
     packages = ["meson"],
 )
 
+clone_type = "Shallow" if info.is_ci() else "Worktree"
+
 checkout_add_repo(
     "glib",
     url = "https://github.com/GNOME/glib",
     rev = "2.82.2",
-    clone = "Worktree",
+    clone = clone_type,
 )
 
 checkout_add_repo(
     "pixman",
     url = "https://gitlab.freedesktop.org/pixman/pixman",
     rev = "pixman-0.43.4",
-    clone = "Worktree",
+    clone = clone_type,
 )
 
 qemu_version = "7.2.9"
@@ -62,7 +64,7 @@ checkout_add_repo(
     "qemu",
     url = "https://github.com/qemu/qemu",
     rev = "v{}".format(qemu_version),
-    clone = "Worktree",
+    clone = clone_type,
 )
 
 checkout_update_env(
