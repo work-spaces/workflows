@@ -15,6 +15,8 @@ load(
 )
 load("//spaces-starlark-sdk/star/run.star", "run_add_exec")
 
+info.set_minimum_version("0.11.2")
+
 add_cmake(
     rule_name = "cmake3",
     platforms = cmake3_platforms,

@@ -210,6 +210,7 @@ def add_copy_libs():
         run_add_exec(
             "copy_{}".format(lib["name"]),
             deps = ["pixman_install", "glib_install"],
+            platforms = ["macos-x86_64", "macos-aarch64"],
             command = "cp",
             args = ["-f", lib["path"], "build/install/lib/"],
         )
