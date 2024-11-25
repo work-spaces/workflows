@@ -84,8 +84,6 @@ def get_sdk_root():
 
         sdk_root = xcrun["stdout"].strip("\n")
         return sdk_root
-
-    run.abort("Unsupported platform: {}".format(info.get_platform()))
     return ""
 
 env_sdk_root = get_sdk_root()
