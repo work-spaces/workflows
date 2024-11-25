@@ -6,13 +6,13 @@ load("//spaces-starlark-sdk/packages/github.com/ninja-build/ninja/v1.12.1.star",
 load("//spaces-starlark-sdk/packages/github.com/astral-sh/uv/0.4.29.star", uv_platforms = "platforms")
 load("//spaces-starlark-sdk/packages/github.com/astral-sh/ruff/0.8.0.star", ruff_platforms = "platforms")
 load("//spaces-starlark-sdk/packages/github.com/cli/cli/v2.62.0.star", gh2_platforms = "platforms")
+load("//spaces-starlark-sdk/packages/github.com/xpack-dev-tools/pkg-config-xpack/v0.29.2-3.star", pkg_config0 = "platforms")
 load("//spaces-starlark-sdk/star/python.star", "add_uv_python")
 load("//spaces-starlark-sdk/star/gh.star", "add_publish_archive")
 load(
     "//spaces-starlark-sdk/star/checkout.star",
     "checkout_add_platform_archive",
     "checkout_add_repo",
-    "checkout_add_which_asset",
     "checkout_update_env",
 )
 load("//spaces-starlark-sdk/star/run.star", "run_add_exec")
@@ -29,18 +29,17 @@ checkout_add_platform_archive(
     platforms = gh2_platforms,
 )
 
+checkout_add_platform_archive(
+    "pkg_config0",
+    platforms = pkg_config0,
+)
+
 add_uv_python(
     rule_name = "python3",
     uv_platforms = uv_platforms,
     ruff_platforms = ruff_platforms,
     python_version = "3.11",
     packages = ["meson"],
-)
-
-checkout_add_which_asset(
-    "which_pkg_config",
-    which = "pkg-config",
-    destination = "sysroot/bin/pkg-config",
 )
 
 checkout_add_repo(
