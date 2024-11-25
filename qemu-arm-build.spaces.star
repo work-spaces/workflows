@@ -65,28 +65,6 @@ checkout_add_repo(
     clone = "Worktree",
 )
 
-def get_sdk_root():
-    """
-    Grab environment variables for QEMU build.
-
-    Returns:
-        dict: Environment variables for QEMU build.
-    """
-    if info.is_platform_macos():
-        xcrun = process.exec(exec = {
-            "command": "xcrun",
-            "args": ["--show-sdk-path"],
-        })
-
-        if xcrun["status"] != 0:
-            run.abort("Failed to get Xcode SDK path with xcrun: {}".format(xcrun["stderr"]))
-
-        sdk_root = xcrun["stdout"].strip("\n")
-        return sdk_root
-    return ""
-
-env_sdk_root = get_sdk_root()
-
 checkout_update_env(
     "system_env",
     paths = ["/usr/bin", "/bin"],
