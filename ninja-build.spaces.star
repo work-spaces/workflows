@@ -2,13 +2,18 @@
 Building Ninja using Spaces
 """
 
-load("spaces-starlark-sdk/packages/github.com/Kitware/CMake/v3.30.5.star", cmake3_platforms = "platforms")
-load("spaces-starlark-sdk/packages/github.com/ninja-build/ninja/v1.12.1.star", ninja1_platforms = "platforms")
-load("spaces-starlark-sdk/packages/github.com/cli/cli/v2.62.0.star", gh2_platforms = "platforms")
-load("spaces-starlark-sdk/star/gh.star", "add_publish_archive")
-load("spaces-starlark-sdk/star/cmake.star", "add_cmake")
-load("spaces-starlark-sdk/star/checkout.star", "checkout_add_repo", "checkout_update_env", "checkout_add_platform_archive")
-load("spaces-starlark-sdk/star/run.star", "run_add_exec")
+load("//spaces-starlark-sdk/packages/github.com/Kitware/CMake/v3.30.5.star", cmake3_platforms = "platforms")
+load("//spaces-starlark-sdk/packages/github.com/ninja-build/ninja/v1.12.1.star", ninja1_platforms = "platforms")
+load("//spaces-starlark-sdk/packages/github.com/cli/cli/v2.62.0.star", gh2_platforms = "platforms")
+load("//spaces-starlark-sdk/star/gh.star", "add_publish_archive")
+load("//spaces-starlark-sdk/star/cmake.star", "add_cmake")
+load(
+    "//spaces-starlark-sdk/star/checkout.star",
+    "checkout_add_platform_archive",
+    "checkout_add_repo",
+    "checkout_update_env",
+)
+load("//spaces-starlark-sdk/star/run.star", "run_add_exec")
 
 add_cmake(
     rule_name = "cmake3",
@@ -41,7 +46,7 @@ checkout_update_env(
     paths = ["/usr/bin", "/bin"],
     vars = {
         "SPACES_WORKSPACE": workspace,
-    }
+    },
 )
 
 run_add_exec(
@@ -53,7 +58,7 @@ run_add_exec(
         "-Wno-dev",
         "-GNinja",
         "-DCMAKE_INSTALL_PREFIX={}/build/install".format(workspace),
-    ]
+    ],
 )
 
 run_add_exec(
@@ -70,11 +75,11 @@ run_add_exec(
     args = ["-Cbuild", "install"],
 )
 
-
 add_publish_archive(
     name = "ninja",
-    input = "{}/build/install".format(workspace),
+    input = "build/install",
     version = "1.12.1",
     deploy_repo = "https://github.com/work-spaces/tools",
-    deps = ["install"])
-
+    deps = ["install"],
+    suffix = "tar.gz",
+)

@@ -10,21 +10,21 @@ spaces checkout --script=workflows/preload --script=workflows/llvm17-config --sc
 
 """
 
-load("spaces-starlark-sdk/packages/github.com/Kitware/CMake/v3.30.5.star", cmake3_platforms = "platforms")
-load("spaces-starlark-sdk/star/cmake.star", "add_cmake")
-load("spaces-starlark-sdk/star/run.star", "run_add_exec")
-load("spaces-starlark-sdk/packages/github.com/cli/cli/v2.62.0.star", gh2_platforms = "platforms")
-load("spaces-starlark-sdk/star/gh.star", "add_publish_archive")
-load("spaces-starlark-sdk/packages/github.com/astral-sh/uv/0.4.29.star", uv_platforms = "platforms")
-load("spaces-starlark-sdk/packages/github.com/astral-sh/ruff/0.8.0.star", ruff_platforms = "platforms")
-load("spaces-starlark-sdk/star/python.star", "add_uv_python")
+load("//spaces-starlark-sdk/packages/github.com/Kitware/CMake/v3.30.5.star", cmake3_platforms = "platforms")
+load("//spaces-starlark-sdk/star/cmake.star", "add_cmake")
+load("//spaces-starlark-sdk/star/run.star", "run_add_exec")
+load("//spaces-starlark-sdk/packages/github.com/cli/cli/v2.62.0.star", gh2_platforms = "platforms")
+load("//spaces-starlark-sdk/star/gh.star", "add_publish_archive")
+load("//spaces-starlark-sdk/packages/github.com/astral-sh/uv/0.4.29.star", uv_platforms = "platforms")
+load("//spaces-starlark-sdk/packages/github.com/astral-sh/ruff/0.8.0.star", ruff_platforms = "platforms")
+load("//spaces-starlark-sdk/star/python.star", "add_uv_python")
 load(
-    "spaces-starlark-sdk/star/checkout.star",
+    "//spaces-starlark-sdk/star/checkout.star",
     "checkout_add_archive",
     "checkout_add_platform_archive",
     "checkout_update_env",
 )
-load("spaces-starlark-sdk/packages/github.com/ninja-build/ninja/v1.12.1.star", ninja1_platforms = "platforms")
+load("//spaces-starlark-sdk/packages/github.com/ninja-build/ninja/v1.12.1.star", ninja1_platforms = "platforms")
 load("llvm-config.star", llvm_sha256 = "sha256", llvm_version = "version")
 
 info.set_minimum_version("0.10.3")

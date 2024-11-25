@@ -2,14 +2,14 @@
 Checkout llvm, cmake, and ninja for a complete build system and toolchain.
 """
 
-load("spaces-starlark-sdk/star/spaces-env.star", "spaces_working_env")
-load("spaces-starlark-sdk/packages/github.com/llvm/llvm-project/llvmorg-19.1.3.star", llvm19_platforms = "platforms")
-load("spaces-starlark-sdk/star/llvm.star", "add_llvm")
-load("spaces-starlark-sdk/packages/github.com/Kitware/CMake/v3.30.5.star", cmake3_platforms = "platforms")
-load("spaces-starlark-sdk/star/cmake.star", "add_cmake")
-load("spaces-starlark-sdk/packages/github.com/ninja-build/ninja/v1.12.1.star", ninja1_platforms = "platforms")
-load("spaces-starlark-sdk/star/checkout.star", "checkout_add_asset", "checkout_add_platform_archive")
-load("spaces-starlark-sdk/star/run.star", "run_add_exec")
+load("//spaces-starlark-sdk/star/spaces-env.star", "spaces_working_env")
+load("//spaces-starlark-sdk/packages/github.com/llvm/llvm-project/llvmorg-19.1.3.star", llvm19_platforms = "platforms")
+load("//spaces-starlark-sdk/star/llvm.star", "add_llvm")
+load("//spaces-starlark-sdk/packages/github.com/Kitware/CMake/v3.30.5.star", cmake3_platforms = "platforms")
+load("//spaces-starlark-sdk/star/cmake.star", "add_cmake")
+load("//spaces-starlark-sdk/packages/github.com/ninja-build/ninja/v1.12.1.star", ninja1_platforms = "platforms")
+load("//spaces-starlark-sdk/star/checkout.star", "checkout_add_asset", "checkout_add_platform_archive")
+load("//spaces-starlark-sdk/star/run.star", "run_add_exec")
 
 info.set_minimum_version("0.10.3")
 
