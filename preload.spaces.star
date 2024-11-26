@@ -16,7 +16,7 @@ checkout.add_repo(
     rule = {"name": "spaces-starlark-sdk"},
     repo = {
         "url": "https://github.com/work-spaces/spaces-starlark-sdk",
-        "rev": "3a96b4085ae6d9aed55c53491fc0f25f973c2fd2",
+        "rev": "842e685de4e7a6aa4926369f7a5df6c179aae076",
         "checkout": "Revision",
         "clone": "Worktree"
     }
