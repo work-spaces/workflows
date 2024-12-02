@@ -10,42 +10,38 @@ spaces checkout --script=workflows/preload --script=workflows/llvm17-config --sc
 
 """
 
-load("//spaces-starlark-sdk/packages/github.com/Kitware/CMake/v3.30.5.star", cmake3_platforms = "platforms")
-load("//spaces-starlark-sdk/star/cmake.star", "add_cmake")
-load("//spaces-starlark-sdk/star/run.star", "run_add_exec")
-load("//spaces-starlark-sdk/packages/github.com/cli/cli/v2.62.0.star", gh2_platforms = "platforms")
-load("//spaces-starlark-sdk/star/gh.star", "add_publish_archive")
-load("//spaces-starlark-sdk/packages/github.com/astral-sh/uv/0.4.29.star", uv_platforms = "platforms")
-load("//spaces-starlark-sdk/packages/github.com/astral-sh/ruff/0.8.0.star", ruff_platforms = "platforms")
-load("//spaces-starlark-sdk/star/python.star", "add_uv_python")
+load("//@packages/star/github.com/packages.star", github_packages = "packages")
+load("//@sdk/star/cmake.star", "cmake_add")
+load("//@sdk/star/run.star", "run_add_exec")
+load("//@sdk/star/gh.star", "gh_add_publish_archive")
+load("//@sdk/star/python.star", "python_add_uv")
 load(
-    "//spaces-starlark-sdk/star/checkout.star",
+    "//@sdk/star/checkout.star",
     "checkout_add_archive",
     "checkout_add_platform_archive",
     "checkout_update_env",
 )
-load("//spaces-starlark-sdk/packages/github.com/ninja-build/ninja/v1.12.1.star", ninja1_platforms = "platforms")
 load("//llvm-config.star", llvm_sha256 = "sha256", llvm_version = "version")
 
 info.set_minimum_version("0.10.3")
 
 # CMake is required to build LLVM
-add_cmake(
-    rule_name = "cmake3",
-    platforms = cmake3_platforms,
+cmake_add(
+    "cmake3",
+    version = "v3.30.5",
 )
 
 # Used for publishing
 checkout_add_platform_archive(
     "gh2",
-    platforms = gh2_platforms,
+    platforms = github_packages["cli"]["cli"]["v2.62.0"],
 )
 
 # python with psutil is required for the test suite
-add_uv_python(
-    rule_name = "python3",
-    uv_platforms = uv_platforms,
-    ruff_platforms = ruff_platforms,
+python_add_uv(
+    "python3",
+    uv_version = "0.4.29",
+    ruff_version = "0.8.0",
     python_version = "3.8",
     packages = ["psutil", "numpy"],
 )
@@ -53,7 +49,7 @@ add_uv_python(
 # LLVM could also be built with make but ninja is nicer
 checkout_add_platform_archive(
     "ninja1",
-    platforms = ninja1_platforms,
+    platforms = github_packages["ninja-build"]["ninja"]["v1.12.1"],
 )
 
 checkout_add_archive(
@@ -70,7 +66,6 @@ checkout_update_env(
     "llvm_env_update",
     paths = ["/usr/bin", "/usr/sbin", "/bin"],
 )
-
 
 workspace = info.get_absolute_path_to_workspace()
 
@@ -117,7 +112,7 @@ run_add_exec(
     ],
 )
 
-add_publish_archive(
+gh_add_publish_archive(
     name = "llvm",
     input = "build/install/llvm",
     version = llvm_version,

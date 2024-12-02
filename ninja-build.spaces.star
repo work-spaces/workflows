@@ -2,18 +2,18 @@
 Building Ninja using Spaces
 """
 
-load("//spaces-starlark-sdk/packages/github.com/Kitware/CMake/v3.30.5.star", cmake3_platforms = "platforms")
-load("//spaces-starlark-sdk/packages/github.com/ninja-build/ninja/v1.12.1.star", ninja1_platforms = "platforms")
-load("//spaces-starlark-sdk/packages/github.com/cli/cli/v2.62.0.star", gh2_platforms = "platforms")
-load("//spaces-starlark-sdk/star/gh.star", "add_publish_archive")
-load("//spaces-starlark-sdk/star/cmake.star", "add_cmake")
+load("//@packages/star/github.com/Kitware/CMake/v3.30.5.star", cmake3_platforms = "platforms")
+load("//@packages/star/github.com/ninja-build/ninja/v1.12.1.star", ninja1_platforms = "platforms")
+load("//@packages/star/github.com/cli/cli/v2.62.0.star", gh2_platforms = "platforms")
+load("//@sdk/star/gh.star", "gh_add_publish_archive")
+load("//@sdk/star/cmake.star", "add_cmake")
 load(
-    "//spaces-starlark-sdk/star/checkout.star",
+    "//@sdk/star/checkout.star",
     "checkout_add_platform_archive",
     "checkout_add_repo",
     "checkout_update_env",
 )
-load("//spaces-starlark-sdk/star/run.star", "run_add_exec")
+load("//@sdk/star/run.star", "run_add_exec")
 
 info.set_minimum_version("0.11.2")
 
@@ -54,6 +54,10 @@ checkout_update_env(
 run_add_exec(
     "configure",
     command = "cmake",
+    inputs = [
+        "+ninja-build/**/CMakeLists.txt",
+        "+ninja-build.spaces.star",
+    ],
     args = [
         "-Bbuild",
         "-Sninja-build",
@@ -65,19 +69,28 @@ run_add_exec(
 
 run_add_exec(
     "build",
+    inputs = [
+        "+ninja-build/src/**",
+        "+build/build.ninja",
+        "+ninja-build.spaces.star",
+    ],
     deps = ["configure"],
-    command = "cmake",
-    args = ["--build", "build"],
+    command = "ninja",
+    args = ["-Cbuild"],
 )
 
 run_add_exec(
     "install",
+    inputs = [
+        "+build/ninja",
+        "+ninja-build.spaces.star",
+    ],
     deps = ["build"],
     command = "ninja",
     args = ["-Cbuild", "install"],
 )
 
-add_publish_archive(
+gh_add_publish_archive(
     name = "ninja",
     input = "build/install",
     version = "1.12.1",

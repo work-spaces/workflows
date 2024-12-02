@@ -4,15 +4,13 @@ uses https://github.com/astral-sh/uv for python binary and package management.
 
 """
 
-load("//spaces-starlark-sdk/star/spaces-env.star", "spaces_working_env")
-load("//spaces-starlark-sdk/packages/github.com/astral-sh/uv/0.4.29.star", uv_platforms = "platforms")
-load("//spaces-starlark-sdk/packages/github.com/astral-sh/ruff/0.8.0.star", ruff_platforms = "platforms")
-load("//spaces-starlark-sdk/star/python.star", "add_uv_python")
+load("//@sdk/star/spaces-env.star", "spaces_working_env")
+load("//@sdk/star/python.star", "python_add_uv")
 
-add_uv_python(
-    rule_name = "python3",
-    uv_platforms = uv_platforms,
-    ruff_platforms = ruff_platforms,
+python_add_uv(
+    "python3",
+    uv_version = "0.4.29",
+    ruff_version = "0.8.0",
     python_version = "3.11",
     packages = ["numpy", "cmake-format"])
 

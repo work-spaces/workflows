@@ -5,11 +5,11 @@ This is a work in progress.
 
 """
 
-load("//spaces-starlark-sdk/star/spaces-env.star", "spaces_working_env")
-load("//spaces-starlark-sdk/packages/go.dev/go/go/1.23.3.star", go_platforms = "platforms")
-load("//spaces-starlark-sdk/star/run.star", "run_add_exec")
+load("//@sdk/star/spaces-env.star", "spaces_working_env")
+load("//@packages/star/go.dev/go/go/1.23.3.star", go_platforms = "platforms")
+load("//@sdk/star/run.star", "run_add_exec")
 load(
-    "//spaces-starlark-sdk/star/checkout.star",
+    "//@sdk/star/checkout.star",
     "checkout_add_asset",
     "checkout_add_platform_archive",
 )

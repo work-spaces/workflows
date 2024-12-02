@@ -2,38 +2,35 @@
 This is an example of how to get conan running in your workspace.
 """
 
-load("//spaces-starlark-sdk/star/spaces-env.star", "spaces_working_env")
-load("//spaces-starlark-sdk/packages/github.com/astral-sh/uv/0.5.4.star", uv_platforms = "platforms")
-load("//spaces-starlark-sdk/packages/github.com/astral-sh/ruff/0.8.0.star", ruff_platforms = "platforms")
-load("//spaces-starlark-sdk/star/python.star", "add_uv_python")
-load("//spaces-starlark-sdk/packages/github.com/Kitware/CMake/v3.30.5.star", cmake3_platforms = "platforms")
-load("//spaces-starlark-sdk/star/cmake.star", "add_cmake")
-load("//spaces-starlark-sdk/packages/github.com/ninja-build/ninja/v1.12.1.star", ninja1_platforms = "platforms")
+load("//@sdk/star/spaces-env.star", "spaces_working_env")
+load("//@sdk/star/python.star", "python_add_uv")
+load("//@packages/star/github.com/packages.star", github_packages = "packages")
+load("//@sdk/star/cmake.star", "cmake_add")
 load(
-    "//spaces-starlark-sdk/star/checkout.star",
+    "//@sdk/star/checkout.star",
     "checkout_add_asset",
     "checkout_add_platform_archive",
     "checkout_add_repo",
     "checkout_update_env",
 )
-load("//spaces-starlark-sdk/star/run.star", "run_add_exec")
+load("//@sdk/star/run.star", "run_add_exec")
 
-add_uv_python(
-    rule_name = "python3",
-    uv_platforms = uv_platforms,
-    ruff_platforms = ruff_platforms,
+python_add_uv(
+    "python3",
+    uv_version = "0.5.4",
+    ruff_version = "0.8.0",
     python_version = "3.12",
     packages = ["conan"],
 )
 
-add_cmake(
-    rule_name = "cmake3",
-    platforms = cmake3_platforms,
+cmake_add(
+    "cmake3",
+    version = "v3.30.5",
 )
 
 checkout_add_platform_archive(
     "ninja1",
-    platforms = ninja1_platforms,
+    platforms = github_packages["ninja-build"]["ninja"]["v1.12.1"],
 )
 
 checkout_add_repo(

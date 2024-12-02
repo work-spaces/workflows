@@ -3,9 +3,15 @@ Spaces starlark checkout script to make changes to spaces, printer, and easy-arc
 With VSCode integration
 """
 
-load("//spaces-starlark-sdk/star/spaces-env.star", "spaces_working_env")
-load("//spaces-starlark-sdk/star/rust.star", "add_rust")
-load("//spaces-starlark-sdk/star/sccache.star", "add_sccache")
+load("//@sdk/star/spaces-env.star", "spaces_working_env")
+load(
+    "//@sdk/star/checkout.star",
+    "checkout_add_asset",
+    "checkout_add_repo",
+    "checkout_update_asset",
+)
+load("//@sdk/star/rust.star", "rust_add")
+load("//@sdk/star/sccache.star", "sccache_add")
 
 # Configure the top level workspace
 
@@ -61,12 +67,10 @@ strip = true
 codegen-units = 1
 """
 
-checkout.add_asset(
-    rule = {"name": "workspace.Cargo.toml"},
-    asset = {
-        "destination": "Cargo.toml",
-        "content": cargo_toml_contents,
-    },
+checkout_add_asset(
+    "workspace.Cargo.toml",
+    destination = "Cargo.toml",
+    content = cargo_toml_contents,
 )
 
 developer_md_content = """
@@ -81,25 +85,20 @@ cargo install --path=spaces/crates/spaces --root=$HOME/.local --profile=release
 
 """
 
-checkout.add_asset(
-    rule = {"name": "Developer_md"},
-    asset = {
-        "destination": "Developer.md",
-        "content": developer_md_content,
-    },
+checkout_add_asset(
+    "Developer_md",
+    destination = "Developer.md",
+    content = developer_md_content,
 )
 
-checkout.update_asset(
-    rule = {"name": "cargo_config"},
-    asset = {
-        "destination": ".cargo/config.toml",
-        "format": "toml",
-        "value": {
-            "patch": {
-                "https://github.com/work-spaces/printer-rs": {
-                    "printer": {
-                        "path": "./printer",
-                    },
+checkout_update_asset(
+    "cargo_config",
+    destination = ".cargo/config.toml",
+    value = {
+        "patch": {
+            "https://github.com/work-spaces/printer-rs": {
+                "printer": {
+                    "path": "./printer",
                 },
             },
         },
@@ -110,41 +109,32 @@ checkout.update_asset(
 
 printer_url = "https://github.com/work-spaces/printer-rs"
 easy_archiver_url = "https://github.com/work-spaces/easy-archiver"
-checkout.add_repo(
-    rule = {"name": "spaces"},
-    repo = {
-        "url": "https://github.com/work-spaces/spaces",
-        "rev": "main",
-        "checkout": "Revision",
-    },
+checkout_add_repo(
+    "spaces",
+    url = "https://github.com/work-spaces/spaces",
+    rev = "main",
 )
 
-checkout.add_repo(
-    rule = {"name": "printer"},
-    repo = {
-        "url": printer_url,
-        "rev": "main",
-        "checkout": "Revision",
-    },
+checkout_add_repo(
+    "printer",
+    url = printer_url,
+    rev = "main",
 )
 
-checkout.add_repo(
-    rule = {"name": "easy-archiver"},
-    repo = {
-        "url": easy_archiver_url,
-        "rev": "main",
-        "checkout": "Revision",
-    },
+checkout_add_repo(
+    "easy-archiver",
+    url = easy_archiver_url,
+    rev = "main",
 )
 
-add_rust(
-    rule_name = "rust_toolchain",
-    toolchain_version = "1.80",
+rust_add(
+    "rust_toolchain",
+    version = "1.80",
 )
 
-add_sccache(
-    rule_name = "sccache",
-    sccache_version = "0.8",
+sccache_add(
+    "sccache",
+    version = "0.8",
 )
 
 cargo_vscode_task = {
@@ -153,30 +143,27 @@ cargo_vscode_task = {
     "group": "build",
 }
 
-checkout.update_asset(
-    rule = {"name": "vscode_tasks"},
-    asset = {
-        "destination": ".vscode/tasks.json",
-        "format": "json",
-        "value": {
-            "tasks": [
-                cargo_vscode_task | {
-                    "command": "build",
-                    "args": ["--manifest-path=spaces/Cargo.toml"],
-                    "label": "build:spaces",
-                },
-                cargo_vscode_task | {
-                    "command": "install",
-                    "args": ["--path=spaces/crates/spaces", "--root=${userHome}/.local", "--profile=dev"],
-                    "label": "install_dev:spaces",
-                },
-                cargo_vscode_task | {
-                    "command": "install",
-                    "args": ["--path=spaces/crates/spaces", "--root=${userHome}/.local", "--profile=release"],
-                    "label": "install:spaces",
-                },
-            ],
-        },
+checkout_update_asset(
+    "vscode_tasks",
+    destination = ".vscode/tasks.json",
+    value = {
+        "tasks": [
+            cargo_vscode_task | {
+                "command": "build",
+                "args": ["--manifest-path=spaces/Cargo.toml"],
+                "label": "build:spaces",
+            },
+            cargo_vscode_task | {
+                "command": "install",
+                "args": ["--path=spaces/crates/spaces", "--root=${userHome}/.local", "--profile=dev"],
+                "label": "install_dev:spaces",
+            },
+            cargo_vscode_task | {
+                "command": "install",
+                "args": ["--path=spaces/crates/spaces", "--root=${userHome}/.local", "--profile=release"],
+                "label": "install:spaces",
+            },
+        ],
     },
 )
 
