@@ -14,7 +14,7 @@ load(
 checkout_add_repo(
     "@capsules/workflows",
     url = "https://github.com/work-spaces/workflows",
-    rev = "0fe1d1b89d0ba0c08a56da0738db869345d29be8",
+    rev = "50be0b119cae6b7178d2bfe404fc4d49b3c04d36",
     clone = "Default",
     is_evaluate_spaces_modules = False
 )

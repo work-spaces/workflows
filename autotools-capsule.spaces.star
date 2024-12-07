@@ -1,9 +1,8 @@
 """
 
-Build Autotools
+Define autotools as a capsule
 
 Still a WIP.
-
 
 """
 
@@ -16,44 +15,50 @@ load("//@sdk/star/gnu-autotools.star", "gnu_add_autotools_from_source")
 
 def capsule_get_install_path(name):
     """
-    Get the install path for the capsule
+    Check if the capsule is required to be checked out and run
 
     Args:
         name: The name of the capsule
 
     Returns:
-        The install path for the capsule
+        True if the capsule is required to be checked out and run, False otherwise
     """
-    digest_key = "SPACES_WORKSPACE_DIGEST"
-    if info.is_env_var_set(digest_key):
-        store = info.get_path_to_store()
-        digest = info.get_env_var(digest_key)
-        return "{}/capules/{}/{}".format(store, name, digest)
-    return "build/install"
+    digest = info.get_workspace_digest()
+    install_path = "{}/capules/{}/{}".format(store, name, digest)
+    if fs.exists(install_path):
+        return None
+    return install_path
+
+install_path = capsule_get_install_path("autotools")
 
 autoconf_version = "2.72"
 automake_version = "1.17"
 libtool_version = "2.5.4"
 
-workspace = info.get_absolute_path_to_workspace()
-install_path = "{}/build/install".format(workspace)
+def add_autotools_checkout_and_run():
+    """
+    Add the autotools checkout and run if the install path does not exist
+    """
+    install_path = capsule_get_install_path("autotools")
+    if install_path != None:
+        digest = info.get_workspace_digest()
+        install_path = "{}/capules/autotools/{}".format(store, digest)
+        gnu_add_autotools_from_source(
+            "autotools",
+            autoconf_version,
+            automake_version,
+            libtool_version,
+            install_path = install_path,
+        )
 
-script.print("install_path: {}".format(capsule_get_install_path("autotools")))
-
-gnu_add_autotools_from_source(
-    "autotools",
-    autoconf_version,
-    automake_version,
-    libtool_version,
-    install_path = install_path,
-)
+add_autotools_checkout_and_run()
 
 checkout_update_asset(
     "libtool_capsule",
-    destination = "capsules.json",
+    destination = "capsules.spaces.json",
     value = {
         "capsules": [{
-            "rule": "autotools_libtool",
+            "rule": "autotools-capsule:autotools_libtool",
             "domain": "ftp.gnu.org",
             "owner": "libtool",
             "repo": "libtool",
@@ -65,14 +70,29 @@ checkout_update_asset(
 
 checkout_update_asset(
     "automake_capsule",
-    destination = "capsules.json",
+    destination = "capsules.spaces.json",
     value = {
         "capsules": [{
-            "rule": "autotools_libtool",
+            "rule": "autotools-capsule:autotools_automake",
             "domain": "ftp.gnu.org",
             "owner": "automake",
             "repo": "automake",
             "version": automake_version,
+            "is_relocatable": False,
+        }],
+    },
+)
+
+checkout_update_asset(
+    "automake_capsule",
+    destination = "capsules.spaces.json",
+    value = {
+        "capsules": [{
+            "rule": "autotools-capsule:autotools_autoconf",
+            "domain": "ftp.gnu.org",
+            "owner": "autoconf",
+            "repo": "autoconf",
+            "version": autoconf_version,
             "is_relocatable": False,
         }],
     },
