@@ -49,8 +49,8 @@ def capsule_get_prefix(name):
     digest = info.get_workspace_digest()
     return "{}/capules/{}/{}".format(store, name, digest)
 
-autoconf_version = "2.72"
-automake_version = "1.17"
+autoconf_version = "2.72.0"
+automake_version = "1.17.0"
 libtool_version = "2.5.4"
 
 def add_autotools_checkout_and_run():
