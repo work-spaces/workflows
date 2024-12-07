@@ -15,6 +15,8 @@ load("//@sdk/star/run.star", "run_add_target")
 load("//@sdk/star/gnu-autotools.star", "gnu_add_autotools_from_source")
 
 capsule_name = "autotools"
+capsule_rule_prefix = format("{}-capsule".format(capsule_name))
+workspace = info.get_absulute_path_to_workspace()
 
 def capsule_get_install_path(name):
     """
@@ -32,6 +34,20 @@ def capsule_get_install_path(name):
     if fs.exists(install_path):
         return None
     return install_path
+
+def capsule_get_prefix(name):
+    """
+    Get the prefix of the capsule
+
+    Args:
+        name: The name of the capsule
+
+    Returns:
+        The prefix of the capsule
+    """
+    store = info.get_path_to_store()
+    digest = info.get_workspace_digest()
+    return "{}/capules/{}/{}".format(store, name, digest)
 
 autoconf_version = "2.72"
 automake_version = "1.17"
@@ -66,16 +82,25 @@ def add_autotools_checkout_and_run():
 
 add_autotools_checkout_and_run()
 
+prefix = capsule_get_prefix(capsule_name)
+
+descriptor_base = {
+    "domain": "ftp.gnu.org",
+    "owner": "libtool",
+}
+
 checkout_update_asset(
     "libtool_capsule",
     destination = "capsules.spaces.json",
     value = [{
-        "rule": "autotools_libtool",
-        "domain": "ftp.gnu.org",
-        "owner": "libtool",
-        "repo": "libtool",
+        "rule": "{}:autotools_libtool".format(capsule_rule_prefix),
+        "desriptor": descriptor_base | {
+            "repo": "libtool",
+        },
         "version": libtool_version,
         "is_relocatable": False,
+        "prefix": prefix,
+        "workspace": workspace
     }],
 )
 
@@ -83,12 +108,14 @@ checkout_update_asset(
     "automake_capsule",
     destination = "capsules.spaces.json",
     value = [{
-        "rule": "autotools_automake",
-        "domain": "ftp.gnu.org",
-        "owner": "automake",
-        "repo": "automake",
+        "rule": "{}:autotools_automake".format(capsule_rule_prefix),
+        "desriptor": descriptor_base | {
+            "repo": "automake",
+        },
         "version": automake_version,
         "is_relocatable": False,
+        "prefix": prefix,
+        "workspace": workspace
     }],
 )
 
@@ -96,12 +123,14 @@ checkout_update_asset(
     "automake_capsule",
     destination = "capsules.spaces.json",
     value = [{
-        "rule": "autotools_autoconf",
-        "domain": "ftp.gnu.org",
-        "owner": "autoconf",
-        "repo": "autoconf",
+        "rule": "{}:autotools_autoconf".format(capsule_rule_prefix),
+        "desriptor": descriptor_base | {
+            "repo": "autoconf",
+        },
         "version": autoconf_version,
         "is_relocatable": False,
+        "prefix": prefix,
+        "workspace": workspace
     }],
 )
 

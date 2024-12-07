@@ -8,31 +8,46 @@ load(
     "//@sdk/star/checkout.star",
     "checkout_add_repo",
     "checkout_update_env",
-    "checkout_add_which_asset"
 )
 
 checkout_add_repo(
     "@capsules/workflows",
     url = "https://github.com/work-spaces/workflows",
-    rev = "42ab382f16fac55af853700cb5f367410eed76a5",
+    rev = "185912043f129d38e6ba3327010e2c82f1974a37",
     clone = "Default",
-    is_evaluate_spaces_modules = False
+    is_evaluate_spaces_modules = False,
 )
+
+descriptor_base = {
+    "domain": "ftp.gnu.org",
+    "owner": "libtool",
+}
 
 checkout.add_capsule(
     rule = {"name": "autotools_capsule", "deps": ["@capsules/workflows"]},
     capsule = {
         "required": [
             {
-                "name": "libtool",
+                "descriptor": descriptor_base | {
+                    "repo": "libtool",
+                },
                 "semver": "2",
                 "dependency_type": "Build",
             },
             {
-                "name": "automake",
+                "descriptor": descriptor_base | {
+                    "repo": "automake",
+                },
                 "semver": "1",
                 "dependency_type": "Build",
-            }
+            },
+            {
+                "descriptor": descriptor_base | {
+                    "repo": "autoconf",
+                },
+                "semver": ">=2.65",
+                "dependency_type": "Build",
+            },
         ],
         "scripts": ["workflows/preload.spaces.star", "workflows/autotools-capsule.spaces.star"],
         "name": "autotools-capsule",
