@@ -13,14 +13,13 @@ load(
 checkout_add_repo(
     "@capsules/workflows",
     url = "https://github.com/work-spaces/workflows",
-    rev = "6090779139d4be71fbb3e93cdaa681b0a8e775ae",
+    rev = "383862d6b8c21ae239fff31b9d9f4385948aeb52",
     clone = "Default",
     is_evaluate_spaces_modules = False,
 )
 
 descriptor_base = {
     "domain": "ftp.gnu.org",
-    "owner": "libtool",
 }
 
 checkout.add_capsule(
@@ -29,6 +28,7 @@ checkout.add_capsule(
         "required": [
             {
                 "descriptor": descriptor_base | {
+                    "owner": "libtool",
                     "repo": "libtool",
                 },
                 "semver": "2",
@@ -36,14 +36,16 @@ checkout.add_capsule(
             },
             {
                 "descriptor": descriptor_base | {
-                    "repo": "automake",
+                    "owner": "automake",
+    "repo": "automake",
                 },
                 "semver": "1",
                 "dependency_type": "Build",
             },
             {
                 "descriptor": descriptor_base | {
-                    "repo": "autoconf",
+                     "owner": "autoconf",
+   "repo": "autoconf",
                 },
                 "semver": ">=2.65",
                 "dependency_type": "Build",

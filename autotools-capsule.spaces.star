@@ -86,7 +86,6 @@ prefix = capsule_get_prefix(capsule_name)
 
 descriptor_base = {
     "domain": "ftp.gnu.org",
-    "owner": "libtool",
 }
 
 checkout_update_asset(
@@ -95,12 +94,13 @@ checkout_update_asset(
     value = [{
         "rule": "{}:autotools_libtool".format(capsule_rule_prefix),
         "descriptor": descriptor_base | {
+            "owner": "libtool",
             "repo": "libtool",
         },
         "version": libtool_version,
         "is_relocatable": False,
         "prefix": prefix,
-        "workspace": workspace
+        "workspace": workspace,
     }],
 )
 
@@ -110,12 +110,13 @@ checkout_update_asset(
     value = [{
         "rule": "{}:autotools_automake".format(capsule_rule_prefix),
         "descriptor": descriptor_base | {
+            "owner": "automake",
             "repo": "automake",
         },
         "version": automake_version,
         "is_relocatable": False,
         "prefix": prefix,
-        "workspace": workspace
+        "workspace": workspace,
     }],
 )
 
@@ -125,12 +126,13 @@ checkout_update_asset(
     value = [{
         "rule": "{}:autotools_autoconf".format(capsule_rule_prefix),
         "descriptor": descriptor_base | {
+            "owner": "autoconf",
             "repo": "autoconf",
         },
         "version": autoconf_version,
         "is_relocatable": False,
         "prefix": prefix,
-        "workspace": workspace
+        "workspace": workspace,
     }],
 )
 
