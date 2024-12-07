@@ -23,6 +23,7 @@ def capsule_get_install_path(name):
     Returns:
         True if the capsule is required to be checked out and run, False otherwise
     """
+    store = info.get_path_to_store()
     digest = info.get_workspace_digest()
     install_path = "{}/capules/{}/{}".format(store, name, digest)
     if fs.exists(install_path):
@@ -41,8 +42,6 @@ def add_autotools_checkout_and_run():
     """
     install_path = capsule_get_install_path("autotools")
     if install_path != None:
-        digest = info.get_workspace_digest()
-        install_path = "{}/capules/autotools/{}".format(store, digest)
         gnu_add_autotools_from_source(
             "autotools",
             autoconf_version,
