@@ -121,7 +121,7 @@ checkout_update_asset(
 )
 
 checkout_update_asset(
-    "automake_capsule",
+    "autoconf_capsule",
     destination = "capsules.spaces.json",
     value = [{
         "rule": "{}:autotools_autoconf".format(capsule_rule_prefix),

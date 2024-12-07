@@ -13,7 +13,7 @@ load(
 checkout_add_repo(
     "@capsules/workflows",
     url = "https://github.com/work-spaces/workflows",
-    rev = "383862d6b8c21ae239fff31b9d9f4385948aeb52",
+    rev = "0e62aac19470fb3d0fcdb44a6d857193ab5d687f",
     clone = "Default",
     is_evaluate_spaces_modules = False,
 )
@@ -37,21 +37,21 @@ checkout.add_capsule(
             {
                 "descriptor": descriptor_base | {
                     "owner": "automake",
-    "repo": "automake",
+                    "repo": "automake",
                 },
                 "semver": "1",
                 "dependency_type": "Build",
             },
             {
                 "descriptor": descriptor_base | {
-                     "owner": "autoconf",
-   "repo": "autoconf",
+                    "owner": "autoconf",
+                    "repo": "autoconf",
                 },
                 "semver": ">=2.65",
                 "dependency_type": "Build",
             },
         ],
-        "scripts": ["workflows/preload.spaces.star", "workflows/autotools-capsule.spaces.star"],
+        "scripts": ["workflows/preload", "workflows/autotools-capsule"],
         "name": "autotools-capsule",
         "version": "1.0.0",
     },
