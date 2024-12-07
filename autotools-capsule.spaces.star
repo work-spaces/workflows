@@ -11,6 +11,7 @@ load(
     "checkout_update_asset",
     "checkout_update_env",
 )
+load("//@sdk/star/run.star", "run_add_target")
 load("//@sdk/star/gnu-autotools.star", "gnu_add_autotools_from_source")
 
 capsule_name = "autotools"
@@ -69,13 +70,13 @@ checkout_update_asset(
     "libtool_capsule",
     destination = "capsules.spaces.json",
     value = [{
-            "rule": "autotools_libtool",
-            "domain": "ftp.gnu.org",
-            "owner": "libtool",
-            "repo": "libtool",
-            "version": libtool_version,
-            "is_relocatable": False,
-        }],
+        "rule": "autotools_libtool",
+        "domain": "ftp.gnu.org",
+        "owner": "libtool",
+        "repo": "libtool",
+        "version": libtool_version,
+        "is_relocatable": False,
+    }],
 )
 
 checkout_update_asset(
@@ -95,14 +96,13 @@ checkout_update_asset(
     "automake_capsule",
     destination = "capsules.spaces.json",
     value = [{
-            "rule": "autotools_autoconf",
-            "domain": "ftp.gnu.org",
-            "owner": "autoconf",
-            "repo": "autoconf",
-            "version": autoconf_version,
-            "is_relocatable": False,
-        }],
-    
+        "rule": "autotools_autoconf",
+        "domain": "ftp.gnu.org",
+        "owner": "autoconf",
+        "repo": "autoconf",
+        "version": autoconf_version,
+        "is_relocatable": False,
+    }],
 )
 
 checkout_update_env(
