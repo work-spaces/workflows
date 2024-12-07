@@ -94,7 +94,7 @@ checkout_update_asset(
     destination = "capsules.spaces.json",
     value = [{
         "rule": "{}:autotools_libtool".format(capsule_rule_prefix),
-        "desriptor": descriptor_base | {
+        "descriptor": descriptor_base | {
             "repo": "libtool",
         },
         "version": libtool_version,
@@ -109,7 +109,7 @@ checkout_update_asset(
     destination = "capsules.spaces.json",
     value = [{
         "rule": "{}:autotools_automake".format(capsule_rule_prefix),
-        "desriptor": descriptor_base | {
+        "descriptor": descriptor_base | {
             "repo": "automake",
         },
         "version": automake_version,
@@ -124,7 +124,7 @@ checkout_update_asset(
     destination = "capsules.spaces.json",
     value = [{
         "rule": "{}:autotools_autoconf".format(capsule_rule_prefix),
-        "desriptor": descriptor_base | {
+        "descriptor": descriptor_base | {
             "repo": "autoconf",
         },
         "version": autoconf_version,
