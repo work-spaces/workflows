@@ -13,6 +13,8 @@ load(
 )
 load("//@sdk/star/gnu-autotools.star", "gnu_add_autotools_from_source")
 
+capsule_name = "autotools"
+
 def capsule_get_install_path(name):
     """
     Check if the capsule is required to be checked out and run
@@ -30,8 +32,6 @@ def capsule_get_install_path(name):
         return None
     return install_path
 
-install_path = capsule_get_install_path("autotools")
-
 autoconf_version = "2.72"
 automake_version = "1.17"
 libtool_version = "2.5.4"
@@ -40,7 +40,7 @@ def add_autotools_checkout_and_run():
     """
     Add the autotools checkout and run if the install path does not exist
     """
-    install_path = capsule_get_install_path("autotools")
+    install_path = capsule_get_install_path(capsule_name)
     if install_path != None:
         gnu_add_autotools_from_source(
             "autotools",
@@ -49,54 +49,61 @@ def add_autotools_checkout_and_run():
             libtool_version,
             install_path = install_path,
         )
+    else:
+        run_add_target(
+            "autotools_libtool",
+            deps = [],
+        )
+        run_add_target(
+            "autotools_automake",
+            deps = [],
+        )
+        run_add_target(
+            "autotools_autoconf",
+            deps = [],
+        )
 
 add_autotools_checkout_and_run()
 
 checkout_update_asset(
     "libtool_capsule",
     destination = "capsules.spaces.json",
-    value = {
-        "capsules": [{
-            "rule": "autotools-capsule:autotools_libtool",
+    value = [{
+            "rule": "autotools_libtool",
             "domain": "ftp.gnu.org",
             "owner": "libtool",
             "repo": "libtool",
             "version": libtool_version,
             "is_relocatable": False,
         }],
-    },
 )
 
 checkout_update_asset(
     "automake_capsule",
     destination = "capsules.spaces.json",
-    value = {
-        "capsules": [{
-            "rule": "autotools-capsule:autotools_automake",
-            "domain": "ftp.gnu.org",
-            "owner": "automake",
-            "repo": "automake",
-            "version": automake_version,
-            "is_relocatable": False,
-        }],
-    },
+    value = [{
+        "rule": "autotools_automake",
+        "domain": "ftp.gnu.org",
+        "owner": "automake",
+        "repo": "automake",
+        "version": automake_version,
+        "is_relocatable": False,
+    }],
 )
 
 checkout_update_asset(
     "automake_capsule",
     destination = "capsules.spaces.json",
-    value = {
-        "capsules": [{
-            "rule": "autotools-capsule:autotools_autoconf",
+    value = [{
+            "rule": "autotools_autoconf",
             "domain": "ftp.gnu.org",
             "owner": "autoconf",
             "repo": "autoconf",
             "version": autoconf_version,
             "is_relocatable": False,
         }],
-    },
+    
 )
-
 
 checkout_update_env(
     "update_env",

@@ -34,11 +34,6 @@ checkout_add_platform_archive(
     platforms = github_packages["xpack-dev-tools"]["m4-xpack"]["v1.4.19-3"],
 )
 
-checkout_add_platform_archive(
-    "spaces0",
-    platforms = github_packages["work-spaces"]["spaces"]["v0.10.4"],
-)
-
 gnu_add_autotools_from_source(
     "autotools",
     autoconf_version,
