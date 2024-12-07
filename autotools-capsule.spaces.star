@@ -16,7 +16,7 @@ load("//@sdk/star/gnu-autotools.star", "gnu_add_autotools_from_source")
 
 capsule_name = "autotools"
 capsule_rule_prefix = "{}-capsule".format(capsule_name)
-workspace = info.get_absulute_path_to_workspace()
+workspace = info.get_absolute_path_to_workspace()
 
 def capsule_get_install_path(name):
     """
