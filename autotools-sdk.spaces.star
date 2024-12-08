@@ -14,7 +14,7 @@ load("//@sdk/star/capsule.star", "capsule_dependency", "capsule_get_depedency_in
 checkout_add_repo(
     "@capsules/workflows",
     url = "https://github.com/work-spaces/workflows",
-    rev = "9cb499ee95c5d944a6353b88479190f49f11ed2d",
+    rev = "bc66ca5c2bcbad2d248bfd0acc00ebe6401976e7",
     clone = "Default",
     is_evaluate_spaces_modules = False,
 )
@@ -29,6 +29,7 @@ capsule_add(
     required = [libtool2, automake1, autoconf2],
     scripts = ["workflows/preload", "workflows/autotools-capsule"],
     deps = ["@capsules/workflows"],
+    prefix = "sysroot"
 )
 
 libtool2_info = capsule_get_depedency_info(libtool2)
