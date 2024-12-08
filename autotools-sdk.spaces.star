@@ -14,7 +14,7 @@ load("//@sdk/star/capsule.star", "capsule_dependency", "capsule_get_depedency_in
 checkout_add_repo(
     "@capsules/workflows",
     url = "https://github.com/work-spaces/workflows",
-    rev = "6d045ab90d72c4b72cda63e78067c50c59f40c65",
+    rev = "915043a2050d2354af20e3a33c4883d51ee40fc1",
     clone = "Default",
     is_evaluate_spaces_modules = False,
 )
