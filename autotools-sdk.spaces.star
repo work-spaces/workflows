@@ -7,14 +7,14 @@ Create a workspace using the autotools capsule.
 load(
     "//@sdk/star/checkout.star",
     "checkout_add_repo",
-    "checkout_update_env",
 )
+load("//@sdk/star/spaces-env.star", "spaces_working_env")
 load("//@sdk/star/capsule.star", "capsule_dependency", "capsule_get_depedency_info", "capsule_add")
 
 checkout_add_repo(
     "@capsules/workflows",
     url = "https://github.com/work-spaces/workflows",
-    rev = "bc66ca5c2bcbad2d248bfd0acc00ebe6401976e7",
+    rev = "6d045ab90d72c4b72cda63e78067c50c59f40c65",
     clone = "Default",
     is_evaluate_spaces_modules = False,
 )
@@ -22,7 +22,8 @@ checkout_add_repo(
 libtool2 = capsule_dependency("ftp.gnu.org", "libtool", "libtool", semver = "2")
 automake1 = capsule_dependency("ftp.gnu.org", "automake", "automake", semver = "1")
 autoconf2 = capsule_dependency("ftp.gnu.org", "autoconf", "autoconf", semver = ">=2.65")
-
+m4_1 = capsule_dependency("ftp.gnu.org", "m4", "m4", semver = "1")
+gettext0 = capsule_dependency("ftp.gnu.org", "m4", "m4", semver = "0")
 
 capsule_add(
     "autotools_capsule",
@@ -32,10 +33,13 @@ capsule_add(
     prefix = "sysroot"
 )
 
-libtool2_info = capsule_get_depedency_info(libtool2)
-
-checkout_update_env(
-    "update_env",
-    system_path = ["/usr/bin", "/bin"],
+capsule_add(
+    "build_essential_capsule",
+    required = [m4_1, gettext0],
+    scripts = ["workflows/preload", "workflows/m4-capsule"],
+    deps = ["@capsules/workflows"],
+    prefix = "sysroot"
 )
+
+spaces_working_env()
 

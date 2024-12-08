@@ -13,7 +13,7 @@ load(
 )
 load("//@sdk/star/python.star", "python_add_uv")
 load("//@sdk/star/run.star", "run_add_exec")
-load("//@sdk/star/rust.star", "add_rust")
+load("//@sdk/star/rust.star", "rust_add")
 load("//@sdk/star/sccache.star", "sccache_add")
 
 checkout_add_platform_archive(
@@ -71,9 +71,9 @@ python_add_uv(
     packages = ["black", "flake8", "mypy"],
 )
 
-add_rust(
+rust_add(
     "rust_toolchain",
-    toolchain_version = "1.80",
+    version = "1.80",
 )
 
 sccache_add(
