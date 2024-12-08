@@ -14,7 +14,7 @@ load("//@sdk/star/capsule.star", "capsule_dependency", "capsule_get_depedency_in
 checkout_add_repo(
     "@capsules/workflows",
     url = "https://github.com/work-spaces/workflows",
-    rev = "7440e5a9f3b065fa5cffc5274addc398ddba874b",
+    rev = "7d3226e06ec504569b4798ae7e24533b430f8cf1",
     clone = "Default",
     is_evaluate_spaces_modules = False,
 )
@@ -23,7 +23,7 @@ libtool2 = capsule_dependency("ftp.gnu.org", "libtool", "libtool", semver = "2")
 automake1 = capsule_dependency("ftp.gnu.org", "automake", "automake", semver = "1")
 autoconf2 = capsule_dependency("ftp.gnu.org", "autoconf", "autoconf", semver = ">=2.65")
 m4_1 = capsule_dependency("ftp.gnu.org", "m4", "m4", semver = "1")
-gettext0 = capsule_dependency("ftp.gnu.org", "m4", "m4", semver = "0")
+gettext0 = capsule_dependency("ftp.gnu.org", "gettext", "gettext", semver = "0")
 
 capsule_add(
     "autotools_capsule",
