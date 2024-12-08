@@ -15,6 +15,7 @@ load("//@sdk/star/gnu-autotools.star", "gnu_add_autotools_from_source")
 autoconf_version = "2.72"
 automake_version = "1.17"
 libtool_version = "2.5.4"
+capsule_name = "autotools"
 
 def add_autotools_checkout_and_run():
     """
@@ -34,7 +35,7 @@ def add_autotools_checkout_and_run():
 def define_depedency(repo, version):
     capsule_checkout_define_dependency(
         "{}_info".format(repo),
-        capsule_name = "autotools",
+        capsule_name = capsule_name,
         domain = "ftp.gnu.org",
         owner = repo,
         repo = repo,

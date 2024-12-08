@@ -9,12 +9,12 @@ load(
     "checkout_add_repo",
     "checkout_update_env",
 )
-load("//@sdk/star/capsule.star", "capsule_dependency")
+load("//@sdk/star/capsule.star", "capsule_dependency", "capsule_get_depedency_info", "capsule_add")
 
 checkout_add_repo(
     "@capsules/workflows",
     url = "https://github.com/work-spaces/workflows",
-    rev = "3e208e6bf668ae57720cf4e16970ddacd6358f66",
+    rev = "91bfab68c76cce7045711f40139158692a3cd393",
     clone = "Default",
     is_evaluate_spaces_modules = False,
 )
@@ -24,7 +24,7 @@ automake1 = capsule_dependency("ftp.gnu.org", "automake", "automake", semver = "
 autoconf2 = capsule_dependency("ftp.gnu.org", "autoconf", "autoconf", semver = ">=2.65")
 
 
-checkout_add_capsule(
+capsule_add(
     "autotools_capsule",
     required = [libtool2, automake1, autoconf2],
     scripts = ["workflows/preload", "workflows/autotools-capsule"],
@@ -36,4 +36,4 @@ checkout_update_env(
     paths = ["/usr/bin", "/bin"],
 )
 
-libtool2_info = info.get_capsule_info(libtool2)
+libtool2_info = capsule_get_depedency_info(libtool2)
