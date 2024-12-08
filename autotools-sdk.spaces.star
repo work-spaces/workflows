@@ -14,7 +14,7 @@ load("//@sdk/star/capsule.star", "capsule_dependency", "capsule_get_depedency_in
 checkout_add_repo(
     "@capsules/workflows",
     url = "https://github.com/work-spaces/workflows",
-    rev = "91bfab68c76cce7045711f40139158692a3cd393",
+    rev = "9cb499ee95c5d944a6353b88479190f49f11ed2d",
     clone = "Default",
     is_evaluate_spaces_modules = False,
 )
@@ -31,9 +31,10 @@ capsule_add(
     deps = ["@capsules/workflows"],
 )
 
+libtool2_info = capsule_get_depedency_info(libtool2)
+
 checkout_update_env(
     "update_env",
-    paths = ["/usr/bin", "/bin"],
+    system_path = ["/usr/bin", "/bin"],
 )
 
-libtool2_info = capsule_get_depedency_info(libtool2)
