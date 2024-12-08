@@ -27,7 +27,7 @@ load(
 checkout_add_repo(
     "@capsules/workflows",
     url = "https://github.com/work-spaces/workflows",
-    rev = "6d045ab90d72c4b72cda63e78067c50c59f40c65",
+    rev = "7440e5a9f3b065fa5cffc5274addc398ddba874b",
     clone = "Default",
     is_evaluate_spaces_modules = False,
 )
@@ -71,7 +71,7 @@ def add_autotools_checkout_and_run():
             install_path = install_path,
         )
 
-        
+
 
 def define_depedency(repo, version):
     capsule_checkout_define_dependency(
