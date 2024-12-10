@@ -2,11 +2,10 @@
 Building Ninja using Spaces
 """
 
-load("//@packages/star/github.com/Kitware/CMake/v3.30.5.star", cmake3_platforms = "platforms")
 load("//@packages/star/github.com/ninja-build/ninja/v1.12.1.star", ninja1_platforms = "platforms")
 load("//@packages/star/github.com/cli/cli/v2.62.0.star", gh2_platforms = "platforms")
-load("//@sdk/star/gh.star", "gh_add_publish_archive")
-load("//@sdk/star/cmake.star", "add_cmake")
+load("//@sdk/star/gh.star", "gh_add", "gh_add_publish_archive")
+load("//@sdk/star/cmake.star", "cmake_add")
 load(
     "//@sdk/star/checkout.star",
     "checkout_add_platform_archive",
@@ -17,9 +16,9 @@ load("//@sdk/star/run.star", "run_add_exec")
 
 info.set_minimum_version("0.11.2")
 
-add_cmake(
-    rule_name = "cmake3",
-    platforms = cmake3_platforms,
+cmake_add(
+    "cmake3",
+    version = "v3.30.5",
 )
 
 checkout_add_platform_archive(
@@ -27,9 +26,9 @@ checkout_add_platform_archive(
     platforms = ninja1_platforms,
 )
 
-checkout_add_platform_archive(
+gh_add(
     "gh2",
-    platforms = gh2_platforms,
+    version = "v2.62.0"
 )
 
 checkout_add_repo(
@@ -98,3 +97,5 @@ gh_add_publish_archive(
     deps = ["install"],
     suffix = "tar.gz",
 )
+
+

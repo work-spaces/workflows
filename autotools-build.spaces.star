@@ -20,7 +20,7 @@ load(
     "checkout_update_env",
 )
 load("//@sdk/star/rpath.star", "rpath_update_macos_install_dir")
-load("//@sdk/star/gnu-autotools.star", "gnu_add_autotools_from_source", "gnu_add_configure_make_install_from_source")
+load("//@sdk/star/gnu.star", "gnu_add_autotools_from_source")
 
 autoconf_version = "2.72"
 automake_version = "1.17"
@@ -41,26 +41,6 @@ gnu_add_autotools_from_source(
     libtool_version,
     install_path = install_path,
 )
-
-'''
-gettext_version = "0.22"
-m4_version = "1.4.19"
-gnu_add_configure_make_install_from_source(
-    "gettext_from_source",
-    "gettext",
-    "gettext",
-    gettext_version,
-    install_path = install_path,
-)
-
-gnu_add_configure_make_install_from_source(
-    "m4_from_source",
-    "m4",
-    "m4",
-    m4_version,
-    install_path = install_path,
-)
-'''
 
 checkout_update_env(
     "working_paths",

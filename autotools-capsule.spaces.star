@@ -10,7 +10,7 @@ load(
     "checkout_update_env",
 )
 load("//@sdk/star/capsule.star", "capsule_get_install_path", "capsule_checkout_define_dependency")
-load("//@sdk/star/gnu-autotools.star", "gnu_add_autotools_from_source")
+load("//@sdk/star/gnu.star", "gnu_add_autotools_from_source")
 
 autoconf_version = "2.72"
 automake_version = "1.17"

@@ -44,7 +44,7 @@ add_uv_python(
     packages = ["meson"],
 )
 
-clone_type = "Shallow" if info.is_ci() else "Worktree"
+clone_type = "Blobless" if info.is_ci() else "Worktree"
 
 checkout_add_repo(
     "glib",

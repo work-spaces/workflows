@@ -67,7 +67,7 @@ checkout_add_repo(
     "ruby-build",
     url = "https://github.com/rbenv/ruby-build",
     rev = "v20241105",
-    clone = "Shallow",
+    clone = "Blobless",
 )
 
 checkout_update_env(

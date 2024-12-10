@@ -71,7 +71,7 @@ checkout_add_repo(
     "zstd",
     url = "https://github.com/facebook/zstd",
     rev = "v1.5.5",
-    clone = "Shallow",
+    clone = "Blobless",
 )
 
 run_add_exec(
