@@ -22,7 +22,6 @@ load(
     "//@sdk/star/capsule.star",
     "capsule_add",
     "capsule_checkout_define_dependency",
-    "capsule_dependency",
     "capsule_get_install_path",
     "capsule_gh_add",
     "capsule_gh_publish",
@@ -39,7 +38,7 @@ checkout_add_repo(
     "@capsules/capsules",
     url = "https://github.com/work-spaces/capsules",
     rev = "a2d7ba48a24eed157b706886d2368c07475f8c7e",
-    clone = "Blobless",
+    clone = "Worktree",
 )
 
 checkout_add_which_asset(
@@ -47,13 +46,8 @@ checkout_add_which_asset(
     which = "spaces",
     destination = "sysroot/bin/spaces")
 
-libtool2 = capsule_dependency("ftp.gnu.org", "libtool", "libtool", semver = "2")
-automake1 = capsule_dependency("ftp.gnu.org", "automake", "automake", semver = "1")
-autoconf2 = capsule_dependency("ftp.gnu.org", "autoconf", "autoconf", semver = ">=2.65")
-
-capsule_add(
+capsule_checkout(
     "autotools_capsule",
-    required = [libtool2, automake1, autoconf2],
     scripts = ["capsules/ftp.gnu.org/preload", "capsules/ftp.gnu.org/autotools-capsule"],
     deps = ["@capsules/capsules"],
     prefix = "sysroot",

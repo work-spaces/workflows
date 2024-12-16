@@ -36,6 +36,11 @@ checkout_add_platform_archive(
     platforms = packages["github.com"]["xpack-dev-tools"]["pkg-config-xpack"]["v0.29.2-3"],
 )
 
+checkout_add_platform_archive(
+    "oras1",
+    platforms = packages["github.com"]["oras-project"]["oras"]["v1.2.1"],
+)
+
 spaces0 = packages["github.com"]["work-spaces"]["spaces"]["v0.10.4"]
 
 checkout_add_platform_archive(
@@ -93,6 +98,14 @@ def check_version(name):
         help = "Check the version of {}".format(name),
     )
 
+def check_help(name):
+    run_add_exec(
+        "{}_test_help".format(name),
+        command = name,
+        args = ["-h"],
+        help = "Check the help of {}".format(name),
+    )
+
 def check_versions():
     commands = [
         "node",
@@ -115,3 +128,5 @@ def check_versions():
         check_version(name)
 
 check_versions()
+
+check_help("oras")
