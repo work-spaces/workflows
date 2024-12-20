@@ -3,15 +3,16 @@ Spaces starlark checkout script to make changes to spaces, printer, and easy-arc
 With VSCode integration
 """
 
-load("//@sdk/star/spaces-env.star", "spaces_working_env")
+load("//@sdk/sdk/star/spaces-env.star", "spaces_working_env")
 load(
-    "//@sdk/star/checkout.star",
+    "//@sdk/sdk/star/checkout.star",
     "checkout_add_asset",
     "checkout_add_repo",
     "checkout_update_asset",
 )
-load("//@sdk/star/rust.star", "rust_add")
-load("//@sdk/star/sccache.star", "sccache_add")
+load("//@sdk/sdk/star/rust.star", "rust_add")
+load("//@sdk/sdk/star/sccache.star", "sccache_add")
+load("//@sdk/sdk/star/run.star", "run_add_exec")
 
 # Configure the top level workspace
 
@@ -50,6 +51,9 @@ graph.path = "spaces/crates/graph"
 platform.path = "spaces/crates/platform"
 starstd.path = "spaces/crates/starstd"
 http-archive.path = "spaces/crates/http-archive"
+changes.path = "spaces/crates/changes"
+environment.path = "spaces/crates/environment"
+lock.path = "spaces/crates/lock"
 
 [profile.dev]
 opt-level = 3
@@ -91,6 +95,7 @@ checkout_add_asset(
     content = developer_md_content,
 )
 
+# This is needed for easy-archiver to pickup the local version of printer
 checkout_update_asset(
     "cargo_config",
     destination = ".cargo/config.toml",
@@ -143,10 +148,20 @@ cargo_vscode_task = {
     "group": "build",
 }
 
+spaces_store = info.get_path_to_store()
+
+task_options = {
+    "env": {
+        "CARGO_HOME": "{}/cargo".format(spaces_store),
+        "RUSTUP_HOME": "{}/rustup".format(spaces_store),
+    },
+}
+
 checkout_update_asset(
     "vscode_tasks",
     destination = ".vscode/tasks.json",
     value = {
+        "options": task_options,
         "tasks": [
             cargo_vscode_task | {
                 "command": "build",
@@ -165,6 +180,22 @@ checkout_update_asset(
             },
         ],
     },
+)
+
+run_add_exec(
+    "check",
+    command = "cargo",
+    args = ["check"],
+    help = "Run cargo check on workspace",
+    type = "Optional"
+)
+
+run_add_exec(
+    "clippy",
+    command = "cargo",
+    args = ["clippy"],
+    help = "Run cargo clippy on workspace",
+    type = "Optional"
 )
 
 spaces_working_env()

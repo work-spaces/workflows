@@ -2,16 +2,16 @@
 Building Ninja using Spaces
 """
 
-load("//@packages/star/github.com/ninja-build/ninja/v1.12.1.star", ninja1_platforms = "platforms")
-load("//@sdk/star/oras.star", "oras_add_publish_archive")
-load("//@sdk/star/cmake.star", "cmake_add")
+load("//@sdk/packages/star/github.com/ninja-build/ninja/v1.12.1.star", ninja1_platforms = "platforms")
+load("//@sdk/sdk/star/oras.star", "oras_add_publish_archive")
+load("//@sdk/sdk/star/cmake.star", "cmake_add")
 load(
-    "//@sdk/star/checkout.star",
+    "//@sdk/sdk/star/checkout.star",
     "checkout_add_platform_archive",
     "checkout_add_repo",
     "checkout_update_env",
 )
-load("//@sdk/star/run.star", "run_add_exec")
+load("//@sdk/sdk/star/run.star", "run_add_exec")
 
 info.set_minimum_version("0.11.6")
 
@@ -87,9 +87,9 @@ run_add_exec(
 oras_add_publish_archive(
     name = "ninja",
     input = "build/install",
-    version = "1.12.1",
-    domain = "ghcr.io",
-    owner = "work-spaces",
+    tag = "v1.12.1",
+    url = "ghcr.io/work-spaces",
+    artifact = "ninja-build-non-reproducible-{}".format(info.get_platform_name()),
     deps = ["install"],
     suffix = "tar.gz",
 )

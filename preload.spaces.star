@@ -13,7 +13,7 @@ This file serves as an example of how to preload a custom spaces starlark SDK.
 """
 
 checkout.add_repo(
-    rule = {"name": "@sdk"},
+    rule = {"name": "@star/sdk"},
     repo = {
         "url": "https://github.com/work-spaces/sdk",
         "rev": "main",
@@ -21,3 +21,14 @@ checkout.add_repo(
         "clone": "Worktree"
     }
 )
+
+checkout.add_repo(
+    rule = {"name": "@star/packages"},
+    repo = {
+        "url": "https://github.com/work-spaces/packages",
+        "rev": "main",
+        "checkout": "Revision",
+        "clone": "Worktree"
+    }
+)
+

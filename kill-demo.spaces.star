@@ -16,7 +16,7 @@ spaces run --target=kill-demo:kill-demo
 """
 
 
-load("//@sdk/star/run.star", "run_add_kill_exec", "run_add_exec", "run_add_target")
+load("//@sdk/sdk/star/run.star", "run_add_kill_exec", "run_add_exec", "run_add_target")
 
 
 run_add_exec(

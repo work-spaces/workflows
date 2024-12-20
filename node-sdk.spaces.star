@@ -3,10 +3,10 @@ This is an example of how to use the nodejs sdk in your workspace.
 
 """
 
-load("//@sdk/star/spaces-env.star", "spaces_working_env")
-load("//@packages/nodejs.org/node/nodejs/packages.star", node_packages = "packages")
-load("//@sdk/star/checkout.star", "checkout_add_platform_archive")
-load("//@sdk/star/run.star", "run_add_exec")
+load("//@sdk/sdk/star/spaces-env.star", "spaces_working_env")
+load("//@sdk/packages/star/nodejs.org/node/nodejs/packages.star", node_packages = "packages")
+load("//@sdk/sdk/star/checkout.star", "checkout_add_platform_archive")
+load("//@sdk/sdk/star/run.star", "run_add_exec")
 
 checkout_add_platform_archive(
     "nodejs23",

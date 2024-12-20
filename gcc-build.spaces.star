@@ -5,22 +5,38 @@ This script is a work in progress. It doesn't build GCC successfully.
 
 """
 
+load("//@sdk/sdk/star/spaces-env.star", "spaces_working_env")
+
 load(
-    "//@packages/star/github.com/packages.star",
-    github_packages = "packages",
+    "//@sdk/sdk/star/capsule.star",
+    "capsule_checkout",
+    "capsule_checkout_add_workflow_repo",
 )
-load("//@sdk/star/spaces-env.star", "spaces_working_env")
-load("//@sdk/star/checkout.star", "checkout_add_archive", "checkout_add_platform_archive")
-load("//@sdk/star/run.star", "run_add_exec")
-load("//@sdk/star/autotools.star", "autotools_add_source_archive")
 
-gmp_version = "6.3.0"
-gmp_sha256 = "a3c2b80201b89e68616f4ad30bc66aee4927c3ce50e33929ca819d5c43538898"
-mpfr_version = "4.2.1"
-mpfr_sha256 = "116715552bd966c85b417c424db1bbdf639f53836eb361549d1f8d6ded5cb4c6"
-mpc_version = "1.3.1"
-mpc_sha256 = "ab642492f5cf882b74aa0cb730cd410a81edcdbec895183ce930e706c1c759b8"
+capsules_workflow_checkout_rule = capsule_checkout_add_workflow_repo(
+    "capsules",
+    url = "https://github.com/work-spaces/capsules",
+    rev = "main",
+)
 
+env_rule = spaces_working_env()
+
+def gnu_capsule_checkout(name, version):
+    capsule_checkout(
+        name,
+        scripts = [
+            "capsules/ftp.gnu.org/preload",
+            "capsules/ftp.gnu.org/{}-{}".format(name, version),
+        ],
+        deps = [capsules_workflow_checkout_rule],
+        prefix = "build/install",
+    )
+
+gnu_capsule_checkout("gmp", "v6")
+gnu_capsule_checkout("mpfr", "v4")
+gnu_capsule_checkout("mpc", "v1")
+
+_ignore = '''
 binutils_version = "2.43"
 binutils_sha256 = "b53606f443ac8f01d1d5fc9c39497f2af322d99e14cea5c0b4b124d630379365"
 
@@ -44,46 +60,10 @@ checkout_add_platform_archive(
     platforms = github_packages["work-spaces"]["spaces"]["v0.10.4"],
 )
 
-autotools_add_source_archive(
-    "gmp",
-    url = "https://gmplib.org/download/gmp/gmp-{}.tar.xz".format(gmp_version),
-    sha256 = gmp_sha256,
-    source_directory = "gmp-{}".format(gmp_version),
-    configure_args = [prefix_arg, "--with-pic"],
-)
-
-autotools_add_source_archive(
-    "mpfr",
-    url = "https://www.mpfr.org/mpfr-current/mpfr-{}.tar.gz".format(mpfr_version),
-    sha256 = mpfr_sha256,
-    deps = ["gmp_install"],
-    source_directory = "mpfr-{}".format(mpfr_version),
-    configure_args = [
-        prefix_arg,
-        "--with-pic",
-        "--with-gmp={}".format(install_prefix),
-    ],
-)
-
-autotools_add_source_archive(
-    "mpc",
-    url = "https://ftp.gnu.org/gnu/mpc/mpc-{}.tar.gz".format(mpc_version),
-    sha256 = mpc_sha256,
-    deps = ["gmp_install", "mpfr_install"],
-    source_directory = "mpc-{}".format(mpc_version),
-    configure_args = [
-        prefix_arg,
-        "--with-pic",
-        "--with-gmp={}".format(install_prefix),
-        "--with-mpfr={}".format(install_prefix),
-    ],
-)
-
-autotools_add_source_archive(
+gnu_add_configure_make_install_from_source(
     "binutils",
     url = "https://ftp.gnu.org/gnu/binutils/binutils-{}.tar.xz".format(binutils_version),
     sha256 = binutils_sha256,
-    deps = ["gmp_install", "mpfr_install", "mpc_install"],
     source_directory = "binutils-{}".format(binutils_version),
     configure_args = [
         prefix_arg,
@@ -94,10 +74,6 @@ autotools_add_source_archive(
     ],
 )
 
-spaces_working_env()
-
-'''
-
 # Download source for GCC
 checkout_add_archive(
     "gcc",
@@ -105,8 +81,6 @@ checkout_add_archive(
     sha256 = gcc_sha256,
     add_prefix = "./",
 )
-
-
 
 with_sysroot = ["--with-sysroot=/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk"] if info.is_platform_macos() else []
 

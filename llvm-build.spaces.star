@@ -10,13 +10,13 @@ spaces checkout --script=workflows/preload --script=workflows/llvm17-config --sc
 
 """
 
-load("//@packages/star/github.com/packages.star", github_packages = "packages")
-load("//@sdk/star/cmake.star", "cmake_add")
-load("//@sdk/star/run.star", "run_add_exec")
-load("//@sdk/star/gh.star", "gh_add_publish_archive")
-load("//@sdk/star/python.star", "python_add_uv")
+load("//@sdk/packages/star/github.com/packages.star", github_packages = "packages")
+load("//@sdk/sdk/star/cmake.star", "cmake_add")
+load("//@sdk/sdk/star/run.star", "run_add_exec")
+load("//@sdk/sdk/star/gh.star", "gh_add_publish_archive")
+load("//@sdk/sdk/star/python.star", "python_add_uv")
 load(
-    "//@sdk/star/checkout.star",
+    "//@sdk/sdk/star/checkout.star",
     "checkout_add_archive",
     "checkout_add_platform_archive",
     "checkout_update_env",

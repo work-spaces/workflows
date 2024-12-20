@@ -2,16 +2,15 @@
 Checkout script to build and publish qemu binaries.
 """
 
-load("//@packages/star/github.com/packages.star", github_packages = "packages")
-load("//@sdk/star/python.star", "add_uv_python")
-load("//@sdk/star/gh.star", "add_publish_archive")
+load("//@sdk/packages/star/github.com/packages.star", github_packages = "packages")
+load("//@sdk/sdk/star/python.star", "python_add_uv")
 load(
-    "//@sdk/star/checkout.star",
+    "//@sdk/sdk/star/checkout.star",
     "checkout_add_platform_archive",
     "checkout_add_repo",
     "checkout_update_env",
 )
-load("//@sdk/star/run.star", "run_add_exec")
+load("//@sdk/sdk/star/run.star", "run_add_exec")
 
 info.set_minimum_version("0.11.2")
 
@@ -25,7 +24,6 @@ checkout_add_platform_archive(
     platforms = github_packages["work-spaces"]["spaces"]["v0.10.4"],
 )
 
-
 checkout_add_platform_archive(
     "gh2",
     platforms = github_packages["cli"]["cli"]["v2.62.0"],
@@ -36,10 +34,10 @@ checkout_add_platform_archive(
     platforms = github_packages["xpack-dev-tools"]["pkg-config-xpack"]["v0.29.2-3"],
 )
 
-add_uv_python(
-    rule_name = "python3",
-    uv_platforms = github_packages["astral-sh"]["uv"]["0.4.29"],
-    ruff_platforms = github_packages["astral-sh"]["ruff"]["0.8.0"],
+python_add_uv(
+    "python3",
+    uv_version = "0.4.29",
+    ruff_version = "0.8.0",
     python_version = "3.11",
     packages = ["meson"],
 )

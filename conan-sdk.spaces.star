@@ -2,18 +2,18 @@
 This is an example of how to get conan running in your workspace.
 """
 
-load("//@sdk/star/spaces-env.star", "spaces_working_env")
-load("//@sdk/star/python.star", "python_add_uv")
-load("//@packages/star/github.com/packages.star", github_packages = "packages")
-load("//@sdk/star/cmake.star", "cmake_add")
+load("//@sdk/sdk/star/spaces-env.star", "spaces_working_env")
+load("//@sdk/sdk/star/python.star", "python_add_uv")
+load("//@sdk/packages/star/github.com/packages.star", github_packages = "packages")
+load("//@sdk/sdk/star/cmake.star", "cmake_add")
 load(
-    "//@sdk/star/checkout.star",
+    "//@sdk/sdk/star/checkout.star",
     "checkout_add_asset",
     "checkout_add_platform_archive",
     "checkout_add_repo",
     "checkout_update_env",
 )
-load("//@sdk/star/run.star", "run_add_exec")
+load("//@sdk/sdk/star/run.star", "run_add_exec")
 
 python_add_uv(
     "python3",

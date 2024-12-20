@@ -3,8 +3,8 @@
 
 
 
-load("//@sdk/star/spaces-env.star", "spaces_working_env")
-load("//@sdk/star/checkout.star", "checkout_add_repo")
+load("//@sdk/sdk/star/spaces-env.star", "spaces_working_env")
+load("//@sdk/sdk/star/checkout.star", "checkout_add_repo")
 
 
 checkout_add_repo(
