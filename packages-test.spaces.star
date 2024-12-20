@@ -11,10 +11,10 @@ load(
     "checkout_add_platform_archive",
     "update_platforms_prefix",
 )
-load("//@star/sdk/star/python.star", "python_add_uv")
+load("//@star/packages/star/python.star", "python_add_uv")
 load("//@star/sdk/star/run.star", "run_add_exec")
-load("//@star/sdk/star/rust.star", "rust_add")
-load("//@star/sdk/star/sccache.star", "sccache_add")
+load("//@star/packages/star/rust.star", "rust_add")
+load("//@star/packages/star/sccache.star", "sccache_add")
 
 checkout_add_platform_archive(
     "nodejs23",

@@ -10,8 +10,8 @@ load(
     "checkout_add_repo",
     "checkout_update_asset",
 )
-load("//@star/sdk/star/rust.star", "rust_add")
-load("//@star/sdk/star/sccache.star", "sccache_add")
+load("//@star/packages/star/rust.star", "rust_add")
+load("//@star/packages/star/sccache.star", "sccache_add")
 load("//@star/sdk/star/run.star", "run_add_exec")
 
 # Configure the top level workspace

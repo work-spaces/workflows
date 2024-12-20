@@ -14,7 +14,7 @@ load("//@star/packages/star/github.com/packages.star", github_packages = "packag
 load("//@star/sdk/star/cmake.star", "cmake_add")
 load("//@star/sdk/star/run.star", "run_add_exec")
 load("//@star/sdk/star/gh.star", "gh_add_publish_archive")
-load("//@star/sdk/star/python.star", "python_add_uv")
+load("//@star/packages/star/python.star", "python_add_uv")
 load(
     "//@star/sdk/star/checkout.star",
     "checkout_add_archive",

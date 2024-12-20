@@ -3,27 +3,19 @@ Checkout llvm, cmake, and ninja for a complete build system and toolchain.
 """
 
 load("//@star/sdk/star/spaces-env.star", "spaces_working_env")
-load("//@star/sdk/star/llvm.star", "llvm_add")
-load("//@star/sdk/star/cmake.star", "cmake_add")
+load("//@star/packages/star/llvm.star", "llvm_add")
+load("//@star/packages/star/cmake.star", "cmake_add")
+load("//@star/packages/star/package.star", "package_add")
 load(
     "//@star/sdk/star/checkout.star",
     "checkout_add_asset",
-    "checkout_add_platform_archive",
 )
 load("//@star/sdk/star/run.star", "run_add_exec")
-load("//@star/packages/star/github.com/packages.star", github_packages = "packages")
 
-info.set_minimum_version("0.10.3")
+info.set_minimum_version("0.11.6")
 
-cmake_add(
-    "cmake3",
-    version = "v3.30.5",
-)
-
-checkout_add_platform_archive(
-    "ninja1",
-    platforms = github_packages["ninja-build"]["ninja"]["v1.12.1"],
-)
+cmake_add("cmake3","v3.30.5")
+package_add("github.com", "ninja-build", "ninja", "v1.12.1")
 
 llvm_add(
     "llvm19",

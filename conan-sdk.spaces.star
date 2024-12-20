@@ -3,13 +3,12 @@ This is an example of how to get conan running in your workspace.
 """
 
 load("//@star/sdk/star/spaces-env.star", "spaces_working_env")
-load("//@star/sdk/star/python.star", "python_add_uv")
-load("//@star/packages/star/github.com/packages.star", github_packages = "packages")
-load("//@star/sdk/star/cmake.star", "cmake_add")
+load("//@star/packages/star/python.star", "python_add_uv")
+load("//@star/packages/star/cmake.star", "cmake_add")
+load("//@star/packages/star/package.star", "package_add")
 load(
     "//@star/sdk/star/checkout.star",
     "checkout_add_asset",
-    "checkout_add_platform_archive",
     "checkout_add_repo",
     "checkout_update_env",
 )
@@ -23,15 +22,8 @@ python_add_uv(
     packages = ["conan"],
 )
 
-cmake_add(
-    "cmake3",
-    version = "v3.30.5",
-)
-
-checkout_add_platform_archive(
-    "ninja1",
-    platforms = github_packages["ninja-build"]["ninja"]["v1.12.1"],
-)
+cmake_add("cmake3", "v3.30.5")
+package_add("github.com", "ninja-build", "ninja", "v1.12.1")
 
 checkout_add_repo(
     "examples2",

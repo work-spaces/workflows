@@ -3,7 +3,7 @@ Checkout script to build and publish qemu binaries.
 """
 
 load("//@star/packages/star/github.com/packages.star", github_packages = "packages")
-load("//@star/sdk/star/python.star", "python_add_uv")
+load("//@star/packages/star/python.star", "python_add_uv")
 load(
     "//@star/sdk/star/checkout.star",
     "checkout_add_platform_archive",
