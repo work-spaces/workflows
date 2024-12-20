@@ -2,16 +2,16 @@
 Building Ninja using Spaces
 """
 
-load("//@sdk/packages/star/github.com/ninja-build/ninja/v1.12.1.star", ninja1_platforms = "platforms")
-load("//@sdk/sdk/star/oras.star", "oras_add_publish_archive")
-load("//@sdk/sdk/star/cmake.star", "cmake_add")
+load("//@star/packages/star/github.com/ninja-build/ninja/v1.12.1.star", ninja1_platforms = "platforms")
+load("//@star/sdk/star/oras.star", "oras_add_publish_archive")
+load("//@star/sdk/star/cmake.star", "cmake_add")
 load(
-    "//@sdk/sdk/star/checkout.star",
+    "//@star/sdk/star/checkout.star",
     "checkout_add_platform_archive",
     "checkout_add_repo",
     "checkout_update_env",
 )
-load("//@sdk/sdk/star/run.star", "run_add_exec")
+load("//@star/sdk/star/run.star", "run_add_exec")
 
 info.set_minimum_version("0.11.6")
 

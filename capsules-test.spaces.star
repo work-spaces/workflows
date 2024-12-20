@@ -4,9 +4,9 @@ Create a workspace using the autotools capsule.
 
 """
 
-load("//@sdk/sdk/star/spaces-env.star", "spaces_working_env")
+load("//@star/sdk/star/spaces-env.star", "spaces_working_env")
 load(
-    "//@sdk/sdk/star/capsule.star",
+    "//@star/sdk/star/capsule.star",
     "capsule_checkout",
     "capsule_checkout_add_workflow_repo",
 )

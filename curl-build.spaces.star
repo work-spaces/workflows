@@ -2,18 +2,18 @@
 Build Curl using spaces.
 """
 
-load("//@sdk/packages/star/github.com/packages.star", github_packages = "packages")
-load("//@sdk/sdk/star/checkout.star", "checkout_add_platform_archive", "checkout_add_repo", "checkout_update_env")
+load("//@star/packages/star/github.com/packages.star", github_packages = "packages")
+load("//@star/sdk/star/checkout.star", "checkout_add_platform_archive", "checkout_add_repo", "checkout_update_env")
 load(
-    "//@sdk/sdk/star/gnu_autotools.star",
+    "//@star/sdk/star/gnu_autotools.star",
     "gnu_add_autotools_from_source",
     "gnu_add_repo",
     "gnu_add_source_archive",
 )
-load("//@sdk/sdk/star/openssl.star", "openssl_add")
-load("//@sdk/sdk/star/cmake.star", "cmake_add", "cmake_add_repo")
-load("//@sdk/sdk/star/run.star", "run_add_exec")
-load("//@sdk/sdk/star/rpath.star", "rpath_update_macos_install_dir")
+load("//@star/sdk/star/openssl.star", "openssl_add")
+load("//@star/sdk/star/cmake.star", "cmake_add", "cmake_add_repo")
+load("//@star/sdk/star/run.star", "run_add_exec")
+load("//@star/sdk/star/rpath.star", "rpath_update_macos_install_dir")
 
 libiconv_version = "1.17"
 libiconv_sha256 = "8f74213b56238c85a50a5329f77e06198771e70dd9a739779f4c02f65d971313"

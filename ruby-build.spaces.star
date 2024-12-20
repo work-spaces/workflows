@@ -2,13 +2,13 @@
 Build Ruby using ruby-build.
 """
 
-load("//@sdk/packages/star/github.com/packages.star", github_packages = "packages")
-load("//@sdk/sdk/star/checkout.star", "checkout_add_platform_archive", "checkout_add_repo", "checkout_update_env")
-load("//@sdk/sdk/star/autotools.star", "autotools_add_source_archive")
-load("//@sdk/sdk/star/cmake.star", "add_cmake", "cmake_add_repo")
-load("//@sdk/sdk/star/openssl.star", "openssl_add")
-load("//@sdk/sdk/star/run.star", "run_add_exec")
-load("//@sdk/sdk/star/rpath.star", "rpath_update_macos_install_dir")
+load("//@star/packages/star/github.com/packages.star", github_packages = "packages")
+load("//@star/sdk/star/checkout.star", "checkout_add_platform_archive", "checkout_add_repo", "checkout_update_env")
+load("//@star/sdk/star/autotools.star", "autotools_add_source_archive")
+load("//@star/sdk/star/cmake.star", "add_cmake", "cmake_add_repo")
+load("//@star/sdk/star/openssl.star", "openssl_add")
+load("//@star/sdk/star/run.star", "run_add_exec")
+load("//@star/sdk/star/rpath.star", "rpath_update_macos_install_dir")
 
 checkout_add_platform_archive(
     "spaces0",

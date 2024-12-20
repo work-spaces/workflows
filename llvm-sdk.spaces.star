@@ -2,16 +2,16 @@
 Checkout llvm, cmake, and ninja for a complete build system and toolchain.
 """
 
-load("//@sdk/sdk/star/spaces-env.star", "spaces_working_env")
-load("//@sdk/sdk/star/llvm.star", "llvm_add")
-load("//@sdk/sdk/star/cmake.star", "cmake_add")
+load("//@star/sdk/star/spaces-env.star", "spaces_working_env")
+load("//@star/sdk/star/llvm.star", "llvm_add")
+load("//@star/sdk/star/cmake.star", "cmake_add")
 load(
-    "//@sdk/sdk/star/checkout.star",
+    "//@star/sdk/star/checkout.star",
     "checkout_add_asset",
     "checkout_add_platform_archive",
 )
-load("//@sdk/sdk/star/run.star", "run_add_exec")
-load("//@sdk/packages/star/github.com/packages.star", github_packages = "packages")
+load("//@star/sdk/star/run.star", "run_add_exec")
+load("//@star/packages/star/github.com/packages.star", github_packages = "packages")
 
 info.set_minimum_version("0.10.3")
 

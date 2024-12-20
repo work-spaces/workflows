@@ -4,8 +4,8 @@ uses https://github.com/astral-sh/uv for python binary and package management.
 
 """
 
-load("//@sdk/sdk/star/spaces-env.star", "spaces_working_env")
-load("//@sdk/sdk/star/python.star", "python_add_uv")
+load("//@star/sdk/star/spaces-env.star", "spaces_working_env")
+load("//@star/packages/star/python.star", "python_add_uv")
 
 python_add_uv(
     "python3",

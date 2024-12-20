@@ -4,17 +4,17 @@ and then runs `<command> --version` to see if the executable is OK.
 
 """
 
-load("//@sdk/sdk/star/spaces-env.star", "spaces_working_env")
-load("//@sdk/packages/star/packages.star", "packages")
+load("//@star/sdk/star/spaces-env.star", "spaces_working_env")
+load("//@star/packages/star/packages.star", "packages")
 load(
-    "//@sdk/sdk/star/checkout.star",
+    "//@star/sdk/star/checkout.star",
     "checkout_add_platform_archive",
     "update_platforms_prefix",
 )
-load("//@sdk/sdk/star/python.star", "python_add_uv")
-load("//@sdk/sdk/star/run.star", "run_add_exec")
-load("//@sdk/sdk/star/rust.star", "rust_add")
-load("//@sdk/sdk/star/sccache.star", "sccache_add")
+load("//@star/sdk/star/python.star", "python_add_uv")
+load("//@star/sdk/star/run.star", "run_add_exec")
+load("//@star/sdk/star/rust.star", "rust_add")
+load("//@star/sdk/star/sccache.star", "sccache_add")
 
 checkout_add_platform_archive(
     "nodejs23",

@@ -3,16 +3,16 @@ Spaces starlark checkout script to make changes to spaces, printer, and easy-arc
 With VSCode integration
 """
 
-load("//@sdk/sdk/star/spaces-env.star", "spaces_working_env")
+load("//@star/sdk/star/spaces-env.star", "spaces_working_env")
 load(
-    "//@sdk/sdk/star/checkout.star",
+    "//@star/sdk/star/checkout.star",
     "checkout_add_asset",
     "checkout_add_repo",
     "checkout_update_asset",
 )
-load("//@sdk/sdk/star/rust.star", "rust_add")
-load("//@sdk/sdk/star/sccache.star", "sccache_add")
-load("//@sdk/sdk/star/run.star", "run_add_exec")
+load("//@star/sdk/star/rust.star", "rust_add")
+load("//@star/sdk/star/sccache.star", "sccache_add")
+load("//@star/sdk/star/run.star", "run_add_exec")
 
 # Configure the top level workspace
 
