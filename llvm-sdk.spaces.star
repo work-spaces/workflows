@@ -85,3 +85,10 @@ run_add_exec(
     command = "ninja",
     args = ["-Cbuild"],
 )
+
+run_add_exec(
+    "run",
+    deps = ["build"],
+    help = "Run the build/hello binary",
+    command = "build/hello",
+)

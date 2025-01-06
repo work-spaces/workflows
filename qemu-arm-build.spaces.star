@@ -2,38 +2,24 @@
 Checkout script to build and publish qemu binaries.
 """
 
-load("//@star/packages/star/github.com/packages.star", github_packages = "packages")
+load("//@star/packages/star/package.star", "package_add")
 load("//@star/packages/star/python.star", "python_add_uv")
+load("//@star/sdk/star/rpath.star", "rpath_update_macos_install_dir")
 load(
     "//@star/sdk/star/checkout.star",
-    "checkout_add_platform_archive",
     "checkout_add_repo",
     "checkout_update_env",
 )
 load("//@star/sdk/star/run.star", "run_add_exec")
+load("//@star/sdk/star/spaces-env.star", "spaces_working_env")
 
 info.set_minimum_version("0.11.2")
 
-checkout_add_platform_archive(
-    "ninja1",
-    platforms = github_packages["ninja-build"]["ninja"]["v1.12.1"],
-)
+spaces_working_env()
 
-checkout_add_platform_archive(
-    "spaces0",
-    platforms = github_packages["work-spaces"]["spaces"]["v0.10.4"],
-)
-
-checkout_add_platform_archive(
-    "gh2",
-    platforms = github_packages["cli"]["cli"]["v2.62.0"],
-)
-
-checkout_add_platform_archive(
-    "pkg_config0",
-    platforms = github_packages["xpack-dev-tools"]["pkg-config-xpack"]["v0.29.2-3"],
-)
-
+package_add("github.com", "ninja-build", "ninja", "v1.12.1")
+package_add("github.com", "work-spaces", "spaces", "v0.11.5")
+package_add("github.com", "xpack-dev-tools", "pkg-config-xpack", "v0.29.2-3")
 python_add_uv(
     "python3",
     uv_version = "0.4.29",
@@ -46,7 +32,7 @@ clone_type = "Blobless" if info.is_ci() else "Worktree"
 
 checkout_add_repo(
     "glib",
-    url = "https://github.com/GNOME/glib",
+    url = "https://github.com/gnome/glib",
     rev = "2.82.2",
     clone = clone_type,
 )
@@ -194,32 +180,8 @@ run_add_exec(
     args = ["-Cbuild/qemu", "install"],
 )
 
-run_add_exec(
+rpath_update_macos_install_dir(
     "install_bin_rpath_macos",
+    install_path = install_path,
     deps = ["qemu_ninja_install"],
-    command = "spaces-starlark-sdk/script/update-rpath-macos.star",
-    args = [
-        "--binary-path={}/bin".format(install_path),
-        "--old-path={}".format(install_path),
-        "--new-path=@executable_path/..",
-    ],
 )
-
-run_add_exec(
-    "install_lib_rpath_macos",
-    deps = ["qemu_ninja_install"],
-    command = "spaces-starlark-sdk/script/update-rpath-macos.star",
-    args = [
-        "--binary-path={}/lib".format(install_path),
-        "--old-path={}/lib".format(install_path),
-        "--new-path=@loader_path",
-    ],
-)
-
-#add_publish_archive(
-#    name = "qemu-arm",
-#    input = "build/install",
-#    version = qemu_version,
-#    deploy_repo = "https://github.com/work-spaces/tools",
-#    deps = ["install_qemu_rpath"],
-#)

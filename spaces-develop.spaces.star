@@ -29,17 +29,16 @@ members = [
 
 [workspace.dependencies]
 anyhow-source-location = { git = "https://github.com/work-spaces/anyhow-source-location", rev = "019b7804e35a72f945b3b4b3a96520cdbaa77f70" }
-anyhow = "1.0.87"
-serde = { version = "1.0.130", features = ["derive"] }
-starlark = "0.12.0"
-state = "0.6.0"
-petgraph = "0.6.5"
-serde_json = "1.0.68"
-glob-match = "0.2.1"
-url = "2.5.2"
-toml = "0.8.19"
+anyhow = "1"
+serde = { version = "1", features = ["derive"] }
+starlark = "0.13"
+state = "0.6"
+petgraph = "0.6"
+serde_json = "1"
+glob-match = "0.2"
+url = "2"
+toml = "0.8"
 serde_yaml = "0.9"
-env_logger = "0.11.5"
 
 easy-archiver = { path = "./easy-archiver", features = [
     "printer",
@@ -54,6 +53,7 @@ http-archive.path = "spaces/crates/http-archive"
 changes.path = "spaces/crates/changes"
 environment.path = "spaces/crates/environment"
 lock.path = "spaces/crates/lock"
+logger.path = "spaces/crates/logger"
 
 [profile.dev]
 opt-level = 3
@@ -104,6 +104,11 @@ checkout_update_asset(
             "https://github.com/work-spaces/printer-rs": {
                 "printer": {
                     "path": "./printer",
+                },
+            },
+            "https://github.com/work-spaces/easy-archiver": {
+                "easy-archiver": {
+                    "path": "./easy-archiver",
                 },
             },
         },

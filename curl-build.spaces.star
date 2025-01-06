@@ -11,7 +11,8 @@ load(
     "gnu_add_source_archive",
 )
 load("//@star/sdk/star/openssl.star", "openssl_add")
-load("//@star/sdk/star/cmake.star", "cmake_add", "cmake_add_repo")
+load("//@star/sdk/star/cmake.star", "cmake_add_repo")
+load("//@star/packages/star/cmake.star", "cmake_add")
 load("//@star/sdk/star/run.star", "run_add_exec")
 load("//@star/sdk/star/rpath.star", "rpath_update_macos_install_dir")
 

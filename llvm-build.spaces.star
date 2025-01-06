@@ -4,38 +4,27 @@ Building LLVM using Spaces
 Use:
 
 ```
-spaces checkout --script=workflows/preload --script=workflows/llvm16-config --script=workflows/llvm-build --name=llvm16-build
-spaces checkout --script=workflows/preload --script=workflows/llvm17-config --script=workflows/llvm-build --name=llvm17-build
+spaces checkout --workflow=workflows:preload,llvm16-config,llvm-build --name=llvm16-build
+spaces checkout --workflow=workflows:preload,llvm17-config,llvm-build --name=llvm17-build
 ```
 
 """
 
-load("//@star/packages/star/github.com/packages.star", github_packages = "packages")
-load("//@star/sdk/star/cmake.star", "cmake_add")
+load("//@star/packages/star/cmake.star", "cmake_add")
 load("//@star/sdk/star/run.star", "run_add_exec")
-load("//@star/sdk/star/gh.star", "gh_add_publish_archive")
 load("//@star/packages/star/python.star", "python_add_uv")
+load("//@star/packages/star/package.star", "package_add")
 load(
     "//@star/sdk/star/checkout.star",
     "checkout_add_archive",
-    "checkout_add_platform_archive",
     "checkout_update_env",
 )
 load("//llvm-config.star", llvm_sha256 = "sha256", llvm_version = "version")
 
-info.set_minimum_version("0.10.3")
+info.set_minimum_version("0.11.6")
 
 # CMake is required to build LLVM
-cmake_add(
-    "cmake3",
-    version = "v3.30.5",
-)
-
-# Used for publishing
-checkout_add_platform_archive(
-    "gh2",
-    platforms = github_packages["cli"]["cli"]["v2.62.0"],
-)
+cmake_add("cmake3", "v3.30.5")
 
 # python with psutil is required for the test suite
 python_add_uv(
@@ -47,10 +36,7 @@ python_add_uv(
 )
 
 # LLVM could also be built with make but ninja is nicer
-checkout_add_platform_archive(
-    "ninja1",
-    platforms = github_packages["ninja-build"]["ninja"]["v1.12.1"],
-)
+package_add("github.com", "ninja-build", "ninja", "v1.12.1")
 
 checkout_add_archive(
     "llvm-project",
@@ -112,10 +98,3 @@ run_add_exec(
     ],
 )
 
-gh_add_publish_archive(
-    name = "llvm",
-    input = "build/install/llvm",
-    version = llvm_version,
-    deploy_repo = "https://github.com/work-spaces/tools",
-    deps = ["install"],
-)

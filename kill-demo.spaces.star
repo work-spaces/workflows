@@ -47,5 +47,6 @@ run_add_kill_exec(
 run_add_target(
     "kill-demo",
     deps = ["kill-sleep10", "sleep10"],
-    type = "Optional"
+    type = "Optional",
+    help = "Kill sleep 10 after 5 seconds"
 )
