@@ -12,7 +12,7 @@ spaces checkout --workflow=workflows:preload,llvm17-config,llvm-build --name=llv
 
 load("//@star/packages/star/cmake.star", "cmake_add")
 load("//@star/sdk/star/run.star", "run_add_exec")
-load("//@star/sdk/star/oras.star", "oras_add_publish_archive")
+load("//@star/sdk/star/gh.star", "gh_add_publish_archive")
 load("//@star/packages/star/python.star", "python_add_uv")
 load("//@star/packages/star/package.star", "package_add")
 load(
@@ -20,7 +20,12 @@ load(
     "checkout_add_archive",
     "checkout_update_env",
 )
-load("//llvm-config.star", llvm_sha256 = "sha256", llvm_version = "version")
+load(
+    "//llvm-config.star",
+    llvm_sha256 = "sha256",
+    llvm_deploy_repo = "deploy_repo",
+    llvm_version = "version",
+)
 
 info.set_minimum_version("0.11.6")
 
@@ -101,13 +106,10 @@ run_add_exec(
     ],
 )
 
-oras_add_publish_archive(
-    "oras_publish",
-    url = "ghcr.io/work-spaces",
-    deploy_repo = "github.com/work-spaces/capsules",
-    artifact = "llvm-{}-{}".format(llvm_version, info.get_platform_name()),
-    tag = "{}-{}".format(llvm_version, llvm_sha256),
+gh_add_publish_archive(
+    "llvm",
+    deploy_repo = llvm_deploy_repo,
+    version = llvm_version,
     input = install_path,
     deps = ["install"],
-    suffix = "tar.xz",
 )

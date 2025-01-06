@@ -10,6 +10,7 @@ header = '"""LLVM 16 Config"""\n\n'
 
 version = 'version = "16.0.6"\n'
 sha256 = 'sha256 = "662f84b9266d54802e82f2b80ba24177af8032c0b5e677b1bb7466f757d1ece6"\n\n'
+deploy_repo = "github.com/work-spaces/tools"
 
 checkout.add_asset(
     rule = {"name": "llvm-config"},
