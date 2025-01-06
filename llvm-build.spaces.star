@@ -12,6 +12,7 @@ spaces checkout --workflow=workflows:preload,llvm17-config,llvm-build --name=llv
 
 load("//@star/packages/star/cmake.star", "cmake_add")
 load("//@star/sdk/star/run.star", "run_add_exec")
+load("//@star/sdk/star/oras.star", "oras_add_publish_archive")
 load("//@star/packages/star/python.star", "python_add_uv")
 load("//@star/packages/star/package.star", "package_add")
 load(
@@ -55,6 +56,8 @@ checkout_update_env(
 
 workspace = info.get_absolute_path_to_workspace()
 
+install_path = "{}/build/install/llvm".format(workspace)
+
 run_add_exec(
     "configure",
     command = "cmake",
@@ -63,7 +66,7 @@ run_add_exec(
         "-DPython3_EXECUTABLE={}/venv/bin/python3".format(workspace),
         "-Bbuild/llvm",
         "-Sllvm-project/llvm",
-        "-DCMAKE_INSTALL_PREFIX={}/build/install/llvm".format(workspace),
+        "-DCMAKE_INSTALL_PREFIX={}".format(install_path),
         "-DLLVM_ENABLE_PROJECTS=clang;clang-tools-extra;lld",
         "-DCMAKE_BUILD_TYPE=MinSizeRel",
     ],
@@ -98,3 +101,13 @@ run_add_exec(
     ],
 )
 
+oras_add_publish_archive(
+    "oras_publish",
+    url = "ghcr.io/work-spaces",
+    deploy_repo = "github.com/work-spaces/capsules",
+    artifact = "llvm-{}-{}".format(llvm_version, info.get_platform_name()),
+    tag = "{}-{}".format(llvm_version, llvm_sha256),
+    input = install_path,
+    deps = ["install"],
+    suffix = "tar.xz",
+)
