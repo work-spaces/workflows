@@ -3,6 +3,7 @@ Checkout llvm, cmake, and ninja for a complete build system and toolchain.
 """
 
 load("//@star/sdk/star/spaces-env.star", "spaces_working_env")
+load("//@star/sdk/star/cmake.star", "cmake_add_configure_build_install")
 load("//@star/packages/star/llvm.star", "llvm_add")
 load("//@star/packages/star/cmake.star", "cmake_add")
 load("//@star/packages/star/package.star", "package_add")
@@ -42,14 +43,14 @@ checkout_add_asset(
 
 cmakelists_content = """
 cmake_minimum_required(VERSION 3.20)
-set(CMAKE_TOOLCHAIN_FILE llvm-19-toolchain.cmake)
+set(CMAKE_TOOLCHAIN_FILE $ENV{SPACES_WORKSPACE}/llvm-19-toolchain.cmake)
 project(hello_world)
 add_executable(hello main.cpp)
 """
 
 checkout_add_asset(
     "cmakelists",
-    destination = "CMakeLists.txt",
+    destination = "hello/CMakeLists.txt",
     content = cmakelists_content,
 )
 
@@ -64,31 +65,23 @@ int main(){
 
 checkout_add_asset(
     "main_cpp",
-    destination = "main.cpp",
+    destination = "hello/main.cpp",
     content = main_cpp_content,
 )
 
 # basic spaces environment - adds /usr/bin and /bin to PATH
 spaces_working_env()
 
-run_add_exec(
-    "configure",
-    help = "Configure the build system",
-    command = "cmake",
-    args = ["-GNinja", "-Bbuild"],
-)
-
-run_add_exec(
-    "build",
-    deps = ["configure"],
-    help = "Build the build/hello binary",
-    command = "ninja",
-    args = ["-Cbuild"],
+cmake_add_configure_build_install(
+    "hello",
+    source_directory = "hello",
+    skip_install = True
 )
 
 run_add_exec(
     "run",
-    deps = ["build"],
+    deps = ["hello"],
     help = "Run the build/hello binary",
-    command = "build/hello",
+    log_level = "App",
+    command = "build/hello/hello",
 )
