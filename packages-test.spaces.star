@@ -15,31 +15,18 @@ load("//@star/packages/star/python.star", "python_add_uv")
 load("//@star/sdk/star/run.star", "run_add_exec")
 load("//@star/packages/star/rust.star", "rust_add")
 load("//@star/packages/star/sccache.star", "sccache_add")
+load("//@star/packages/star/package.star", "package_add")
+load("//@star/packages/star/bazelisk.star", "bazelisk_add")
+load("//@star/packages/star/shfmt.star", "shfmt_add")
 
-checkout_add_platform_archive(
-    "nodejs23",
-    platforms = packages["nodejs.org"]["node"]["nodejs"]["v23.3.0"],
-)
-
-checkout_add_platform_archive(
-    "gh2",
-    platforms = packages["github.com"]["cli"]["cli"]["v2.62.0"],
-)
-
-checkout_add_platform_archive(
-    "qemu_arm8",
-    platforms = packages["github.com"]["xpack-dev-tools"]["qemu-arm-xpack"]["v8.2.6-1"],
-)
-
-checkout_add_platform_archive(
-    "pkg_config0",
-    platforms = packages["github.com"]["xpack-dev-tools"]["pkg-config-xpack"]["v0.29.2-3"],
-)
-
-checkout_add_platform_archive(
-    "oras1",
-    platforms = packages["github.com"]["oras-project"]["oras"]["v1.2.1"],
-)
+package_add("nodejs.org", "node", "nodejs", "v23.3.0")
+package_add("github.com", "cli", "cli", "v2.62.0")
+package_add("github.com", "xpack-dev-tools", "qemu-arm-xpack", "v8.2.6-1")
+package_add("github.com", "xpack-dev-tools", "pkg-config-xpack", "v0.29.2-3")
+package_add("github.com", "oras-project", "oras", "v1.2.1")
+package_add("github.com", "koalaman", "shellcheck", "v0.10.0")
+bazelisk_add("bazelisk", "v1.25.0")
+shfmt_add("shfmt", "v3.10.0")
 
 spaces0 = packages["github.com"]["work-spaces"]["spaces"]["v0.10.4"]
 
@@ -58,15 +45,8 @@ checkout_add_platform_archive(
     platforms = spaces_alt,
 )
 
-checkout_add_platform_archive(
-    "gnu_aarch_none_elf13",
-    platforms = packages["arm.developer.com"]["gnu"]["aarch64-none-elf"]["13.3.rel1"],
-)
-
-checkout_add_platform_archive(
-    "gnu_arm_none_eabi13",
-    platforms = packages["arm.developer.com"]["gnu"]["arm-none-eabi"]["13.3.rel1"],
-)
+package_add("arm.developer.com", "gnu", "aarch64-none-elf", "13.3.rel1")
+package_add("arm.developer.com", "gnu", "arm-none-eabi", "13.3.rel1")
 
 python_add_uv(
     "uv_python",
@@ -122,6 +102,9 @@ def check_versions():
         "aarch64-none-elf-gcc",
         "arm-none-eabi-gcc",
         "pkg-config",
+        "shfmt",
+        "bazelisk",
+        "shellcheck",
         "qemu-system-arm",
     ]
     for name in commands:

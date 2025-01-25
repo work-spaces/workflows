@@ -159,6 +159,7 @@ task_options = {
     "env": {
         "CARGO_HOME": "{}/cargo".format(spaces_store),
         "RUSTUP_HOME": "{}/rustup".format(spaces_store),
+        "RUSTFLAGS": "--remap-path-prefix={}/=".format(info.get_absolute_path_to_workspace())
     },
 }
 
