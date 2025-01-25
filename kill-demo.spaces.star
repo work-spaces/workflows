@@ -10,7 +10,7 @@ spaces run
 Kill sleep10 after 5 seconds
 
 ```sh
-spaces run --target=kill-demo:kill-demo
+spaces run kill-demo:kill-demo
 ```
 
 """

@@ -23,7 +23,7 @@ checkout_add_which_asset(
     destination = "sysroot/bin/spaces",
 )
 
-def _add_workflow_test(name, deps = [], is_run = True):
+def _add_workflow_test(name, deps = [], is_run = True, target = None):
     CHECKOUT_RULE = "{}_checkout".format(name)
     run_add_exec(
         CHECKOUT_RULE,
@@ -39,6 +39,7 @@ def _add_workflow_test(name, deps = [], is_run = True):
         deps = deps,
     )
     if is_run:
+        effective_target = [target] if target else []
         run_add_exec(
             name,
             command = "spaces",
@@ -46,13 +47,14 @@ def _add_workflow_test(name, deps = [], is_run = True):
                 "--hide-progress-bars",
                 "--verbosity=message",
                 "run",
-            ],
+            ] + effective_target,
             deps = [CHECKOUT_RULE],
             working_directory = name,
         )
 
 _add_workflow_test("python-sdk")
-_add_workflow_test("conan-sdk", ["python-sdk"])
+_add_workflow_test("kill-demo", ["python-sdk"], target = "kill-demo:kill-demo")
+_add_workflow_test("conan-sdk", ["kill-demo"])
 _add_workflow_test("llvm-sdk", ["conan-sdk"])
 _add_workflow_test("go-sdk", ["llvm-sdk"])
 _add_workflow_test("node-sdk", ["go-sdk"])
