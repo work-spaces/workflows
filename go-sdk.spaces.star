@@ -8,6 +8,7 @@ This is a work in progress.
 load("//@star/sdk/star/spaces-env.star", "spaces_working_env")
 load("//@star/packages/star/go.dev/go/go/1.23.3.star", go_platforms = "platforms")
 load("//@star/sdk/star/run.star", "run_add_exec")
+load("//@star/sdk/star/shell.star", "cp")
 load(
     "//@star/sdk/star/checkout.star",
     "checkout_add_asset",
@@ -41,23 +42,25 @@ checkout_add_asset(
 
 run_add_exec(
     "mod_init",
-    help = "Initiazlie the go module",
+    inputs = [],
+    help = "Initialize the go module",
     command = "go",
     args = ["mod", "init", "go/hello"],
 )
 
 run_add_exec(
     "mkdir_hello_go",
+    inputs = [],
     deps = ["mod_init"],
     help = "Copy the hello go file",
     command = "mkdir",
     args = ["-p", "go/hello"],
 )
 
-run_add_exec(
+cp(
     "cp_hello_go",
     deps = ["mkdir_hello_go"],
-    help = "Copy the hello go file",
-    command = "cp",
-    args = ["-f", "hello_go.txt", "go/hello/hello.go"],
+    options = ["-f"],
+    source = "hello_go.txt",
+    destination = "go/hello/hello.go",
 )
