@@ -50,6 +50,7 @@ def _add_workflow_test(name, deps = [], is_run = True, target = None):
             ] + effective_target,
             deps = [CHECKOUT_RULE],
             working_directory = name,
+            help = "Run checkout and run up to and includeing {}".format(name)
         )
 
 _add_workflow_test("python-sdk")
