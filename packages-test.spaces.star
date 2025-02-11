@@ -15,6 +15,7 @@ load("//@star/packages/star/python.star", "python_add_uv")
 load("//@star/sdk/star/run.star", "run_add_exec")
 load("//@star/packages/star/rust.star", "rust_add")
 load("//@star/packages/star/sccache.star", "sccache_add")
+load("//@star/packages/star/ccache.star", "ccache_add")
 load("//@star/packages/star/package.star", "package_add")
 load("//@star/packages/star/bazelisk.star", "bazelisk_add")
 load("//@star/packages/star/shfmt.star", "shfmt_add")
@@ -66,6 +67,8 @@ sccache_add(
     version = "0.8",
 )
 
+ccache_add("ccache", "v4.10.2")
+
 # This will add /usr/bin and /bin to the path so you can
 # work in the command line after running `source env`
 spaces_working_env()
@@ -103,6 +106,7 @@ def check_versions():
         "arm-none-eabi-gcc",
         "pkg-config",
         "shfmt",
+        "ccache",
         "bazelisk",
         "shellcheck",
         "qemu-system-arm",

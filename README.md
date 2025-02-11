@@ -7,10 +7,10 @@ This command will create a sample project for building a program using
 
 ```sh
 git clone https://github.com/work-spaces/workflows
-spaces checkout --script=workflows/preload --script=workflows/llvm-sdk --name=llvm-workspace
+spaces checkout --workflow=workflows:llvm-sdk --name=llvm-workspace
 cd llvm-workspace
 spaces run
 
 # To get into the ENV and run commands manually
-source env
+source ./env
 ```

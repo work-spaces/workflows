@@ -6,6 +6,7 @@ load("//@star/sdk/star/spaces-env.star", "spaces_working_env")
 load("//@star/sdk/star/cmake.star", "cmake_add_configure_build_install")
 load("//@star/packages/star/llvm.star", "llvm_add")
 load("//@star/packages/star/cmake.star", "cmake_add")
+load("//@star/packages/star/ccache.star", "ccache_add")
 load("//@star/packages/star/package.star", "package_add")
 load(
     "//@star/sdk/star/checkout.star",
@@ -16,6 +17,7 @@ load("//@star/sdk/star/run.star", "run_add_exec")
 info.set_minimum_version("0.11.6")
 
 cmake_add("cmake3","v3.30.5")
+ccache_add("ccache","v4.10.2")
 package_add("github.com", "ninja-build", "ninja", "v1.12.1")
 
 llvm_add(
@@ -75,7 +77,10 @@ spaces_working_env()
 cmake_add_configure_build_install(
     "hello",
     source_directory = "hello",
-    skip_install = True
+    skip_install = True,
+    configure_args = [
+        "-DCMAKE_CXX_COMPILER_LAUNCHER=ccache",
+    ]
 )
 
 run_add_exec(
