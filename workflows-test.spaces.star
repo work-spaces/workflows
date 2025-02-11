@@ -4,7 +4,7 @@ Test the workflows in this repo
 
 load("//@star/sdk/star/checkout.star", "checkout_add_repo", "checkout_add_which_asset")
 load("//@star/sdk/star/info.star", "info_set_minimum_version")
-load("//@star/sdk/star/run.star", "run_add_exec")
+load("//@star/sdk/star/run.star", "run_add_exec", "RUN_TYPE_ALL")
 load("//@star/sdk/star/spaces-env.star", "spaces_working_env")
 
 info_set_minimum_version("0.12.0")
@@ -27,6 +27,7 @@ def _add_workflow_test(name, deps = [], is_run = True, target = None):
     CHECKOUT_RULE = "{}_checkout".format(name)
     run_add_exec(
         CHECKOUT_RULE,
+        type = RUN_TYPE_ALL,
         command = "spaces",
         inputs = [], # run only once
         args = [
@@ -49,6 +50,7 @@ def _add_workflow_test(name, deps = [], is_run = True, target = None):
                 "run",
             ] + effective_target,
             deps = [CHECKOUT_RULE],
+            type = RUN_TYPE_ALL,
             working_directory = name,
             help = "Run checkout and run up to and includeing {}".format(name)
         )
