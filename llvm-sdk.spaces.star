@@ -12,9 +12,11 @@ load(
     "//@star/sdk/star/checkout.star",
     "checkout_add_asset",
 )
-load("//@star/sdk/star/run.star", "run_add_exec")
+load("//@star/sdk/star/run.star", "run_add_exec", "RUN_TYPE_ALL")
+load("//@star/sdk/star/info.star", "info_set_minimum_version")
 
-info.set_minimum_version("0.11.6")
+info_set_minimum_version("0.12.0")
+
 
 cmake_add("cmake3","v3.30.5")
 ccache_add("ccache","v4.10.2")
@@ -85,6 +87,7 @@ cmake_add_configure_build_install(
 
 run_add_exec(
     "run",
+    type = RUN_TYPE_ALL,
     deps = ["hello"],
     help = "Run the build/hello binary",
     log_level = "App",

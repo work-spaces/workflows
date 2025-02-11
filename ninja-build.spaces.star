@@ -9,9 +9,10 @@ load(
     "checkout_add_repo",
     "checkout_update_env",
 )
-load("//@star/sdk/star/run.star", "run_add_exec")
+load("//@star/sdk/star/run.star", "run_add_exec", "RUN_TYPE_ALL")
+load("//@star/sdk/star/info.star", "info_set_minimum_version")
 
-info.set_minimum_version("0.11.6")
+info_set_minimum_version("0.12.0")
 
 cmake_add("cmake3", "v3.30.5")
 
@@ -67,6 +68,7 @@ run_add_exec(
 
 run_add_exec(
     "install",
+    type = RUN_TYPE_ALL,
     inputs = [
         "+build/ninja",
         "+ninja-build.spaces.star",

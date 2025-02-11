@@ -12,7 +12,7 @@ load(
     "update_platforms_prefix",
 )
 load("//@star/packages/star/python.star", "python_add_uv")
-load("//@star/sdk/star/run.star", "run_add_exec")
+load("//@star/sdk/star/run.star", "run_add_exec", "RUN_TYPE_ALL")
 load("//@star/packages/star/rust.star", "rust_add")
 load("//@star/packages/star/sccache.star", "sccache_add")
 load("//@star/packages/star/ccache.star", "ccache_add")
@@ -76,6 +76,7 @@ spaces_working_env()
 def check_version(name):
     run_add_exec(
         "{}_test_version".format(name),
+        type = RUN_TYPE_ALL,
         command = name,
         args = ["--version"],
         help = "Check the version of {}".format(name),
@@ -84,6 +85,7 @@ def check_version(name):
 def check_help(name):
     run_add_exec(
         "{}_test_help".format(name),
+        type = RUN_TYPE_ALL,
         command = name,
         args = ["-h"],
         help = "Check the help of {}".format(name),

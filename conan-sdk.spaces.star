@@ -12,7 +12,10 @@ load(
     "checkout_add_repo",
     "checkout_update_env",
 )
-load("//@star/sdk/star/run.star", "run_add_exec")
+load("//@star/sdk/star/run.star", "run_add_exec", "RUN_TYPE_ALL")
+load("//@star/sdk/star/info.star", "info_set_minimum_version")
+
+info_set_minimum_version("0.12.0")
 
 python_add_uv(
     "python3",
@@ -96,6 +99,7 @@ run_add_exec(
 
 run_add_exec(
     "simple_cmake_project_build",
+    type = RUN_TYPE_ALL,
     deps = ["simple_cmake_project_configure"],
     command = "ninja",
     args = [

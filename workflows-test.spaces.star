@@ -7,7 +7,7 @@ load("//@star/sdk/star/info.star", "info_set_minimum_version")
 load("//@star/sdk/star/run.star", "run_add_exec")
 load("//@star/sdk/star/spaces-env.star", "spaces_working_env")
 
-info_set_minimum_version("0.11.26")
+info_set_minimum_version("0.12.0")
 spaces_working_env()
 
 checkout_add_repo(

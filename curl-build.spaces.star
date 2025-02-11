@@ -3,7 +3,12 @@ Build Curl using spaces.
 """
 
 load("//@star/packages/star/github.com/packages.star", github_packages = "packages")
-load("//@star/sdk/star/checkout.star", "checkout_add_platform_archive", "checkout_add_repo", "checkout_update_env")
+load(
+    "//@star/sdk/star/checkout.star",
+    "checkout_add_platform_archive",
+    "checkout_add_repo",
+    "checkout_update_env",
+)
 load(
     "//@star/sdk/star/gnu_autotools.star",
     "gnu_add_autotools_from_source",
@@ -13,8 +18,11 @@ load(
 load("//@star/sdk/star/openssl.star", "openssl_add")
 load("//@star/sdk/star/cmake.star", "cmake_add_repo")
 load("//@star/packages/star/cmake.star", "cmake_add")
-load("//@star/sdk/star/run.star", "run_add_exec")
+load("//@star/sdk/star/run.star", "run_add_exec", "run_add_to_all")
 load("//@star/sdk/star/rpath.star", "rpath_update_macos_install_dir")
+load("//@star/sdk/star/info.star", "info_set_minimum_version")
+
+info_set_minimum_version("0.12.0")
 
 libiconv_version = "1.17"
 libiconv_sha256 = "8f74213b56238c85a50a5329f77e06198771e70dd9a739779f4c02f65d971313"
@@ -138,7 +146,7 @@ gnu_add_source_archive(
     sha256 = libidn2_sha256,
     source_directory = "libidn2-{}".format(libidn2_version),
     deps = gnu_autotools_deps,
-    configure_args = [ "--with-included-libunistring"]
+    configure_args = ["--with-included-libunistring"],
 )
 
 checkout_add_platform_archive(
@@ -223,3 +231,6 @@ rpath_update_macos_install_dir(
     install_path,
     deps = ["curl_install"],
 )
+
+
+run_add_to_all("all", deps = ["update_macos_rpaths"])

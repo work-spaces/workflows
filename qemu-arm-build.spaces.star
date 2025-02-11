@@ -10,10 +10,10 @@ load(
     "checkout_add_repo",
     "checkout_update_env",
 )
-load("//@star/sdk/star/run.star", "run_add_exec")
+load("//@star/sdk/star/run.star", "run_add_exec", "run_add_to_all")
 load("//@star/sdk/star/spaces-env.star", "spaces_working_env")
 
-info.set_minimum_version("0.11.2")
+info.set_minimum_version("0.12.0")
 
 spaces_working_env()
 
@@ -185,3 +185,5 @@ rpath_update_macos_install_dir(
     install_path = install_path,
     deps = ["qemu_ninja_install"],
 )
+
+run_add_to_all("all", deps = ["install_bin_rpath_macos", "qemu_ninja_install"])

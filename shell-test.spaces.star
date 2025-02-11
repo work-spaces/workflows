@@ -3,7 +3,7 @@ Shell Test workflow
 """
 
 load("//@star/sdk/star/checkout.star", "checkout_add_asset")
-load("//@star/sdk/star/run.star", "run_add_exec")
+load("//@star/sdk/star/run.star", "run_add_exec", "RUN_TYPE_ALL")
 load("//@star/packages/star/spaces-cli.star", "spaces_add")
 load("//@star/sdk/star/spaces-env.star", "spaces_working_env")
 load(
@@ -47,7 +47,8 @@ run_add_exec(
     "run_script",
     command = "./hello.star",
     deps = ["chmod_file"],
-    log_level = "App"
+    log_level = "App",
+    type = RUN_TYPE_ALL,
 )
 
 cp(
@@ -61,6 +62,7 @@ ls(
     "check_copy_file",
     path = "README2.md",
     deps = ["copy_file"],
+    type = RUN_TYPE_ALL,
 )
 
 ln(
@@ -75,6 +77,7 @@ ls(
     "check_ln_file",
     path = "README2.md",
     deps = ["ln_symbolic_file"],
+    type = RUN_TYPE_ALL,
 )
 
 mv(
@@ -103,7 +106,8 @@ cp(
     source = "README2.md",
     destination = "README.md",
     deps = ["check_move_file2", "check_move_file"],
-    options = ["-f"]
+    options = ["-f"],
+    type = RUN_TYPE_ALL,
 )
 
 mkdir(
@@ -117,11 +121,14 @@ cp(
     source = "README.md",
     destination = "new_dir/README2.md",
     deps = ["create_dir"],
-    options = ["-f"]
+    options = ["-f"],
+    type = RUN_TYPE_ALL,
+
 )
 
 ls(
     "check_new_dir",
     path = "new_dir/README2.md",
     deps = ["copy_file2"],
+    type = RUN_TYPE_ALL,
 )

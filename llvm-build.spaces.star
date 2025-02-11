@@ -11,7 +11,7 @@ spaces checkout --workflow=workflows:preload,llvm17-config,llvm-build --name=llv
 """
 
 load("//@star/packages/star/cmake.star", "cmake_add")
-load("//@star/sdk/star/run.star", "run_add_exec")
+load("//@star/sdk/star/run.star", "run_add_exec", "RUN_TYPE_ALL")
 load("//@star/sdk/star/gh.star", "gh_add_publish_archive")
 load("//@star/packages/star/python.star", "python_add_uv")
 load("//@star/packages/star/package.star", "package_add")
@@ -108,6 +108,7 @@ run_add_exec(
 
 gh_add_publish_archive(
     "llvm",
+    type = RUN_TYPE_ALL,
     deploy_repo = llvm_deploy_repo,
     version = llvm_version,
     input = install_path,

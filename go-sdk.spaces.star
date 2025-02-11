@@ -7,9 +7,12 @@ This is a work in progress.
 
 load("//@star/sdk/star/spaces-env.star", "spaces_working_env")
 load("//@star/packages/star/package.star", "package_add")
-load("//@star/sdk/star/run.star", "RUN_INPUTS_ONCE", "run_add_exec")
+load("//@star/sdk/star/run.star", "RUN_INPUTS_ONCE", "run_add_exec", "RUN_TYPE_ALL")
 load("//@star/sdk/star/shell.star", "cp")
 load("//@star/sdk/star/checkout.star", "checkout_add_asset")
+load("//@star/sdk/star/info.star", "info_set_minimum_version")
+
+info_set_minimum_version("0.12.0")
 
 package_add("go.dev", "go", "go", "1.23.3")
 
@@ -52,6 +55,7 @@ run_add_exec(
 
 cp(
     "cp_hello_go",
+    type = RUN_TYPE_ALL,
     deps = ["mkdir_hello_go"],
     options = ["-f"],
     source = "hello_go.txt",

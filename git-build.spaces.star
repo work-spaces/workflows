@@ -3,7 +3,7 @@ Workflow to build git"
 """
 
 load("//@star/sdk/star/checkout.star", "checkout_add_archive", "checkout_update_env")
-load("//@star/sdk/star/run.star", "run_add_exec")
+load("//@star/sdk/star/run.star", "run_add_exec", "run_add_to_all")
 load("//@star/sdk/star/info.star", "info_get_absolute_path_to_workspace", "info_get_cpu_count")
 load("//@star/sdk/star/rpath.star", "rpath_update_macos_install_dir")
 load("//@star/sdk/star/spaces-env.star", "spaces_working_env")
@@ -13,9 +13,6 @@ load(
     "capsule_checkout",
     "capsule_checkout_add_workflow_repo",
 )
-
-
-
 
 CAPSULE_CHECKOUT_RULE = "capsules"
 GIT_VERSION = "2.45.1"
@@ -116,3 +113,6 @@ rpath_update_macos_install_dir(
     install_path = INSTALL_PATH,
     deps = ["git-install"],
 )
+
+
+run_add_to_all("all", deps = ["update_macos_rpath", "git-install"])
