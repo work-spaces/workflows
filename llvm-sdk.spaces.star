@@ -4,6 +4,7 @@ Checkout llvm, cmake, and ninja for a complete build system and toolchain.
 
 load("//@star/sdk/star/spaces-env.star", "spaces_working_env")
 load("//@star/sdk/star/cmake.star", "cmake_add_configure_build_install")
+load("//@star/sdk/star/shell.star", "ls")
 load("//@star/packages/star/llvm.star", "llvm_add")
 load("//@star/packages/star/cmake.star", "cmake_add")
 load("//@star/packages/star/ccache.star", "ccache_add")
@@ -85,11 +86,19 @@ cmake_add_configure_build_install(
     ]
 )
 
+# This is just here to verify that the extensions.json
+# file was checkout out correctly
+ls(
+    "check_vscode",
+    path = ".vscode/extensions.json",
+)
+
 run_add_exec(
     "run",
     type = RUN_TYPE_ALL,
-    deps = ["hello"],
+    deps = ["hello", "check_vscode"],
     help = "Run the build/hello binary",
     log_level = "App",
+    redirect_stdout = "hello.txt",
     command = "build/hello/hello",
 )
