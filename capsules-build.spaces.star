@@ -5,6 +5,7 @@ Create a workspace using the autotools capsule.
 """
 
 load("//@star/sdk/star/spaces-env.star", "spaces_working_env")
+load("//@star/sdk/star/info.star", "info_set_max_queue_count")
 load(
     "//@star/sdk/star/capsule.star",
     "capsule_checkout",
@@ -12,7 +13,7 @@ load(
     "capsule_checkout_add_workflow_repo",
 )
 
-info.set_max_queue_count(1)
+info_set_max_queue_count(1)
 
 capsules_repo_rule = "capsules"
 
