@@ -1,5 +1,8 @@
 """
-Workflow to build git"
+Workflow to build git
+
+Currently broken: needs to be ported to the new capsule system
+
 """
 
 load("//@star/sdk/star/checkout.star", "checkout_add_archive", "checkout_update_env")

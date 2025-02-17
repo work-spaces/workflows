@@ -10,6 +10,10 @@ load(
     "info_set_minimum_version",
 )
 load("//@star/sdk/star/run.star", "run_add_target")
+load("//@star/sdk/star/checkout.star", 
+    "checkout_add_repo",
+    "checkout_add_target"
+)
 load("//@star/sdk/star/spaces-env.star", "spaces_working_env")
 
 info_set_minimum_version("0.12.6")
@@ -18,10 +22,10 @@ info_assert_member_semver(
     ">=0.1",
 )
 
-info_assert_member_revision(
-    "https://github.com/work-spaces/packages",
-    "v0.1.0",
-)
+#info_assert_member_revision(
+#    "https://github.com/work-spaces/packages",
+#    "v0.1.0",
+#)
 
 spaces_working_env()
 
@@ -39,3 +43,12 @@ run_add_target(
     "ls2",
     deps = ["ls1"],
 )
+
+checkout_add_repo(
+    "spaces",
+    url = "https://github.com/work-spaces/spaces",
+    rev = "main",
+    clone = "Blobless",
+    type = "Optional",
+)
+
