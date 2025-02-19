@@ -7,7 +7,7 @@ load("//@star/sdk/star/info.star", "info_set_minimum_version")
 load("//@star/sdk/star/run.star", "run_add_exec", "RUN_TYPE_ALL")
 load("//@star/sdk/star/spaces-env.star", "spaces_working_env")
 
-info_set_minimum_version("0.12.0")
+info_set_minimum_version("0.14.0")
 spaces_working_env()
 
 checkout_add_repo(
@@ -52,7 +52,7 @@ def _add_workflow_test(name, deps = [], is_run = True, target = None):
             deps = [CHECKOUT_RULE],
             type = RUN_TYPE_ALL,
             working_directory = name,
-            help = "Run checkout and run up to and includeing {}".format(name)
+            help = "Run checkout and run up to and including {}".format(name)
         )
 
 _add_workflow_test("python-sdk")
