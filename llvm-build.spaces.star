@@ -12,6 +12,8 @@ spaces checkout --workflow=workflows:preload,llvm17-config,llvm-build --name=llv
 
 load("//@star/packages/star/cmake.star", "cmake_add")
 load("//@star/sdk/star/run.star", "run_add_exec", "run_add_to_all")
+load("//@star/sdk/star/workspace.star", "workspace_get_absolute_path")
+load("//@star/sdk/star/info.star", "info_set_minimum_version")
 load("//@star/sdk/star/gh.star", "gh_add_publish_archive")
 load("//@star/packages/star/python.star", "python_add_uv")
 load("//@star/packages/star/package.star", "package_add")
@@ -27,7 +29,7 @@ load(
     llvm_version = "version",
 )
 
-info.set_minimum_version("0.11.6")
+info_set_minimum_version("0.14.0")
 
 # CMake is required to build LLVM
 cmake_add("cmake3", "v3.30.5")
@@ -59,19 +61,19 @@ checkout_update_env(
     paths = ["/usr/bin", "/usr/sbin", "/bin"],
 )
 
-workspace = info.get_absolute_path_to_workspace()
+WORKSPACE = workspace_get_absolute_path()
 
-install_path = "{}/build/install/llvm".format(workspace)
+INSTALL_PATH = "{}/build/install/llvm".format(WORKSPACE)
 
 run_add_exec(
     "configure",
     command = "cmake",
     args = [
         "-GNinja",
-        "-DPython3_EXECUTABLE={}/venv/bin/python3".format(workspace),
+        "-DPython3_EXECUTABLE={}/venv/bin/python3".format(WORKSPACE),
         "-Bbuild/llvm",
         "-Sllvm-project/llvm",
-        "-DCMAKE_INSTALL_PREFIX={}".format(install_path),
+        "-DCMAKE_INSTALL_PREFIX={}".format(INSTALL_PATH),
         "-DLLVM_ENABLE_PROJECTS=clang;clang-tools-extra;lld",
         "-DCMAKE_BUILD_TYPE=MinSizeRel",
     ],

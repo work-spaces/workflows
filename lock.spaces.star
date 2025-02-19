@@ -8,4 +8,4 @@ workspace_locks = {
   "preload:@star/packages": "v0.1.0"
 }
 
-info.set_locks(locks = workspace_locks) 
+#workspace.set_locks(locks = workspace_locks) 

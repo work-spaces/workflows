@@ -13,14 +13,18 @@ load(
     "//@star/sdk/star/checkout.star",
     "checkout_add_asset",
 )
-load("//@star/sdk/star/run.star", "run_add_exec", "RUN_TYPE_ALL")
+load(
+    "//@star/sdk/star/run.star",
+    "RUN_LOG_LEVEL_APP",
+    "RUN_TYPE_ALL",
+    "run_add_exec",
+)
 load("//@star/sdk/star/info.star", "info_set_minimum_version")
 
-info_set_minimum_version("0.12.0")
+info_set_minimum_version("0.14.0")
 
-
-cmake_add("cmake3","v3.30.5")
-ccache_add("ccache","v4.10.2")
+cmake_add("cmake3", "v3.30.5")
+ccache_add("ccache", "v4.10.2")
 package_add("github.com", "ninja-build", "ninja", "v1.12.1")
 
 llvm_add(
@@ -29,7 +33,7 @@ llvm_add(
     toolchain_name = "llvm-19-toolchain.cmake",
 )
 
-readme_content = """
+README_CONTENT = """
 
 To build and execute a simple program using llvm-19 and cmake/ninja:
 
@@ -43,10 +47,10 @@ spaces run
 checkout_add_asset(
     "readme",
     destination = "llvm-19-README.md",
-    content = readme_content,
+    content = README_CONTENT,
 )
 
-cmakelists_content = """
+CMAKELISTS_CONTENT = """
 cmake_minimum_required(VERSION 3.20)
 set(CMAKE_TOOLCHAIN_FILE $ENV{SPACES_WORKSPACE}/llvm-19-toolchain.cmake)
 project(hello_world)
@@ -56,10 +60,10 @@ add_executable(hello main.cpp)
 checkout_add_asset(
     "cmakelists",
     destination = "hello/CMakeLists.txt",
-    content = cmakelists_content,
+    content = CMAKELISTS_CONTENT,
 )
 
-main_cpp_content = """
+MAIN_CPP_CONTENT = """
 #include <iostream>
 
 int main(){
@@ -71,7 +75,7 @@ int main(){
 checkout_add_asset(
     "main_cpp",
     destination = "hello/main.cpp",
-    content = main_cpp_content,
+    content = MAIN_CPP_CONTENT,
 )
 
 # basic spaces environment - adds /usr/bin and /bin to PATH
@@ -83,7 +87,7 @@ cmake_add_configure_build_install(
     skip_install = True,
     configure_args = [
         "-DCMAKE_CXX_COMPILER_LAUNCHER=ccache",
-    ]
+    ],
 )
 
 # This is just here to verify that the extensions.json
@@ -98,7 +102,7 @@ run_add_exec(
     type = RUN_TYPE_ALL,
     deps = ["hello", "check_vscode"],
     help = "Run the build/hello binary",
-    log_level = "App",
+    log_level = RUN_LOG_LEVEL_APP,
     redirect_stdout = "hello.txt",
     command = "build/hello/hello",
 )

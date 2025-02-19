@@ -13,6 +13,7 @@ load(
 load("//@star/packages/star/rust.star", "rust_add")
 load("//@star/packages/star/sccache.star", "sccache_add")
 load("//@star/sdk/star/run.star", "run_add_exec")
+load("//@star/sdk/star/workspace.star", "workspace_get_absolute_path")
 
 # Configure the top level workspace
 
@@ -159,7 +160,7 @@ task_options = {
     "env": {
         "CARGO_HOME": "{}/cargo".format(spaces_store),
         "RUSTUP_HOME": "{}/rustup".format(spaces_store),
-        "RUSTFLAGS": "--remap-path-prefix={}/=".format(info.get_absolute_path_to_workspace())
+        "RUSTFLAGS": "--remap-path-prefix={}/=".format(workspace_get_absolute_path())
     },
 }
 

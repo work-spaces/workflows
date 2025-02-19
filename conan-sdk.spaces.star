@@ -14,6 +14,7 @@ load(
 )
 load("//@star/sdk/star/run.star", "run_add_exec", "RUN_TYPE_ALL")
 load("//@star/sdk/star/info.star", "info_set_minimum_version")
+load("//@star/sdk/star/workspace.star", "workspace_get_absolute_path")
 
 info_set_minimum_version("0.12.0")
 
@@ -39,7 +40,7 @@ checkout_add_repo(
 # work in the command line after running `source env`
 spaces_working_env()
 
-workspace = info.get_absolute_path_to_workspace()
+workspace = workspace_get_absolute_path()
 
 checkout_update_env(
     "conan_env",

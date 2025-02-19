@@ -11,9 +11,11 @@ load(
     "checkout_update_env",
 )
 load("//@star/sdk/star/run.star", "run_add_exec", "run_add_to_all")
+load("//@star/sdk/star/info.star", "info_set_minimum_version")
 load("//@star/sdk/star/spaces-env.star", "spaces_working_env")
+load("//@star/sdk/star/workspace.star", "workspace_get_absolute_path")
 
-info.set_minimum_version("0.12.0")
+info_set_minimum_version("0.12.0")
 
 spaces_working_env()
 
@@ -28,29 +30,29 @@ python_add_uv(
     packages = ["meson"],
 )
 
-clone_type = "Blobless" if info.is_ci() else "Worktree"
+CLONE_TYPE = "Blobless" if info.is_ci() else "Worktree"
 
 checkout_add_repo(
     "glib",
     url = "https://github.com/gnome/glib",
     rev = "2.82.2",
-    clone = clone_type,
+    clone = CLONE_TYPE,
 )
 
 checkout_add_repo(
     "pixman",
     url = "https://gitlab.freedesktop.org/pixman/pixman",
     rev = "pixman-0.43.4",
-    clone = clone_type,
+    clone = CLONE_TYPE,
 )
 
-qemu_version = "7.2.9"
+QEMU_VERSION = "7.2.9"
 
 checkout_add_repo(
     "qemu",
     url = "https://github.com/qemu/qemu",
-    rev = "v{}".format(qemu_version),
-    clone = clone_type,
+    rev = "v{}".format(QEMU_VERSION),
+    clone = CLONE_TYPE,
 )
 
 checkout_update_env(
@@ -60,12 +62,12 @@ checkout_update_env(
 
 # Run Rules
 
-workspace = info.get_absolute_path_to_workspace()
+WORKSPACE = workspace_get_absolute_path()
 
-install_prefix = "{}/build/install".format(workspace)
-install_prefix_arg = "--prefix={}".format(install_prefix)
-job_arg = "-j{}".format(info.get_cpu_count())
-workspace_build_dir = "{}/build".format(workspace)
+INSTALL_PREFIX = "{}/build/install".format(WORKSPACE)
+INSTALL_PREFIX_ARG = "--prefix={}".format(INSTALL_PREFIX)
+JOB_ARG = "-j{}".format(info.get_cpu_count())
+WORKSPACE_BUILD_DIR = "{}/build".format(WORKSPACE)
 
 def meson_compile_and_install(rule_name):
     build_rule_name = "{}_build".format(rule_name)
@@ -86,13 +88,13 @@ def meson_compile_and_install(rule_name):
         working_directory = working_directory,
     )
 
-install_path = "{}/build/install".format(workspace)
+INSTALL_PATH = "{}/build/install".format(WORKSPACE)
 
 def get_common_configure_args(build_dir):
     return [
         "configure",
         build_dir,
-        "--prefix={}".format(install_path),
+        "--prefix={}".format(INSTALL_PATH),
         "--buildtype=release",
         "--pkgconfig.relocatable",
     ]
@@ -103,8 +105,8 @@ run_add_exec(
     args = ["setup", "build/glib", "glib"],
 )
 
-glib_common_configure_args = get_common_configure_args("../build/glib")
-linux_configure_args = [
+GLIB_COMMON_CONFIGURE_ARGS = get_common_configure_args("../build/glib")
+LINUX_CONFIGURE_ARGS = [
     "--default-library=static",
 ] if info.is_platform_linux() else []
 
@@ -112,7 +114,7 @@ run_add_exec(
     "glib_configure",
     deps = ["glib_setup"],
     command = "meson",
-    args = glib_common_configure_args + linux_configure_args,
+    args = GLIB_COMMON_CONFIGURE_ARGS + LINUX_CONFIGURE_ARGS,
     working_directory = "glib",
 )
 
@@ -124,19 +126,19 @@ run_add_exec(
     args = ["setup", "build/pixman", "pixman"],
 )
 
-pixman_common_configure_args = get_common_configure_args("{}/pixman".format(workspace_build_dir))
+PIXMAN_COMMON_CONFIGURE_ARGS = get_common_configure_args("{}/pixman".format(WORKSPACE_BUILD_DIR))
 
 run_add_exec(
     "pixman_configure",
     deps = ["pixman_setup"],
     command = "meson",
-    args = pixman_common_configure_args + linux_configure_args,
+    args = PIXMAN_COMMON_CONFIGURE_ARGS + LINUX_CONFIGURE_ARGS,
     working_directory = "pixman",
 )
 
 meson_compile_and_install("pixman")
 
-pkg_config_path = "{}/lib/pkgconfig".format(install_prefix) if info.is_platform_macos() else "{}/lib/x86_64-linux-gnu/pkgconfig".format(install_prefix)
+PKG_CONFIG_PATH = "{}/lib/pkgconfig".format(INSTALL_PREFIX) if info.is_platform_macos() else "{}/lib/x86_64-linux-gnu/pkgconfig".format(INSTALL_PREFIX)
 
 run_add_exec(
     "qemu_setup",
@@ -144,15 +146,15 @@ run_add_exec(
     args = ["-p", "build/qemu"],
 )
 
-static_arg = ["--static"] if info.is_platform_linux() else []
+STATIC_ARG = ["--static"] if info.is_platform_linux() else []
 
 run_add_exec(
     "qemu_configure",
     deps = ["glib_install", "qemu_setup", "pixman_install"],
     command = "../../qemu/configure",
     args = [
-        "--python={}/venv/bin/python3".format(workspace),
-        install_prefix_arg,
+        "--python={}/venv/bin/python3".format(WORKSPACE),
+        INSTALL_PREFIX_ARG,
         "--target-list=arm-softmmu",
         "--disable-pie",
         "--disable-sdl",
@@ -161,9 +163,9 @@ run_add_exec(
         "--disable-xen",
         "--disable-guest-agent",
         "--disable-bsd-user",
-    ] + static_arg,
+    ] + STATIC_ARG,
     working_directory = "build/qemu",
-    env = {"PKG_CONFIG_PATH": pkg_config_path},
+    env = {"PKG_CONFIG_PATH": PKG_CONFIG_PATH},
 )
 
 run_add_exec(
@@ -182,7 +184,7 @@ run_add_exec(
 
 rpath_update_macos_install_dir(
     "install_bin_rpath_macos",
-    install_path = install_path,
+    install_path = INSTALL_PATH,
     deps = ["qemu_ninja_install"],
 )
 

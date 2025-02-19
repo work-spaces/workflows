@@ -21,6 +21,7 @@ load("//@star/packages/star/cmake.star", "cmake_add")
 load("//@star/sdk/star/run.star", "run_add_exec", "run_add_to_all")
 load("//@star/sdk/star/rpath.star", "rpath_update_macos_install_dir")
 load("//@star/sdk/star/info.star", "info_set_minimum_version")
+load("//@star/sdk/star/workspace.star", "workspace_get_absolute_path")
 
 info_set_minimum_version("0.12.0")
 
@@ -42,7 +43,7 @@ groff_sha256 = "6b9757f592b7518b4902eb6af7e54570bdccba37a871fddb2d30ae3863511c13
 m4_version = "1.4.19"
 m4_sha256 = "63aede5c6d33b6d9b13511cd0be2cac046f2e70fd0a07aa9573a04a82783af96"
 
-workspace = info.get_absolute_path_to_workspace()
+workspace = workspace_get_absolute_path()
 install_path = "{}/build/install".format(workspace)
 gnu_autotools_deps = ["autoconf_install", "automake_install", "libtool_install"]
 

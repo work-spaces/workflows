@@ -3,7 +3,12 @@ Shell Test workflow
 """
 
 load("//@star/sdk/star/checkout.star", "checkout_add_asset")
-load("//@star/sdk/star/run.star", "run_add_exec", "RUN_TYPE_ALL")
+load(
+    "//@star/sdk/star/run.star",
+    "RUN_LOG_LEVEL_APP",
+    "RUN_TYPE_ALL",
+    "run_add_exec",
+)
 load("//@star/packages/star/spaces-cli.star", "spaces_add")
 load("//@star/sdk/star/spaces-env.star", "spaces_working_env")
 load(
@@ -16,13 +21,13 @@ load(
     "mv",
 )
 
-script = """#!/usr/bin/env spaces
+SCRIPT = """#!/usr/bin/env spaces
 
 script.print("Hello!!")
 
 """
 
-spaces_add("spaces0", "v0.11.14")
+spaces_add("spaces0", "v0.12.6")
 spaces_working_env()
 
 checkout_add_asset(
@@ -34,7 +39,7 @@ checkout_add_asset(
 checkout_add_asset(
     "hello.star",
     destination = "hello.star",
-    content = script,
+    content = SCRIPT,
 )
 
 chmod(
@@ -47,7 +52,7 @@ run_add_exec(
     "run_script",
     command = "./hello.star",
     deps = ["chmod_file"],
-    log_level = "App",
+    log_level = RUN_LOG_LEVEL_APP,
     type = RUN_TYPE_ALL,
 )
 
@@ -85,7 +90,7 @@ mv(
     source = "README.md",
     destination = "README2.md",
     deps = ["copy_file", "copy_file2"],
-    options = ["-f"]
+    options = ["-f"],
 )
 
 ls(
@@ -123,7 +128,6 @@ cp(
     deps = ["create_dir"],
     options = ["-f"],
     type = RUN_TYPE_ALL,
-
 )
 
 ls(

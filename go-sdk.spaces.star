@@ -20,7 +20,7 @@ package_add("go.dev", "go", "go", "1.23.3")
 # work in the command line after running `source env`
 spaces_working_env()
 
-hello_go_content = """
+HELLO_GO_CONTENT = """
 package main
 
 import "fmt"
@@ -33,7 +33,7 @@ func main() {
 checkout_add_asset(
     "hello_go",
     destination = "hello_go.txt",
-    content = hello_go_content,
+    content = HELLO_GO_CONTENT,
 )
 
 run_add_exec(

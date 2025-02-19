@@ -11,11 +11,11 @@ load(
 )
 load("//@star/sdk/star/run.star", "run_add_exec", "RUN_TYPE_ALL")
 load("//@star/sdk/star/info.star", "info_set_minimum_version")
+load("//@star/sdk/star/workspace.star", "workspace_get_absolute_path")
 
 info_set_minimum_version("0.12.0")
 
 cmake_add("cmake3", "v3.30.5")
-
 package_add("github.com", "ninja-build", "ninja", "v1.12.1")
 
 checkout_add_repo(
@@ -25,7 +25,7 @@ checkout_add_repo(
     clone = "Worktree",
 )
 
-workspace = info.get_absolute_path_to_workspace()
+WORKSPACE = workspace_get_absolute_path()
 
 # This will add /usr/bin and /bin to the path so you can
 # work in the command line after running `source env`
@@ -33,7 +33,7 @@ checkout_update_env(
     "update_env",
     paths = ["/usr/bin", "/bin"],
     vars = {
-        "SPACES_WORKSPACE": workspace,
+        "SPACES_WORKSPACE": WORKSPACE,
     },
     inherited_vars = ["HOME"],
 )
@@ -50,7 +50,7 @@ run_add_exec(
         "-Sninja-build",
         "-Wno-dev",
         "-GNinja",
-        "-DCMAKE_INSTALL_PREFIX={}/build/install".format(workspace),
+        "-DCMAKE_INSTALL_PREFIX={}/build/install".format(WORKSPACE),
     ],
 )
 

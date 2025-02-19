@@ -29,21 +29,21 @@ package_add("github.com", "koalaman", "shellcheck", "v0.10.0")
 bazelisk_add("bazelisk", "v1.25.0")
 shfmt_add("shfmt", "v3.10.0")
 
-spaces0 = packages["github.com"]["work-spaces"]["spaces"]["v0.10.4"]
+SPACES0 = packages["github.com"]["work-spaces"]["spaces"]["v0.10.4"]
 
 checkout_add_platform_archive(
     "spaces0",
-    platforms = spaces0,
+    platforms = SPACES0,
 )
 
-spaces_alt = update_platforms_prefix(
-    spaces0,
+SPACES_ALT = update_platforms_prefix(
+    SPACES0,
     add_prefix = "sysroot/spaces/bin",
 )
 
 checkout_add_platform_archive(
     "spaces_alt",
-    platforms = spaces_alt,
+    platforms = SPACES_ALT,
 )
 
 package_add("arm.developer.com", "gnu", "aarch64-none-elf", "13.3.rel1")
@@ -91,31 +91,28 @@ def check_help(name):
         help = "Check the help of {}".format(name),
     )
 
-def check_versions():
-    commands = [
-        "node",
-        "npm",
-        "npx",
-        "cargo",
-        "rustc",
-        "gh",
-        "uv",
-        "ruff",
-        "python",
-        "spaces",
-        "sysroot/spaces/bin/spaces",
-        "aarch64-none-elf-gcc",
-        "arm-none-eabi-gcc",
-        "pkg-config",
-        "shfmt",
-        "ccache",
-        "bazelisk",
-        "shellcheck",
-        "qemu-system-arm",
-    ]
-    for name in commands:
-        check_version(name)
-
-check_versions()
+COMMANDS = [
+    "node",
+    "npm",
+    "npx",
+    "cargo",
+    "rustc",
+    "gh",
+    "uv",
+    "ruff",
+    "python",
+    "spaces",
+    "sysroot/spaces/bin/spaces",
+    "aarch64-none-elf-gcc",
+    "arm-none-eabi-gcc",
+    "pkg-config",
+    "shfmt",
+    "ccache",
+    "bazelisk",
+    "shellcheck",
+    "qemu-system-arm",
+]
+for name in COMMANDS:
+    check_version(name)
 
 check_help("oras")
