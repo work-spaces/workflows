@@ -112,7 +112,7 @@ gh_add_publish_archive(
     "llvm",
     deploy_repo = llvm_deploy_repo,
     version = llvm_version,
-    input = install_path,
+    input = INSTALL_PATH,
     deps = ["install"],
 )
 
