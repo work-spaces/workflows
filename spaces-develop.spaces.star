@@ -13,7 +13,7 @@ load(
 load("//@star/packages/star/rust.star", "rust_add")
 load("//@star/packages/star/sccache.star", "sccache_add")
 load("//@star/sdk/star/run.star", "run_add_exec")
-load("//@star/sdk/star/workspace.star", "workspace_get_absolute_path")
+load("//@star/sdk/star/ws.star", "workspace_get_absolute_path")
 
 # Configure the top level workspace
 
