@@ -7,7 +7,8 @@ Currently broken: needs to be ported to the new capsule system
 
 load("//@star/sdk/star/checkout.star", "checkout_add_archive", "checkout_update_env")
 load("//@star/sdk/star/run.star", "run_add_exec", "run_add_to_all")
-load("//@star/sdk/star/info.star", "info_get_absolute_path_to_workspace", "info_get_cpu_count")
+load("//@star/sdk/star/info.star", "info_get_cpu_count")
+load("//@star/sdk/star/ws.star", "workspace_get_absolute_path")
 load("//@star/sdk/star/rpath.star", "rpath_update_macos_install_dir")
 load("//@star/sdk/star/spaces-env.star", "spaces_working_env")
 load(
@@ -21,7 +22,7 @@ CAPSULE_CHECKOUT_RULE = "capsules"
 GIT_VERSION = "2.45.1"
 CPUS = info_get_cpu_count()
 ENV_RULE = spaces_working_env(add_spaces_to_sysroot = True)
-WORKSPACE = info_get_absolute_path_to_workspace()
+WORKSPACE = workspace_get_absolute_path()
 LOCAL_INSTALL_PATH = "build/install"
 INSTALL_PATH = "{}/{}".format(WORKSPACE, LOCAL_INSTALL_PATH)
 SOURCE_DIRECTORY = "git-{}".format(GIT_VERSION)
