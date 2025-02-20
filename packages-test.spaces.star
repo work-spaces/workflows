@@ -12,13 +12,14 @@ load(
     "update_platforms_prefix",
 )
 load("//@star/packages/star/python.star", "python_add_uv")
-load("//@star/sdk/star/run.star", "run_add_exec", "RUN_TYPE_ALL")
+load("//@star/sdk/star/run.star", "RUN_TYPE_ALL", "run_add_exec")
 load("//@star/packages/star/rust.star", "rust_add")
 load("//@star/packages/star/sccache.star", "sccache_add")
 load("//@star/packages/star/ccache.star", "ccache_add")
 load("//@star/packages/star/package.star", "package_add")
 load("//@star/packages/star/bazelisk.star", "bazelisk_add")
 load("//@star/packages/star/shfmt.star", "shfmt_add")
+load("//@star/packages/star/spaces-cli.star", "spaces_add")
 
 package_add("nodejs.org", "node", "nodejs", "v23.3.0")
 package_add("github.com", "cli", "cli", "v2.62.0")
@@ -31,9 +32,10 @@ shfmt_add("shfmt", "v3.10.0")
 
 SPACES0 = packages["github.com"]["work-spaces"]["spaces"]["v0.10.4"]
 
-checkout_add_platform_archive(
+spaces_add(
     "spaces0",
-    platforms = SPACES0,
+    version = "v0.14.2",
+    add_link_to_workspace_root = True,
 )
 
 SPACES_ALT = update_platforms_prefix(
