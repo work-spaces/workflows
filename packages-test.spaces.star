@@ -13,6 +13,7 @@ load(
 )
 load("//@star/packages/star/python.star", "python_add_uv")
 load("//@star/sdk/star/run.star", "RUN_TYPE_ALL", "run_add_exec")
+load("//@star/sdk/star/info.star", "info_set_required_semver")
 load("//@star/packages/star/rust.star", "rust_add")
 load("//@star/packages/star/sccache.star", "sccache_add")
 load("//@star/packages/star/ccache.star", "ccache_add")
@@ -31,6 +32,8 @@ bazelisk_add("bazelisk", "v1.25.0")
 shfmt_add("shfmt", "v3.10.0")
 
 SPACES0 = packages["github.com"]["work-spaces"]["spaces"]["v0.10.4"]
+
+info_set_required_semver(">0.10, <0.20.1")
 
 spaces_add(
     "spaces0",

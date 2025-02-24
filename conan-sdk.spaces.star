@@ -3,6 +3,7 @@ This is an example of how to get conan running in your workspace.
 """
 
 load("//@star/sdk/star/spaces-env.star", "spaces_working_env")
+load("//@star/sdk/star/shell.star", "shell")
 load("//@star/packages/star/python.star", "python_add_uv")
 load("//@star/packages/star/cmake.star", "cmake_add")
 load("//@star/packages/star/package.star", "package_add")
@@ -61,15 +62,9 @@ checkout_add_asset(
     content = conan_global_config,
 )
 
-profile_exists = fs.exists("{}/.conan/profiles/default".format(workspace))
-
-run_add_exec(
+shell(
     "conan_profile_detect",
-    command = "conan",
-    args = [
-        "profile",
-        "detect",
-    ] if not profile_exists else ["--version"],
+    script = "ls .conan/profiles/default || conan profile detect"
 )
 
 run_add_exec(
