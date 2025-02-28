@@ -17,6 +17,20 @@ load(
 )
 
 checkout_add_repo(
+    "StratifyOS-default",
+    url = "https://github.com/StratifyLabs/StratifyOS",
+    rev = "main",
+    clone = "Blobless",
+)
+
+checkout_add_repo(
+    "StratifyOS-default-v4",
+    url = "https://github.com/StratifyLabs/StratifyOS",
+    rev = "v4.3.0",
+    clone = "Blobless",
+)
+
+checkout_add_repo(
     "StratifyOS",
     url = "https://github.com/StratifyLabs/StratifyOS",
     rev = "main",
@@ -34,6 +48,17 @@ checkout_add_repo(
     sparse_list = ["/*", "!src/", "!include/"],
     deps = ["StratifyOS"],
 )
+
+checkout_add_repo(
+    "StratifyOS4",
+    url = "https://github.com/StratifyLabs/StratifyOS",
+    rev = "v4.3.0",
+    clone = "Blobless",
+    sparse_mode = CHECKOUT_SPARSE_MODE_NO_CONE,
+    sparse_list = ["/*", "!src/", "!include/"],
+    deps = ["StratifyOS"],
+)
+
 
 checkout_add_repo(
     "StratifyOS3",

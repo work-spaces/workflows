@@ -18,43 +18,57 @@ load("//@star/sdk/star/ws.star", "workspace_get_absolute_path")
 # Configure the top level workspace
 
 cargo_toml_contents = """
+
 [workspace]
 resolver = "2"
 members = [
     "spaces/crates/spaces",
+    "spaces/crates/copy",
     "spaces/crates/graph",
     "spaces/crates/git",
     "spaces/crates/platform",
     "spaces/crates/starstd",
+    "spaces/crates/changes",
+    "spaces/crates/environment",
+    "spaces/crates/lock",
+    "spaces/crates/logger",
+    "spaces/crates/suggest",
+    "spaces/crates/ws",
 ]
 
 [workspace.dependencies]
-anyhow-source-location = { git = "https://github.com/work-spaces/anyhow-source-location", rev = "019b7804e35a72f945b3b4b3a96520cdbaa77f70" }
-anyhow = "1"
-serde = { version = "1", features = ["derive"] }
+anyhow-source-location = { git = "https://github.com/work-spaces/anyhow-source-location", rev = "v0.1.0" }
+anyhow = "1.0.95"
+serde = { version = "1", features = ["derive", "rc"] }
 starlark = "0.13"
-state = "0.6"
-petgraph = "0.6"
+state = "0.6.0"
+petgraph = "0.6.5"
 serde_json = "1"
-glob-match = "0.2"
-url = "2"
+glob-match = "0.2.1"
+url = "2.5.2"
 toml = "0.8"
 serde_yaml = "0.9"
+strum = { version = "0.26", features = ["derive"] }
 
 easy-archiver = { path = "./easy-archiver", features = [
     "printer",
 ] }
 
-printer.path = "printer"
+changes.path = "spaces/crates/changes"
+copy.path = "spaces/crates/copy"
+environment.path = "spaces/crates/environment"
 git.path = "spaces/crates/git"
 graph.path = "spaces/crates/graph"
-platform.path = "spaces/crates/platform"
-starstd.path = "spaces/crates/starstd"
 http-archive.path = "spaces/crates/http-archive"
-changes.path = "spaces/crates/changes"
-environment.path = "spaces/crates/environment"
+inputs.path = "spaces/crates/inputs"
 lock.path = "spaces/crates/lock"
 logger.path = "spaces/crates/logger"
+platform.path = "spaces/crates/platform"
+printer.path = "printer"
+rule.path = "spaces/crates/rule"
+starstd.path = "spaces/crates/starstd"
+suggest.path = "spaces/crates/suggest"
+ws.path = "spaces/crates/ws"
 
 [profile.dev]
 opt-level = 3

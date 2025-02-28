@@ -30,7 +30,7 @@ python_add_uv(
     packages = ["meson"],
 )
 
-CLONE_TYPE = "Blobless" if info.is_ci() else "Worktree"
+CLONE_TYPE = "Default"
 
 checkout_add_repo(
     "glib",
