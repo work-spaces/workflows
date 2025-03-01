@@ -6,6 +6,7 @@ load(
     "//@star/sdk/star/checkout.star",
     "CHECKOUT_SPARSE_MODE_CONE",
     "CHECKOUT_SPARSE_MODE_NO_CONE",
+    "CHECKOUT_CLONE_WORKTREE",
     "checkout_add_repo",
 )
 load(
@@ -67,6 +68,45 @@ checkout_add_repo(
     sparse_mode = CHECKOUT_SPARSE_MODE_NO_CONE,
     sparse_list = ["/*", "!src/", "!include/"],
     deps = ["StratifyOS2"],
+)
+
+checkout_add_repo(
+    "StratifyOS_slash",
+    url = "https://github.com/StratifyLabs/StratifyOS/",
+    rev = "main",
+)
+
+checkout_add_repo(
+    "StratifyOS_git_slash",
+    url = "https://github.com/StratifyLabs/StratifyOS.git/",
+    rev = "main",
+)
+
+checkout_add_repo(
+    "StratifyOS_git",
+    url = "https://github.com/StratifyLabs/StratifyOS.git",
+    rev = "main",
+)
+
+checkout_add_repo(
+    "StratifyOS_slash_worktree",
+    url = "https://github.com/StratifyLabs/StratifyOS/",
+    rev = "main",
+    clone = CHECKOUT_CLONE_WORKTREE,
+)
+
+checkout_add_repo(
+    "StratifyOS_git_slash_worktree",
+    url = "https://github.com/StratifyLabs/StratifyOS.git/",
+    rev = "main",
+    clone = CHECKOUT_CLONE_WORKTREE,
+)
+
+checkout_add_repo(
+    "StratifyOS_git_worktree",
+    url = "https://github.com/StratifyLabs/StratifyOS.git",
+    rev = "main",
+    clone = CHECKOUT_CLONE_WORKTREE,
 )
 
 run_add_exec(

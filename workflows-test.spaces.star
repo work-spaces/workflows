@@ -65,9 +65,9 @@ _add_workflow_test("ruby-sdk", ["node-sdk"])
 _add_workflow_test("packages-test", ["ruby-sdk"])
 #_add_workflow_test("git-build", ["packages-test"])
 _add_workflow_test("qemu-arm-build", ["packages-test"], is_run = False)
-_add_workflow_test("ninja-build", ["qemu-arm-build"])
+_add_workflow_test("ninja-build", ["qemu-arm-build_checkout"])
 _add_workflow_test("shell-test", ["ninja-build"])
 _add_workflow_test("llvm-build-16", ["shell-test"], is_run = False)
-_add_workflow_test("sparse-checkout-test", ["llvm-build-16"], is_run = False)
+_add_workflow_test("sparse-checkout-test", ["llvm-build-16_checkout"], is_run = False)
 
 
