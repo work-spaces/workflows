@@ -28,6 +28,7 @@ package_add("github.com", "xpack-dev-tools", "qemu-arm-xpack", "v8.2.6-1")
 package_add("github.com", "xpack-dev-tools", "pkg-config-xpack", "v0.29.2-3")
 package_add("github.com", "oras-project", "oras", "v1.2.1")
 package_add("github.com", "koalaman", "shellcheck", "v0.10.0")
+package_add("github.com", "gohugoio", "hugo", "v0.145.0")
 bazelisk_add("bazelisk", "v1.25.0")
 shfmt_add("shfmt", "v3.10.0")
 
@@ -97,27 +98,33 @@ def check_help(name):
     )
 
 COMMANDS = [
+    "aarch64-none-elf-gcc",
+    "arm-none-eabi-gcc",
+    "bazelisk",
+    "cargo",
+    "ccache",
+    "gh",
     "node",
     "npm",
     "npx",
-    "cargo",
-    "rustc",
-    "gh",
-    "uv",
-    "ruff",
+    "pkg-config",
     "python",
+    "qemu-system-arm",
+    "ruff",
+    "rustc",
+    "shellcheck",
+    "shfmt",
     "spaces",
     "sysroot/spaces/bin/spaces",
-    "aarch64-none-elf-gcc",
-    "arm-none-eabi-gcc",
-    "pkg-config",
-    "shfmt",
-    "ccache",
-    "bazelisk",
-    "shellcheck",
-    "qemu-system-arm",
+    "uv",
 ]
 for name in COMMANDS:
     check_version(name)
 
-check_help("oras")
+HELP_COMMANDS = [
+    "hugo",
+    "oras"
+]
+
+for name in HELP_COMMANDS:
+    check_help(name)
