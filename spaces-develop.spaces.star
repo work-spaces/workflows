@@ -208,15 +208,22 @@ run_add_exec(
     command = "cargo",
     args = ["check"],
     help = "Run cargo check on workspace",
-    type = "Optional"
 )
 
 run_add_exec(
     "clippy",
     command = "cargo",
     args = ["clippy"],
+    log_level = "App",
     help = "Run cargo clippy on workspace",
-    type = "Optional"
 )
+
+run_add_exec(
+    "install_dev",
+    command = "cargo",
+    args = ["install", "--force", "--path=spaces/crates/spaces", "--profile=dev"],
+    help = "Run cargo clippy on workspace",
+)
+
 
 spaces_working_env()
