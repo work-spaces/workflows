@@ -29,6 +29,7 @@ package_add("github.com", "xpack-dev-tools", "pkg-config-xpack", "v0.29.2-3")
 package_add("github.com", "oras-project", "oras", "v1.2.1")
 package_add("github.com", "koalaman", "shellcheck", "v0.10.0")
 package_add("github.com", "gohugoio", "hugo", "v0.145.0")
+package_add("github.com", "jqlang", "jq", "jq-1.7.1")
 bazelisk_add("bazelisk", "v1.25.0")
 shfmt_add("shfmt", "v3.10.0")
 
@@ -104,6 +105,7 @@ COMMANDS = [
     "cargo",
     "ccache",
     "gh",
+    "jq",
     "node",
     "npm",
     "npx",

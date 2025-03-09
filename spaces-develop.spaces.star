@@ -219,9 +219,17 @@ run_add_exec(
 )
 
 run_add_exec(
+    "format",
+    command = "cargo",
+    args = ["fmt"],
+    log_level = "App",
+    help = "Run cargo clippy on workspace",
+)
+
+run_add_exec(
     "install_dev",
     command = "cargo",
-    args = ["install", "--force", "--path=spaces/crates/spaces", "--profile=dev"],
+    args = ["install", "--force", "--path=spaces/crates/spaces", "--profile=dev", "--root=$HOME/.local"],
     help = "Run cargo clippy on workspace",
 )
 
