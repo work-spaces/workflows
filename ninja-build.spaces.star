@@ -4,12 +4,13 @@ Building Ninja using Spaces
 
 load("//@star/packages/star/package.star", "package_add")
 load("//@star/packages/star/cmake.star", "cmake_add")
+load("//@star/sdk/star/cmake.star", "cmake_add_configure_build_install")
 load(
     "//@star/sdk/star/checkout.star",
     "checkout_add_repo",
     "checkout_update_env",
 )
-load("//@star/sdk/star/run.star", "run_add_exec", "RUN_TYPE_ALL")
+load("//@star/sdk/star/run.star", "run_add_target", "RUN_TYPE_ALL")
 load("//@star/sdk/star/info.star", "info_set_minimum_version")
 load("//@star/sdk/star/ws.star", "workspace_get_absolute_path")
 
@@ -38,44 +39,19 @@ checkout_update_env(
     inherited_vars = ["HOME"],
 )
 
-run_add_exec(
-    "configure",
-    command = "cmake",
-    inputs = [
-        "+ninja-build/**/CMakeLists.txt",
-        "+ninja-build.spaces.star",
-    ],
-    args = [
-        "-Bbuild",
-        "-Sninja-build",
+
+cmake_add_configure_build_install(
+    "cmake_ninja",
+    source_directory = "ninja-build",
+    configure_args = [
         "-Wno-dev",
         "-GNinja",
-        "-DCMAKE_INSTALL_PREFIX={}/build/install".format(WORKSPACE),
-    ],
+    ]
 )
 
-run_add_exec(
-    "build",
-    inputs = [
-        "+ninja-build/src/**",
-        "+build/build.ninja",
-        "+ninja-build.spaces.star",
-    ],
-    deps = ["configure"],
-    command = "ninja",
-    args = ["-Cbuild"],
-)
-
-run_add_exec(
+run_add_target(
     "install",
     type = RUN_TYPE_ALL,
-    inputs = [
-        "+build/ninja",
-        "+ninja-build.spaces.star",
-    ],
-    deps = ["build"],
-    command = "ninja",
-    args = ["-Cbuild", "install"],
+    deps = ["cmake_ninja"],
 )
-
 
