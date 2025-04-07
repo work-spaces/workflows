@@ -8,7 +8,7 @@ load(
     "//@star/sdk/star/checkout.star",
     "checkout_add_asset",
     "checkout_add_repo",
-    "checkout_update_asset",
+    "checkout_update_asset"
 )
 load("//@star/packages/star/rust.star", "rust_add")
 load("//@star/packages/star/sccache.star", "sccache_add")
