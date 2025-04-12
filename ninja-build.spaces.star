@@ -23,7 +23,6 @@ checkout_add_repo(
     "ninja-build",
     url = "https://github.com/ninja-build/ninja",
     rev = "v1.12.1",
-    clone = "Worktree",
 )
 
 WORKSPACE = workspace_get_absolute_path()

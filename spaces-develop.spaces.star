@@ -7,6 +7,7 @@ load("//@star/sdk/star/spaces-env.star", "spaces_working_env")
 load(
     "//@star/sdk/star/checkout.star",
     "checkout_add_asset",
+    "checkout_add_hard_link_asset",
     "checkout_add_repo",
     "checkout_update_asset"
 )
@@ -34,6 +35,7 @@ members = [
     "spaces/crates/logger",
     "spaces/crates/suggest",
     "spaces/crates/ws",
+    "spaces/crates/workflows",
 ]
 
 [workspace.dependencies]
@@ -69,6 +71,7 @@ rule.path = "spaces/crates/rule"
 starstd.path = "spaces/crates/starstd"
 suggest.path = "spaces/crates/suggest"
 ws.path = "spaces/crates/ws"
+workflows.path = "spacers/crates/workflows"
 
 [profile.dev]
 opt-level = 3
@@ -122,6 +125,13 @@ checkout_add_repo(
     rev = "main",
 )
 
+checkout_add_hard_link_asset(
+    "rust_toolchain",
+    source = "spaces/rust-toolchain.toml",
+    destination = "rust-toolchain.toml",
+    deps = ["spaces"],
+)
+
 checkout_add_repo(
     "printer",
     url = printer_url,
@@ -136,7 +146,7 @@ checkout_add_repo(
 
 rust_add(
     "rust_toolchain",
-    version = "1.80",
+    version = "1.85.1",
 )
 
 sccache_add(

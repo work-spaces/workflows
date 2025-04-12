@@ -30,3 +30,7 @@ spaces-dev = ["preload", "spaces-develop"]
 spaces-docs = ["lock", "preload", "spaces-docs"]
 serve-rules = ["preload", "preload-sources", "serve-rules", "capsules-build"]
 doxygen-build = ["lock", "preload", "doxygen-build"]
+
+[ninja-build-dev]
+checkout_scripts = ["preload", "ninja-build"]
+new_branches = ["//ninja-build:ninja-build"]
