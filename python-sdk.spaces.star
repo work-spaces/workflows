@@ -12,7 +12,7 @@ python_add_uv(
     uv_version = "0.4.29",
     ruff_version = "0.8.0",
     python_version = "3.11",
-    packages = ["numpy", "cmake-format"])
+    packages = ["numpy", "cmake-format", "pre-commit"])
 
 
 # This will add /usr/bin and /bin to the path so you can
