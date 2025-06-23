@@ -30,6 +30,7 @@ package_add("github.com", "oras-project", "oras", "v1.2.1")
 package_add("github.com", "koalaman", "shellcheck", "v0.10.0")
 package_add("github.com", "gohugoio", "hugo", "v0.145.0")
 package_add("github.com", "jqlang", "jq", "jq-1.7.1")
+package_add("github.com", "git-lfs", "git-lfs", "v3.6.1")
 bazelisk_add("bazelisk", "v1.25.0")
 shfmt_add("shfmt", "v3.10.0")
 
@@ -106,6 +107,7 @@ COMMANDS = [
     "ccache",
     "gh",
     "jq",
+    "git-lfs",
     "node",
     "npm",
     "npx",
