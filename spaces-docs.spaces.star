@@ -1,6 +1,16 @@
 """
 Checks out a workspace to work on the spaces documentation.
 
+After checkout:
+
+Update the spaces version defined in `work-spaces.github.io/spaces.star`.
+
+```sh
+spaces run //work-spaces.github.io:work-spaces.github.io
+```
+
+Then manually run the action to publish the github pages.
+
 """
 
 load("//@star/sdk/star/spaces-env.star", "spaces_working_env")
