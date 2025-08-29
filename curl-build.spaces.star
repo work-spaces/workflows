@@ -10,7 +10,7 @@ load(
     "checkout_update_env",
 )
 load(
-    "//@star/sdk/star/gnu_autotools.star",
+    "//@star/sdk/star/gnu.star",
     "gnu_add_autotools_from_source",
     "gnu_add_repo",
     "gnu_add_source_archive",
