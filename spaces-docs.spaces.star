@@ -6,8 +6,11 @@ After checkout:
 Update the spaces version defined in `work-spaces.github.io/spaces.star`.
 
 ```sh
-spaces run //work-spaces.github.io:work-spaces.github.io
+# run locally to check everything is working.
+spaces run //work-spaces.github.io:work-spaces.github.io_archive
 ```
+
+Commit and push changes to the `main` branch.
 
 Then manually run the action to publish the github pages.
 
