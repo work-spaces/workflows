@@ -18,7 +18,7 @@ checkout.add_repo(
         "url": "https://github.com/work-spaces/sdk",
         "rev": "main",
         "checkout": "Revision",
-        "clone": "Blobless"
+        "clone": "Default"
     }
 )
 
@@ -31,4 +31,3 @@ checkout.add_repo(
         "clone": "Default"
     }
 )
-

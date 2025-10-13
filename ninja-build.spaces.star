@@ -13,8 +13,11 @@ load(
 load("//@star/sdk/star/run.star", "run_add_target", "RUN_TYPE_ALL")
 load("//@star/sdk/star/info.star", "info_set_minimum_version")
 load("//@star/sdk/star/ws.star", "workspace_get_absolute_path")
+load("//@star/sdk/star/spaces-env.star", "spaces_working_env")
 
-info_set_minimum_version("0.12.0")
+info_set_minimum_version("0.15.1")
+
+spaces_working_env(add_spaces_to_sysroot = True, inherit_terminal = True)
 
 cmake_add("cmake3", "v3.30.5")
 package_add("github.com", "ninja-build", "ninja", "v1.12.1")
@@ -53,4 +56,3 @@ run_add_target(
     type = RUN_TYPE_ALL,
     deps = ["cmake_ninja"],
 )
-
