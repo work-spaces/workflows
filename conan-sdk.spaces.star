@@ -14,7 +14,7 @@ load(
     "checkout_update_env",
 )
 load("//@star/sdk/star/run.star", "run_add_exec", "RUN_TYPE_ALL")
-load("//@star/sdk/star/info.star", "info_set_minimum_version")
+load("//@star/sdk/star/info.star", "info_set_minimum_version", "info_get_path_to_store")
 load("//@star/sdk/star/ws.star", "workspace_get_absolute_path")
 
 info_set_minimum_version("0.12.0")
@@ -33,9 +33,7 @@ package_add("github.com", "ninja-build", "ninja", "v1.12.1")
 checkout_add_repo(
     "examples2",
     url = "https://github.com/conan-io/examples2",
-    rev = "main",
-    clone = "Worktree",
-)
+    rev = "88d336832130f058d70acf027cdd8418082dc7e7",)
 
 # This will add /usr/bin and /bin to the path so you can
 # work in the command line after running `source env`
@@ -50,7 +48,7 @@ checkout_update_env(
     },
 )
 
-store_path = info.get_path_to_store()
+store_path = info_get_path_to_store()
 
 conan_global_config = """
 core.cache:storage_path = {}/conan_cache
