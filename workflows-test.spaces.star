@@ -2,15 +2,15 @@
 Test the workflows in this repo
 """
 
-load("//@star/sdk/star/checkout.star", 
-    "checkout_add_repo", 
+load("//@star/sdk/star/checkout.star",
+    "checkout_add_repo",
     "checkout_add_which_asset",
     "checkout_update_env")
 load("//@star/sdk/star/info.star", "info_set_minimum_version")
 load("//@star/sdk/star/run.star", "run_add_exec", "RUN_TYPE_ALL")
 load("//@star/sdk/star/spaces-env.star", "spaces_working_env")
 
-info_set_minimum_version("0.14.0")
+info_set_minimum_version("0.15.2")
 spaces_working_env()
 
 checkout_add_repo(
@@ -76,5 +76,5 @@ _add_workflow_test("ninja-build", ["qemu-arm-build_checkout"])
 _add_workflow_test("shell-test", ["ninja-build"])
 _add_workflow_test("llvm-build-16", ["shell-test"], is_run = False)
 _add_workflow_test("sparse-checkout-test", ["llvm-build-16_checkout"], is_run = False)
-
-
+_add_workflow_test("test1", ["sparse-checkout-test"], is_run = True)
+_add_workflow_test("octocat-test", ["test1"], is_run = True)

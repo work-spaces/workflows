@@ -16,7 +16,7 @@ checkout.add_repo(
     rule = {"name": "@star/sdk"},
     repo = {
         "url": "https://github.com/work-spaces/sdk",
-        "rev": "main",
+        "rev": "issue-52-fix-extend-inherited-vars",
         "checkout": "Revision",
         "clone": "Default"
     }
