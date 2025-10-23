@@ -16,12 +16,13 @@ Then manually run the action to publish the github pages.
 
 """
 
-load("//@star/sdk/star/spaces-env.star", "spaces_working_env")
 load(
     "//@star/sdk/star/checkout.star",
     "checkout_add_repo",
 )
 load("//@star/sdk/star/info.star", "info_set_required_semver")
+load("//@star/sdk/star/spaces-env.star", "spaces_working_env")
+
 info_set_required_semver(">0.10, <0.20.1")
 
 checkout_add_repo(
