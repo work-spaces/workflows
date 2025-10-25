@@ -1,0 +1,8 @@
+{
+  "languages": {
+    "Starlark": {
+      "language_servers": ["!spaces-lsp", "!buck2-lsp", "!starpls", "!tilt"],
+      "tab_size": 4
+    }
+  }
+}
