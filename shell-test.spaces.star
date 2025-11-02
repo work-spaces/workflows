@@ -10,6 +10,7 @@ load(
     "run_add_exec",
 )
 load("//@star/packages/star/spaces-cli.star", "spaces_add")
+load("//@star/packages/star/starship.star", "starship_add_bash")
 load("//@star/sdk/star/spaces-env.star", "spaces_working_env")
 load(
     "//@star/sdk/star/shell.star",
@@ -27,7 +28,8 @@ script.print("Hello!!")
 
 """
 
-spaces_add("spaces0", "v0.12.6")
+starship_add_bash("starship_bash")
+spaces_add("spaces0", "v0.15.4")
 spaces_working_env()
 
 checkout_add_asset(

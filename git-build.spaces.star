@@ -11,7 +11,7 @@ load("//@star/packages/star/cmake.star", "cmake_add")
 load("//@star/packages/star/spaces-cli.star", "spaces_add")
 load("//@star/packages/star/package.star", "package_add")
 load("//@star/sdk/star/info.star", "info_get_cpu_count")
-load("//@star/sdk/star/ws.star", 
+load("//@star/sdk/star/ws.star",
     "workspace_get_absolute_path",
     "workspace_get_env_var")
 load("//@star/sdk/star/rpath.star", "rpath_update_macos_install_dir")
@@ -19,7 +19,6 @@ load("//@star/sources/star/gnu.star", "gnu_add_configure_make_install_from_sourc
 load("//@star/sdk/star/cmake.star", "cmake_add_repo")
 load("//@star/sdk/star/spaces-env.star", "spaces_working_env")
 
-CAPSULE_CHECKOUT_RULE = "capsules"
 GIT_VERSION = "2.45.1"
 GIT_SHA256 = "10acb581993061e616be9c5674469335922025a666318e0748cb8306079fef24"
 CPUS = info_get_cpu_count()

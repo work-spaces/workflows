@@ -10,7 +10,7 @@ load(
     "checkout_add_repo",
     "checkout_update_env",
 )
-load("//@star/sdk/star/run.star", "run_add_target", "RUN_TYPE_ALL")
+load("//@star/sdk/star/run.star", "run_add_target", "RUN_TYPE_ALL", "run_add_archive")
 load("//@star/sdk/star/info.star", "info_set_minimum_version")
 load("//@star/sdk/star/ws.star", "workspace_get_absolute_path")
 load("//@star/sdk/star/spaces-env.star", "spaces_working_env")
@@ -49,6 +49,32 @@ cmake_add_configure_build_install(
         "-Wno-dev",
         "-GNinja",
     ]
+)
+
+run_add_archive(
+    "ninja_archive",
+    archive_name = "ninja",
+    source_directory = "build/install",
+    version = "1.12.1",
+    deps = ["cmake_ninja"],
+)
+
+run_add_archive(
+    "ninja_archive_bin",
+    archive_name = "ninja",
+    includes = ["bin/**"],
+    source_directory = "build/install",
+    version = "1.12.1",
+    deps = ["cmake_ninja"],
+)
+
+run_add_archive(
+    "ninja_archive_lib",
+    archive_name = "ninja",
+    excludes = ["bin/**"],
+    source_directory = "build/install",
+    version = "1.12.1",
+    deps = ["cmake_ninja"],
 )
 
 run_add_target(
