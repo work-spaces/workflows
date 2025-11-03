@@ -34,6 +34,7 @@ spaces-docs = ["lock", "preload", "spaces-docs"]
 serve-rules = ["preload", "preload-sources", "serve-rules", "capsules-build"]
 doxygen-build = ["lock", "preload", "doxygen-build"]
 test1 = ["preload", "test", "test2"]
+zephyr-stm32 = ["preload", "lock", "zephyr-stm32"]
 
 [ninja-build-dev]
 checkout_scripts = ["preload", "ninja-build"]
