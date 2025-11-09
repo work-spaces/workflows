@@ -28,7 +28,7 @@ script.print("Hello!!")
 
 """
 
-starship_add_bash("starship_bash")
+starship_add_bash("starship_bash", shortcuts = {})
 spaces_add("spaces0", "v0.15.4")
 spaces_working_env()
 
