@@ -10,13 +10,12 @@ load("//@star/sdk/star/info.star", "info_set_minimum_version")
 load("//@star/sdk/star/run.star", "run_add_exec", "RUN_TYPE_ALL")
 load("//@star/sdk/star/spaces-env.star", "spaces_working_env")
 
-info_set_minimum_version("0.15.2")
+info_set_minimum_version("0.15.16")
 spaces_working_env()
 
 checkout_add_repo(
     "workflows",
     url = "https://github.com/work-spaces/workflows",
-    clone = "Blobless",
     rev = "main",
 )
 
