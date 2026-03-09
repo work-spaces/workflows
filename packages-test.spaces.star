@@ -10,7 +10,7 @@ load("//@star/packages/star/ccache.star", "ccache_add")
 load(
     "//@star/packages/star/coreutils.star",
     "coreutils_add",
-    coreutils_default_functions = "DEFAULT_FUNCTIONS",
+    coreutils_default_functions = "COREUTILS_DEFAULT_FUNCTIONS",
     "coreutils_add_rs_tools"
 )
 load("//@star/packages/star/package.star", "package_add")
