@@ -12,6 +12,14 @@ This file serves as an example of how to preload a custom spaces starlark SDK.
 
 """
 
+checkout.update_env(
+    rule = {"name": "workspace_env"},
+    env = {
+        "vars": {},
+        "paths": ["{}/sysroot/bin".format(workspace.get_absolute_path())]
+    }
+)
+
 checkout.add_repo(
     rule = {"name": "@star/sdk"},
     repo = {

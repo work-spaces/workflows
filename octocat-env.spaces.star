@@ -10,3 +10,10 @@ checkout_update_env(
     "gh_token",
     optional_inherited_vars = ["GH_TOKEN"]
 )
+
+checkout.update_env(
+    rule = { "name": "test_env", },
+    env = {
+        "checkout_required_inherited_vars": ["HOMEBREW_CELLAR"]
+    }
+)

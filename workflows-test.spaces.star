@@ -6,7 +6,9 @@ load("//@star/sdk/star/checkout.star",
     "checkout_add_repo",
     "checkout_add_which_asset",
     "checkout_update_env")
+
 load("//@star/sdk/star/info.star", "info_set_minimum_version")
+load("//@star/sdk/star/ws.star", "workspace_get_absolute_path")
 load("//@star/sdk/star/run.star", "run_add_exec", "RUN_TYPE_ALL")
 load("//@star/sdk/star/spaces-env.star", "spaces_working_env")
 
@@ -27,7 +29,8 @@ checkout_add_which_asset(
 
 checkout_update_env(
     "spaces_home",
-    inherited_vars = ["SPACES_HOME"]
+    inherited_vars = ["SPACES_HOME"],
+    paths = ["{}/sysroot/bin".format(workspace_get_absolute_path())]
 )
 
 def _add_workflow_test(name, deps = [], is_run = True, target = None):
